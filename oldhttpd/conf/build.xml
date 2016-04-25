@@ -1,0 +1,1096 @@
+<project name="nuinfo" default="checkBothApacheAll" xmlns:ac="antlib:net.sf.antcontrib">
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+                <classpath>
+                        <pathelement location="/usr/share/java/ant-contrib-1.0b3.jar"/>
+                </classpath>
+        </taskdef>
+
+<!-- node properties file path, fixed except for testing -->
+<property name="node_properties_path"
+          value="/local-adm-pub/config/this-node.properties" />
+
+<loadproperties srcFile="${node_properties_path}" />
+
+<!-- Don't put a trailing slash on directory paths , don't use spaces in directory paths-->
+
+<!-- list of the FQDN of the other nodes -->
+<loadfile property="other_nodes_file" srcFile="/local-adm-pub/config/other-nodes-fqdn.txt"/>
+<loadfile property="all_nodes_file" srcFile="/local-adm-pub/config/all-nodes-fqdn.txt"/>
+<loadfile property="evanston_nodes_file" srcFile="/local-adm-pub/config/evanston-nodes-fqdn.txt"/>
+<loadfile property="chicago_nodes_file" srcFile="/local-adm-pub/config/chicago-nodes-fqdn.txt"/>
+
+<var name="prod_config_dir" value="/etc/httpd/conf" />
+<var name="test_config_dir" value="/etc/httpd/test-conf" />
+<var name="prod_script_dir" value="/etc/httpd/conf" />
+<var name="prod_agent_config_dir" value="/var/local/web_agents/apache22_agent/Agent_001/config" />
+<var name="test_agent_config_dir" value="/var/local/web_agents/apache22_agent/Agent_002/config" />
+<var name="conf_usergroup" value="root:wheel" />
+<var name="conf_mode" value="640" />
+<var name="conf_dir_mode" value="750" />
+<var name="general_conf_files" value="httpd.conf:mime.types:main-only.conf:main-head.conf:virtual.conf:virtual-redirect.conf:policy-url-file.txt:virtual-host-map.txt" />
+
+
+<target name="isServerReachable">
+    <!-- Test if a server is reachable on some port -->
+    <!-- For use via antcallback -->
+    <!--
+        Parameters:
+
+            server: FQDN of a server or "local" (required)
+            port:   TCP port number (default 22)
+
+        returns:    true/false boolean in "reachable"
+                    text message in "message"
+    -->
+
+    <property name="port" value="22" />
+
+    <!-- output control -->
+    <if>
+        <and>
+            <isset property="quiet" />
+            <istrue value="${quiet}" />
+        </and>
+        <then>
+            <property name="quiet" value="true" />
+            <property name="quietarg" value="-q" />
+            <property name="quietprop" value="-Dquiet=true" />
+        </then>
+        <else>
+            <echo>from: ${fqdn} to: ${server} port: ${port}</echo>
+            <property name="quiet" value="false" />
+            <property name="quietarg" value="-logger org.apache.tools.ant.NoBannerLogger" />
+            <property name="quietprop" value="" />
+        </else>
+    </if>
+
+    <if>
+        <!-- parameter sanity checks -->
+        <and>
+            <!-- "server" parameter is required -->
+            <isset property="server" />
+            <not><equals arg1="${server}" arg2="" trim="true" /></not>
+        </and>
+        <then>
+            <if>
+                <!-- bypass tests for "server"="local" -->
+                <not><equals arg1="${server}" arg2="local" trim="true" /></not>
+                <then>
+                    <!-- server is not "local" -->
+                    <if>
+                        <!-- Do a generic Java network reachability test up front-->
+                        <!-- This may flag invalid host names -->
+                        <!-- <isreachable host="${server}" /> -->
+                        <!-- comment out for now -->
+                        <equals arg1="dummy" arg2="dummy" />
+                        <then>
+                            <!-- Then, try to open the TCP port -->
+                            <trycatch property="exception" reference="exceptionref" >
+                                <try>
+                                    <waitfor maxwait="5" maxwaitunit="second" timeoutproperty="server.unreachable">
+                                        <and>
+                                            <socket port="${port}" server="${server}" />
+                                        </and>
+                                    </waitfor>
+                                </try>
+                                <catch>
+                                    <!-- treat exceptions as unreachable, but pass through the message -->
+                                    <!-- unknown host names all seem to fail the same way as socket timeout -->
+                                    <property name="server.unreachable" value="true" />
+                                    <property name="message" value="${exception}" />
+                                    <echo>catch ${exception}</echo>
+                                </catch>
+                                <finally>
+                                 <if>
+                                    <isfalse value="${server.unreachable}"/>
+                                    <then>
+                                        <property name="reachable" value="true" />
+                                        <property name="message" value="" />
+                                    </then>
+                                    <else>
+                                        <property name="reachable" value="false" />
+                                        <property name="message" value="server ${server} is unreachable" />
+                                    </else>
+                                 </if>
+                                </finally>
+                            </trycatch>
+                        </then>
+                        <else>
+                            <!-- Java "reachable" test failed -->
+                            <property name="reachable" value="false" />
+                            <property name="message" value="server ${server} is unreachable (2)" />
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <!-- server is "local", skip tests, return reachable=true -->
+                    <property name="reachable" value="true" />
+                    <property name="message" value="" />
+                </else>
+            </if>
+        </then>
+        <else>
+            <!-- empty or missing server parameter -->
+            <property name="reachable" value="false" />
+            <property name="message" value="server name is missing" />
+        </else>
+    </if>
+    <if>
+        <not><equals arg1="${message}" arg2="" trim="true" /></not>
+        <then>
+            <echo>(${message})</echo>
+        </then>
+    </if>
+    <!-- <echo>reachable=${reachable} ${message}</echo> -->
+
+</target>
+
+<target name="copyProdCfgFiles">
+    <!--    Copy production config files from the production config dir on the current server
+            to corresponding locations on the specified server -->
+    <!-- parameter: server is server fqdn or "local" -->
+    <!-- skip copy if server="local" or same server -->
+    <if>
+        <or>
+            <equals arg1="${server}" arg2="local" />
+            <equals arg1="${server}" arg2="${fqdn}" />
+        </or>
+        <then>
+            <echo>Skip copy of prod ${server}</echo>
+        </then>
+        <else>
+            <scp todir="root@${server}:${prod_config_dir}"
+                keyfile="/root/.ssh/id_rsa"
+                knownhosts="/root/.ssh/known_hosts"
+                passphrase=""
+                >
+                <fileset dir="${prod_config_dir}">
+                    <include name="httpd.conf"/>
+                    <include name="main-only.conf"/>
+                    <include name="main-head.conf"/>
+                    <include name="virtual.conf"/>
+                    <include name="virtual-redirect.conf"/>
+                    <include name="virtual-host-map.txt"/>
+                    <include name="policy-url-file.txt"/>
+                    <include name="all-names.conf"/>
+                </fileset>
+            </scp>
+        </else>
+    </if>
+
+</target>
+
+<target name="copyTestCfgFiles">
+    <!--    Copy test config files from the test config dir on the current server
+            to corresponding locations on the specified server -->
+    <!-- parameter: server is server fqdn or "local" -->
+    <!-- skip copy if server="local" or same server -->
+    <if>
+        <or>
+            <equals arg1="${server}" arg2="local" />
+            <equals arg1="${server}" arg2="${fqdn}" />
+        </or>
+        <then>
+            <echo>Skip copy of test ${server}</echo>
+        </then>
+        <else>
+            <scp todir="root@${server}:${test_config_dir}"
+                keyfile="/root/.ssh/id_rsa"
+                knownhosts="/root/.ssh/known_hosts"
+                passphrase=""
+                >
+                <fileset dir="${test_config_dir}">
+                    <include name="httpd.conf"/>
+                    <include name="main-only.conf"/>
+                    <include name="main-head.conf"/>
+                    <include name="virtual.conf"/>
+                    <include name="virtual-redirect.conf"/>
+                    <include name="virtual-host-map.txt"/>
+                    <include name="policy-url-file.txt"/>
+                    <include name="all-names.conf"/>
+                </fileset>
+            </scp>
+        </else>
+    </if>
+</target>
+
+<!-- set file and directory permissions on the specified server -->
+<target name="setFilePermissions" >
+    <limit maxwait="30" failonerror="true" >
+        <exec executable="/bin/ksh"
+        failonerror="true" >
+            <arg value="${prod_script_dir}/set-file-perms.ksh"/>
+            <arg value="${server}" />
+            <arg value="${conf_usergroup}" />
+            <arg value="${conf_mode}" />
+            <arg value="${dir_conf_mode}" />
+            <arg value="${prod_config_dir}" />
+            <arg value="${general_conf_files}" />
+        </exec>
+    </limit>
+</target>
+
+<!-- set permissions on test config only -->
+<target name="setTestFilePermissions" >
+   <limit maxwait="30" failonerror="true" >
+        <exec executable="/bin/ksh"
+        failonerror="true" >
+            <arg value="${prod_script_dir}/set-file-perms.ksh"/>
+            <arg value="${server}" />
+            <arg value="${conf_usergroup}" />
+            <arg value="${conf_mode}" />
+            <arg value="${conf_dir_mode}" />
+            <arg value="${test_config_dir}" />
+            <arg value="${general_conf_files}" />
+        </exec>
+    </limit>
+</target>
+
+<!-- Check the production Apache configuration on the specified server -->
+<target name="checkApache" >
+    <antcall target="manageApacheRemote" >
+        <param name="param2" value="check" />
+
+    </antcall>
+
+</target>
+
+<!-- Check the test Apache configuration on the specified server -->
+<target name="checkTestApache" >
+    <antcall target="manageTestApacheRemote" >
+        <param name="param2" value="check" />
+
+    </antcall>
+
+</target>
+
+<!-- Start the production Apache configuration on the specified server -->
+<target name="startApache" >
+    <antcall target="manageApacheRemote" >
+        <param name="param2" value="start" />
+
+    </antcall>
+
+</target>
+
+<!-- Start the test Apache configuration on the specified server -->
+<target name="startTestApache" >
+    <antcall target="manageTestApacheRemote" >
+        <param name="param2" value="start" />
+
+    </antcall>
+
+</target>
+
+<!-- Stop the production Apache configuration on the specified server -->
+<target name="stopApache" depends="checkApache" >
+    <antcall target="manageApacheRemote" >
+        <param name="param2" value="stop" />
+
+    </antcall>
+
+</target>
+
+<!-- Stop the test Apache configuration on the specified server -->
+<target name="stopTestApache" >
+    <antcall target="manageTestApacheRemote" >
+        <param name="param2" value="stop" />
+
+    </antcall>
+
+</target>
+
+
+<target name="manageApacheRemote" >
+    <!-- manage the production Apache instance on the specified server -->
+    <!-- param2 is an opcode passed to /etc/init.d/ scripts -->
+    <fail message="manageApacheRemote param2 action code is missing">
+        <condition>
+            <or>
+                <not><isset property="param2" /></not>
+                <equals arg1="${param2}" arg2="" trim="true" />
+            </or>
+        </condition>
+    </fail>
+    <property name="server" value="local" />
+    <if>
+        <or>
+            <equals arg1="${server}" arg2="local" />
+            <!-- <equals arg1="${server}" arg2="${fqdn}" /> -->
+        </or>
+        <then>
+            <!-- manage the production apache configuration, fail if it is invalid -->
+            <echo>local on ${fqdn} /etc/init.d/web ${param2}</echo>
+            <limit maxwait="60" failonerror="true" >
+                <exec executable="/bin/sh"
+                    failonerror="true" >
+                    <arg value="/etc/init.d/web" />
+                    <arg value="${param2}" />
+                </exec>
+            </limit>
+        </then>
+        <else>
+            <limit maxwait="60" failonerror="true" >
+                <sshexec host="${server}"
+                    username="root"
+                    keyfile="/root/.ssh/id_rsa"
+                    knownhosts="/root/.ssh/known_hosts"
+                    passphrase=""
+                    command="/etc/init.d/web ${param2}"
+                />
+            </limit>
+        </else>
+    </if>
+
+</target>
+
+<target name="manageTestApacheRemote" >
+    <!-- manage the test Apache instance on the specified server -->
+    <!-- param2 is an opcode passed to /etc/init.d/ scripts -->
+    <fail message="manageTestApacheRemote param2 action code is missing">
+        <condition>
+            <or>
+                <not><isset property="param2" /></not>
+                <equals arg1="${param2}" arg2="" trim="true" />
+            </or>
+        </condition>
+    </fail>
+    <property name="server" value="local" />
+    <if>
+        <or>
+            <equals arg1="${server}" arg2="local" />
+            <!-- <equals arg1="${server}" arg2="${fqdn}" /> -->
+        </or>
+        <then>
+            <!-- check the test apache configuration, fail if it is invalid -->
+            <echo>local on ${fqdn} /etc/init.d/testweb ${param2}</echo>
+            <limit maxwait="60" failonerror="true" >
+                <exec executable="/bin/sh"
+                    failonerror="true" >
+                    <arg value="/etc/init.d/testweb" />
+                    <arg value="${param2}" />
+                </exec>
+            </limit>
+        </then>
+        <else>
+            <limit maxwait="60" failonerror="true" >
+                <sshexec host="${server}"
+                    username="root"
+                    keyfile="/root/.ssh/id_rsa"
+                    knownhosts="/root/.ssh/known_hosts"
+                    passphrase=""
+                    command="/etc/init.d/testweb ${param2}"
+                />
+            </limit>
+        </else>
+    </if>
+
+</target>
+
+<target name="runLocalConfigTarget">
+    <!--    Run ant -f LocalConfig ${target_name}
+            locally or remotely, fail if it fails
+
+        Parameters:
+            local_config_target_name:   the target to execute
+            server:         FQDN or server or "local"
+
+            param2:           optional parameter passed through to the targets
+            param3:           optional parameter passed through to the targets
+            param4:           optional parameter passed through to the targets
+    -->
+    <property name="server" value="${fqdn}" />
+    <property name="param2" value="" />
+    <property name="param3" value="" />
+    <property name="param4" value="" />
+    <property name="tag" value="task" />
+
+    <echo>Run local: ${local_config_target_name} ${server}</echo>
+
+    <!-- output control -->
+    <if>
+        <and>
+            <isset property="quiet" />
+            <istrue value="${quiet}" />
+        </and>
+        <then>
+            <var name="quietarg" unset="true" />
+            <property name="quiet" value="true" />
+            <property name="quietarg" value="-q" />
+            <property name="quietprop" value="-Dquiet=true" />
+        </then>
+        <else>
+            <var name="quietarg" unset="true" />
+            <property name="quiet" value="false" />
+            <!-- omits blank lines -->
+            <property name="quietarg" value="-logger org.apache.tools.ant.NoBannerLogger" />
+            <property name="quietprop" value="" />
+        </else>
+    </if>
+    <!-- <echo>quiet=(${quiet}) quietarg=(${quietarg}) quietprop=(${quietprop}) </echo> -->
+
+    <!-- check required parameters -->
+    <fail message="${tag} missing target name">
+        <condition>
+            <or>
+                <not><isset property="local_config_target_name" /></not>
+                <equals arg1="${local_config_target_name}" arg2="" trim="true" />
+            </or>
+        </condition>
+    </fail>
+    <!-- don't treat ${fqdn} as local to reduce direct recursion -->
+    <if>
+        <or>
+            <equals arg1="${server}" arg2="local" />
+            <!-- <equals arg1="${server}" arg2="${fqdn}" /> -->
+        </or>
+        <then>
+            <exec executable="/usr/bin/perl"
+                failonerror="true" >
+                <arg value="/usr/local/bin/ant" />
+                <!-- does an empty arg have any ill effects ? -->
+                <arg value="${quietarg}" />
+                <arg value="-f" />
+                <arg value="${prod_script_dir}/localConfig.xml" />
+                <arg value="${local_config_target_name}" />
+                <arg value="-Dparam2=&quot;${param2}&quot;" />
+                <arg value="-Dparam3=&quot;${param3}&quot;" />
+                <arg value="-Dparam4=&quot;${param4}&quot;" />
+                <arg value="${quietprop}" />
+           </exec>
+        </then>
+        <else>
+            <antcallback target="isServerReachable" return="reachable,message">
+                <param name="server" value="${server}" />
+                <param name="quiet" value="${quiet}" />
+            </antcallback>
+            <!-- <echo> reachable=${reachable} (${message})</echo> -->
+            <if>
+                <istrue value="${reachable}" />
+                <then>
+
+                    <sshexec host="${server}"
+                        username="root"
+                        keyfile="/root/.ssh/id_rsa"
+                        passphrase=""
+                        knownhosts="/root/.ssh/known_hosts"
+                        command="/usr/local/bin/ant ${quietarg} -f &quot;${prod_script_dir}/localConfig.xml&quot; &quot;${local_config_target_name}&quot; -Dparam2=&quot;${param2}&quot; -Dparam3=&quot;${param3}&quot; -Dparam4=&quot;${param4}&quot; ${quietprop}"
+                    />
+                </then>
+                <else>
+                    <!-- unreachable -->
+                    <fail message="${local_config_target_name} ${tag} failed: $message" />
+                </else>
+            </if>
+        </else>
+    </if>
+</target>
+
+
+<target name="runDummyEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="dummy" />
+
+    </antcall>
+
+</target>
+
+<target name="runDummyChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="dummy" />
+
+    </antcall>
+
+</target>
+
+<target name="runDummyAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="dummy" />
+
+    </antcall>
+
+</target>
+
+<target name="dummy" >
+    <echo>server=${server} param2=${param2} param3=${param3} param4=${param4}</echo>
+</target>
+
+<target name="runTargetOnNodeList">
+
+    <!--
+    A procedure to run somewhat arbitrary targets on various lists of nodes
+    and aggregate success or failure into an over-all status.
+
+    (It's up to the target to actually run ssh, etc. to contact the nodes)
+
+    Parameters:
+
+        list_file:  a property containing a list of node names
+                    as loaded from one of the well-known files (required)
+
+        preflight_target:
+                        optional target to run before the loop
+                        If it fails, the whole task always fails
+
+        target_name:    the target to execute for each node (required)
+
+        param2:           optional parameter passed through to the targets
+        param3:           optional parameter passed through to the targets
+        param4:           optional parameter passed through to the targets
+
+        failonerror:    if true, fail if any node task fails
+
+        tag:            optional label for error messages
+
+        This can return success_count,failure_count via antcallback
+        if failonerror is false, or just fail, if failonerror is true
+
+        It tries to process all listed nodes one before failing
+
+    -->
+
+    <!-- default parameters -->
+    <property name="param2" value="" />
+    <property name="param3" value="" />
+    <property name="param4" value="" />
+    <property name="failonerror" value="true" />
+    <property name="tag" value="${target_name} ${tag}" />
+
+    <!-- clear/initialize properties -->
+    <var name="server" unset="true" />
+    <var name="success_count" unset="true" />
+    <var name="failure_count" unset="true" />
+    <var name="allmessages" unset="true" />
+    <var name="allmessages" value="" />
+    <var name="success_count" value="0" />
+    <var name="failure_count" value="0" />
+
+    <!-- output control -->
+    <if>
+        <and>
+            <isset property="quiet" />
+            <istrue value="${quiet}" />
+        </and>
+        <then>
+            <property name="quiet" value="true" />
+            <property name="quietarg" value="-q" />
+            <property name="quietprop" value="-Dquiet=true" />
+        </then>
+        <else>
+            <property name="quiet" value="false" />
+            <!-- omits blank lines -->
+            <property name="quietarg" value="-logger org.apache.tools.ant.NoBannerLogger" />
+            <property name="quietprop" value="" />
+        </else>
+    </if>
+
+    <!--    if specified, run a preflight target on the current node,
+            always fail if it fails -->
+    <!-- run this with ssh to ${fqdn} to reduce direct recursion -->
+    <if>
+        <isset property="preflight_target" />
+        <then>
+            <trycatch property="trymessages" reference="execeptionref" >
+                <try>
+                    <echo/>
+                    <echo>Run: ${preflight_target} on ${fqdn}</echo>
+                    <antcall target="${preflight_target}" >
+                        <param name="server" value="${fqdn}"/>
+                        <param name="param2" value="${param2}" />
+                        <param name="param3" value="${param3}" />
+                        <param name="param4" value="${param4}" />
+                        <param name="param4" value="${param4}" />
+                        <param name="quiet" value="${quiet}" />
+
+                        <param name="tag" value="${tag}" />
+                   </antcall>
+
+                </try>
+
+                <catch>
+
+                    <!-- always fail if a preflight task fails -->
+                    <throw
+                        refid="execeptionref"
+                        message="${tag} preflight failed ${preflight_target_name} ${trymessages}"
+                    />
+
+                </catch>
+
+            </trycatch>
+        </then>
+    </if>
+
+    <!-- check for required parameters -->
+    <fail message="${tag} missing target name">
+        <condition>
+            <or>
+                <not><isset property="target_name" /></not>
+                <equals arg1="${target_name}" arg2="" />
+            </or>
+        </condition>
+    </fail>
+
+    <fail message="${tag} missing list of nodes">
+        <condition>
+            <or>
+                <not><isset property="list_file" /></not>
+                <equals arg1="${list_file}" arg2="" />
+            </or>
+        </condition>
+    </fail>
+
+    <echo/>
+    <echo>Run: ${target_name} ${param2} for ${list_file}</echo>
+
+    <!-- run the target for "reachable" servers in the list file-->
+    <!-- "server" is passed as parameter
+         It's up to the target to do the ssh/scp/sftp or whatever -->
+
+   <!-- indirection to use the named property as the list -->
+   <propertycopy property="loop" from="${list_file}" />
+
+   <!-- loop over list of nodes -->
+   <for param="line" list="${loop}" delimiter="${line.separator}">
+        <sequential>
+            <var name="server" unset="true" />
+            <echo />
+            <echo>server: @{line}</echo>
+
+            <!-- call isServerReachable to see that port 22 is open,
+            and maybe do other network sanity checks -->
+            <antcallback target="isServerReachable" return="reachable,message">
+                <param name="server" value="@{line}" />
+                <param name="quiet" value="${quiet}" />
+            </antcallback>
+            <!-- <echo> reachable=${reachable} (${message})</echo> -->
+            <if>
+                <istrue value="${reachable}" />
+                <then>
+                    <!-- "reachable" -->
+
+                    <!-- wrap the whole thing in a try/catch to trap failures -->
+                    <trycatch property="trymessages" reference="execeptionref" >
+                        <try>
+                            <!-- call a target in the current build file -->
+                            <antcall target="${target_name}">
+                                <param name="server" value="@{line}" />
+                                <param name="param2" value="${param2}" />
+                                <param name="param3" value="${param3}" />
+                                <param name="param4" value="${param4}" />
+                                <param name="quiet" value="${quiet}" />
+
+                                <param name="tag" value="${tag}" />
+                            </antcall>
+                            <math result="success_count" operation="+" datatype="int"
+                                operand1="${success_count}" operand2="1" />
+                        </try>
+                        <catch>
+                            <!-- count exceptions as failures -->
+                            <math result="failure_count" operation="+" datatype="int"
+                                operand1="${failure_count}" operand2="1" />
+                            <var name="allmessages" value="${allmessages}${line.separator}- - - -${line.separator}${target_name} on ${fqdn}${line.separator}${trymessages} " />
+                        </catch>
+                        <finally>
+                        </finally>
+                    </trycatch>
+                </then>
+                <else>
+                    <!-- "unreachable" node -->
+                    <echo>${message}</echo>
+                    <!-- count unreachable as failures -->
+                    <math result="failure_count" operation="+" datatype="int"
+                        operand1="${failure_count}" operand2="1" />
+                    <var name="allmessages" value="${allmessages}${line.separator}- - - -${line.separator}${target_name} on ${fqdn}${line.separator}${message} " />
+                </else>
+            </if>
+
+        </sequential>
+    </for>
+
+    <!-- turn success and failure counts into an overall outcome -->
+    <echo>success_count=${success_count} failure_count=${failure_count}</echo>
+
+    <!--
+    If failonerror is "true", then we "fail"
+        if the success count is zero
+        or the failure count is non-zero
+
+    If failonerror is "false", it's up to the caller to
+    look at these properties via antcallback, if they care
+
+    -->
+    <fail message="${tag} failed count ${failure_count}: ${allmessages}">
+        <condition>
+            <and>
+                <isset property="failonerror" />
+                <istrue value="${failonerror}" />
+                <or>
+                    <not><equals arg1="${failure_count}" arg2="0" /></not>
+                    <equals arg1="${success_count}" arg2="0" />
+                </or>
+            </and>
+        </condition>
+    </fail>
+
+</target>
+
+<!-- aggregate targets based on runTargetOnNodeList -->
+
+<!-- restart checks the production apache config before restarting -->
+<!-- stop and start are unconditional -->
+<target name="restartEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="restart" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="restartChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="restart" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="restartAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="restart" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+
+</target>
+
+<target name="startEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="startChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="startAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="stopEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="stopChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="stopAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="gracefulEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="graceful" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="gracefulChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="graceful" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="gracefulAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageApacheRemote" />
+        <param name="param2" value="graceful" />
+        <param name="preflight_target" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="restartTestEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="restart" />
+    </antcall>
+</target>
+
+<target name="restartTestChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="restart" />
+    </antcall>
+</target>
+
+<target name="restartTestAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="restart" />
+    </antcall>
+</target>
+
+<target name="startTestEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="startTestChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="startTestAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="start" />
+    </antcall>
+</target>
+
+<target name="stopTestEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="stopTestChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="stopTestAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="manageTestApacheRemote" />
+        <param name="param2" value="stop" />
+    </antcall>
+</target>
+
+<target name="checkBothApacheAll">
+    <antcall target="checkApacheAll" />
+    <antcall target="checkTestApacheAll" />
+</target>
+
+<target name="checkApacheEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="checkApacheChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="checkApache" />
+    </antcall>
+</target>
+
+
+<target name="checkApacheAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="checkApache" />
+    </antcall>
+</target>
+
+<target name="checkTestApacheEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="checkTestApache" />
+    </antcall>
+</target>
+
+<target name="checkTestApacheChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="checkTestApache" />
+
+    </antcall>
+</target>
+
+<target name="checkTestApacheAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="checkTestApache" />
+    </antcall>
+</target>
+
+<!-- aliases for previous targets, targets we wish existed -->
+
+<target name="deployConfigToEvanston">
+    <antcall target="runOneServerEvanston" />
+</target>
+<target name="deployEvanston">
+    <antcall target="runOneServerEvanston" />
+</target>
+
+<target name="deployConfigToChicago">
+    <antcall target="runOneServerChicago" />
+</target>
+
+<target name="deployChicago">
+    <antcall target="runOneServerChicago" />
+</target>
+
+<target name="deployConfig">
+    <antcall target="runOneServerAll" />
+</target>
+
+<target name="deployAll">
+    <antcall target="runOneServerAll" />
+</target>
+
+<target name="deploy">
+    <antcall target="runOneServerAll" />
+</target>
+
+<target name="install-cluster">
+    <antcall target="runOneServerAll" />
+</target>
+
+<target name="install">
+    <antcall target="runOneServerAll" />
+</target>
+
+<target name="test-cluster">
+    <ant antfile="localConfig.xml" dir="${prod_script_dir}" target="runTestServer" />
+</target>
+
+<target name="test">
+    <ant antfile="localConfig.xml" dir="${prod_script_dir}" target="runTestServer" />
+</target>
+
+<!-- copy test configuration from the current node to other nodes -->
+<target name="distributeTestConfigEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="copyTestCfgFiles" />
+        <param name="preflight_target" value="checkTestApache" />
+    </antcall>
+</target>
+
+<target name="distributeTestConfigChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="copyTestCfgFiles" />
+        <param name="preflight_target" value="checkTestApache" />
+    </antcall>
+</target>
+
+<target name="distributeTestConfigAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="copyTestCfgFiles" />
+        <param name="preflight_target" value="checkTestApache" />
+    </antcall>
+</target>
+
+<!-- targets defined using runLocalConfigTarget -->
+<!-- these may be especially prone to bad recursion -->
+
+<target name="runOneServerAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runOneServer" />
+        <param name="preflight_target" value="distributeTestConfigAll" />
+    </antcall>
+</target>
+
+<target name="runOneServerEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runOneServer" />
+        <param name="preflight_target" value="distributeTestConfigEvanston" />
+    </antcall>
+</target>
+
+<target name="runOneServerChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runOneServer" />
+        <param name="preflight_target" value="distributeTestConfigChicago" />
+    </antcall>
+</target>
+
+<target name="runTestServerAll">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="all_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runTestServer" />
+        <param name="preflight_target" value="distributeTestConfigAll" />
+    </antcall>
+</target>
+
+<target name="runTestServerEvanston">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="evanston_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runTestServer" />
+        <param name="preflight_target" value="distributeTestConfigEvanston" />
+    </antcall>
+</target>
+
+<target name="runTestServerChicago">
+    <antcall target="runTargetOnNodeList" >
+        <param name="list_file" value="chicago_nodes_file" />
+        <param name="target_name" value="runLocalConfigTarget" />
+        <param name="local_config_target_name" value="runTestServer" />
+        <param name="preflight_target" value="distributeTestConfigChicago" />
+    </antcall>
+</target>
+
+</project>

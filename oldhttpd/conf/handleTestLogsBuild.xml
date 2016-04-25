@@ -1,0 +1,513 @@
+<project>
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+  		<classpath>
+    			<pathelement location="/usr/share/java/ant-contrib-1.0b3.jar"/>
+  		</classpath>
+	</taskdef>
+
+    	<property file="/local-adm-pub/config/this-node.properties" prefix="localname" />
+	<property name="servername" value="${localname.shortname}"/>
+
+	<property name="currentlogs" value="/logs/cur/httpd/test" />
+	<property name="oldlogs" value="/logs/old/httpd/test" /> 
+
+    	<property name="currentskippedlogs" value="/logs/cur/httpd/test/${servername}_skipped" />
+    	<property name="oldskippedlogs" value="/logs/old/httpd/test/${servername}_skipped" />
+	<property name="curerrorlogs" value="/logs/cur/httpd/test/${servername}_error" />
+	<property name="olderrorlogs" value="/logs/old/httpd/test/${servername}_error" />
+
+	<property name="currentlogsamagent" value="/logs/cur/sunwam/test" />
+	<property name="oldlogsamagent" value="/logs/old/sunwam/test" />
+
+	<property name="currentlogsrewrite" value="/logs/cur/rewrite/test" />
+	<property name="oldlogsrewrite" value="/logs/old/rewrite/test" />
+
+	<property name="rawapachelogs" value="/var/log/test-httpd" />
+	<property name="rawamagentlogs" value="/var/log/test-amagent" />
+
+	<target name="testtarget">
+		<antcall target="obtainservername" />
+		<echo message="${servername}" />
+	</target>
+
+        <target name="testemail">
+		<mail mailhost="hostsmtp.northwestern.edu" mailport="25" subject="Test build"  charset="utf-8">
+  			<from address="pk@northwestern.edu"/>
+  			<to address="pk@northwestern.edu"/>
+  			<message>I'm using ANT to email myself.</message>
+		</mail>
+        </target>
+
+        <target name="confirmemail">
+                <mail mailhost="hostsmtp.northwestern.edu" mailport="25" subject="${servername} test log archiving process finished running"  charset="utf-8">
+                        <from address="napoleon.gulley@northwestern.edu"/>
+                        <to address="napoleon.gulley@northwestern.edu"/>
+                        <message>The test log rotation process on ${servername} has finished running.</message>
+                </mail>
+        </target>
+
+	<target name="runfullarchival">
+	<antcall target="movezippedamagentlogs" />
+	<sleep seconds="1" />
+	<antcall target="movezippedrewritelogs" />
+	<sleep seconds="1" />
+        <antcall target="ziplogs" />
+        <sleep seconds="1" />
+        <antcall target="zipskippedlogs" />
+        <sleep seconds="1" />
+        <antcall target="archivelogs" />
+        <sleep seconds="1" />
+        <antcall target="expireoldaccesslogs" />
+        <sleep seconds="1" />
+	<antcall target="archiveskippedlogs" />
+	<sleep seconds="1" />
+        <antcall target="expireskippedlogs" />
+        <sleep seconds="1" />
+        <antcall target="moveerrorlogs" />
+        <sleep seconds="1" />
+        <antcall target="expireerrorlogs" />
+        <sleep seconds="1" />
+        <antcall target="archivezippedamagentlogs" />
+        <sleep seconds="1" />
+        <antcall target="expireoldamagentlogs" />
+        <sleep seconds="1" />
+        <antcall target="archivezippedrewritelogs" />
+        <sleep seconds="1" />
+        <antcall target="expireoldrewritelogs" />
+        <sleep seconds="1" />
+        <antcall target="confirmemail" />
+	</target>
+
+	<target name="moveerrorlogs">
+		<tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-24" unit="hour" />
+                        <format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+                </tstamp>
+
+                <fileset id="errorlogfiles" dir="${rawapachelogs}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="error_log_${servername}.*" />
+                        <exclude name="*.gz" />
+                </fileset>
+		
+		<for param="oneitem">
+                        <path>
+                                <fileset refid="errorlogfiles" />
+                        </path>
+                        <sequential>
+                                <gzip src="@{oneitem}" destfile="@{oneitem}.gz"/>
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+		
+		<fileset id="gzippederrorlogfiles" dir="${rawapachelogs}" includes="error_log_${servername}.*.gz" />
+
+		<move todir="${curerrorlogs}" overwrite="false">
+			<fileset refid="gzippederrorlogfiles" />
+		</move>
+
+		<!--Resume Here-->
+
+                <fileset id="logfilestochangepermissions" dir="${curerrorlogs}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="logfilestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="logfilestochangepermissions" />
+                </chown>
+
+	</target>
+
+	<target name="expireerrorlogs">
+		<!--Delete error logs older than 30 days-->
+	        <tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-720" unit="minute" />
+                </tstamp>
+
+                <fileset id="archerrfiles" dir="${curerrorlogs}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="error_log*" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="archerrfiles" />
+                        </path>
+                        <sequential>
+				<!--<echo message="@{oneitem}" />-->
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+		
+	</target>
+
+    	<target name="ziplogs">
+		<tstamp>
+			<format property="inclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+			<format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-24" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+		</tstamp>
+
+		<fileset id="setoffiles" dir="${rawapachelogs}">
+			<date datetime="${inclusion.time}" when="after" />
+			<date datetime="${exclusion.time}" when="before" />
+			<include name="access_log_${servername}.*" />
+			<exclude name="*.gz" />
+		</fileset>
+
+		<for param="oneitem">
+			<path>
+				<fileset refid="setoffiles" />
+			</path>
+			<sequential>
+				<gzip src="@{oneitem}" destfile="@{oneitem}.gz"/>
+				<delete file="@{oneitem}" />
+			</sequential>
+		</for>
+
+		<!-- Now move the files to be picked up -->
+
+	        <fileset id="gzippedfiles" dir="${rawapachelogs}" includes="access_log_${servername}.*.gz" />
+
+		<move todir="${currentlogs}/${servername}" overwrite="false">
+                        <fileset refid="gzippedfiles" />
+                </move>
+
+		<fileset id="filestochangepermissions" dir="${currentlogs}/${servername}">
+			<date datetime="${chgrp.time}" when="after" />
+			<include name="*.gz" />
+		</fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+
+	</target>
+
+	<target name="archivelogs">
+		<tstamp>
+			<format property="archive.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+		</tstamp>
+
+		<fileset id="archivefiles" dir="${currentlogs}/${servername}" includes="*.gz">
+			<date datetime="${archive.time}" when="before" />
+		</fileset>
+
+		<move todir="${oldlogs}/${servername}" overwrite="false">
+                	<fileset refid="archivefiles" />
+		</move>
+
+                <fileset id="filestochangepermissions" dir="${oldlogs}/${servername}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+
+	</target>
+
+        <target name="expireoldaccesslogs">
+                <!--Delete access logs older than 3 weeks-->
+                <tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-504" unit="hour" />
+                </tstamp>
+
+                <fileset id="archaccessfiles" dir="${oldlogs}/${servername}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="access_log*" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="archaccessfiles" />
+                        </path>
+                        <sequential>
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+        </target>
+
+        <target name="zipskippedlogs">
+                <tstamp>
+                        <format property="inclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-24" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+                </tstamp>
+
+                <fileset id="setoffiles" dir="${rawapachelogs}">
+                        <date datetime="${inclusion.time}" when="after" />
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="access_log_skipped_${servername}.*" />
+                        <exclude name="*.gz" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="setoffiles" />
+                        </path>
+                        <sequential>
+                                <gzip src="@{oneitem}" destfile="@{oneitem}.gz"/>
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+
+                <!-- Now move the files to be picked up -->
+
+                <fileset id="gzippedfiles" dir="${rawapachelogs}" includes="access_log_skipped_${servername}.*.gz" />
+
+                <move todir="${currentskippedlogs}" overwrite="false">
+                        <fileset refid="gzippedfiles" />
+                </move>
+
+                <fileset id="filestochangepermissions" dir="${currentskippedlogs}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+
+        </target>
+
+        <target name="archiveskippedlogs">
+                <tstamp>
+                        <format property="archive.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+                </tstamp>
+
+                <fileset id="archivefiles" dir="${currentskippedlogs}" includes="*.gz">
+                        <date datetime="${archive.time}" when="before" />
+                </fileset>
+
+                <move todir="${oldskippedlogs}" overwrite="false">
+                        <fileset refid="archivefiles" />
+                </move>
+
+                <fileset id="filestochangepermissions" dir="${oldskippedlogs}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+        </target>
+
+        <target name="expireskippedlogs">
+                <!--Delete error logs older than 3 weeks-->
+                <tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-504" unit="hour" />
+                </tstamp>
+
+                <fileset id="archerrfiles" dir="${oldskippedlogs}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="access_log_skipped*" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="archerrfiles" />
+                        </path>
+                        <sequential>
+                                <!--<echo message="@{oneitem}" />-->
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+        </target>
+
+	<target name="movezippedamagentlogs">
+		<echo message="${servername}" />
+
+		<tstamp>
+			<format property="inclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-24" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+		</tstamp>
+
+		<fileset id="amagentfilestomove" dir="${rawamagentlogs}">
+                        <date datetime="${inclusion.time}" when="after" />
+			<date datetime="${exclusion.time}" when="before" />
+                        <include name="amagent_log.*.gz" />
+			<exclude name="amagent_log.txt" />
+		</fileset>
+
+		<move todir="${currentlogsamagent}/${servername}" overwrite="false">
+			<fileset refid="amagentfilestomove" />
+		</move>
+
+                <fileset id="filestochangepermissions" dir="${currentlogsamagent}/${servername}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+	</target>
+
+        <target name="archivezippedamagentlogs">
+                <tstamp>
+                        <format property="archive.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+                        <format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+                </tstamp>
+
+                <fileset id="archivefiles" dir="${currentlogsamagent}" includes="*.gz">
+                        <date datetime="${archive.time}" when="before" />
+                </fileset>
+
+                <move todir="${oldlogsamagent}" overwrite="false">
+                        <fileset refid="archivefiles" />
+                </move>
+
+                <fileset id="filestochangepermissions" dir="${oldlogsamagent}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+        </target>
+
+        <target name="expireoldamagentlogs">
+                <!--Delete error logs older than 60 days-->
+                <tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-1440" unit="minute" />
+                </tstamp>
+
+                <fileset id="archerrfiles" dir="${oldlogsamagent}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="amagent_log*" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="archerrfiles" />
+                        </path>
+                        <sequential>
+                                <!--<echo message="@{oneitem}" />-->
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+
+        </target>
+
+
+	<target name="movezippedrewritelogs">
+		<tstamp>
+			<format property="inclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+                <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-24" unit="hour" />
+			<format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+		</tstamp>
+
+		<fileset id="rewritefilestomove" dir="${rawapachelogs}">
+            <date datetime="${inclusion.time}" when="after" />
+			<date datetime="${exclusion.time}" when="before" />
+            <include name="rewrite_log*.gz" />
+			<exclude name="rewrite_log" />
+		</fileset>
+
+		<move todir="${currentlogsrewrite}/${servername}" overwrite="false">
+			<fileset refid="rewritefilestomove" />
+		</move>
+
+                <fileset id="filestochangepermissions" dir="${currentlogsrewrite}/${servername}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+		</target>
+
+        <target name="archivezippedrewritelogs">
+                <tstamp>
+                        <format property="archive.time" pattern="MM/dd/yyyy hh:mm aa" offset="-336" unit="hour" />
+                        <format property="chgrp.time" pattern="MM/dd/yyyy hh:mm aa" offset="-20" unit="minute" />
+                </tstamp>
+
+                <fileset id="archivefiles" dir="${currentlogsrewrite}" includes="*.gz">
+                        <date datetime="${archive.time}" when="before" />
+                </fileset>
+
+                <move todir="${oldlogsrewrite}" overwrite="false">
+                        <fileset refid="archivefiles" />
+                </move>
+
+                <fileset id="filestochangepermissions" dir="${oldlogsrewrite}">
+                        <date datetime="${chgrp.time}" when="after" />
+                        <include name="*.gz" />
+                </fileset>
+
+                <chgrp group="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chgrp>
+
+                <chown owner="mydaemon">
+                        <fileset refid="filestochangepermissions" />
+                </chown>
+        </target>
+
+        <target name="expireoldrewritelogs">
+                <!--Delete error logs older than 60 days-->
+                <tstamp>
+                        <format property="exclusion.time" pattern="MM/dd/yyyy hh:mm aa" offset="-1440" unit="minute" />
+                </tstamp>
+
+                <fileset id="archerrfiles" dir="${oldlogsrewrite}">
+                        <date datetime="${exclusion.time}" when="before" />
+                        <include name="rewrite_log*" />
+                </fileset>
+
+                <for param="oneitem">
+                        <path>
+                                <fileset refid="archerrfiles" />
+                        </path>
+                        <sequential>
+                                <!--<echo message="@{oneitem}" />-->
+                                <delete file="@{oneitem}" />
+                        </sequential>
+                </for>
+
+        </target>
+
+
+</project>

@@ -1,0 +1,293 @@
+# redirect virtual host directories on main host to virtual host
+# put these redirects in place after the domain name has changed
+
+# We may use double redirects to reduce round-trips for missing slash
+
+# redirects changed to Purchasing site 2-5-07
+Redirect /virtualstore/ http://www.univsvcs.northwestern.edu/Purchasing/
+Redirect /virtualstore  http://www.univsvcs.northwestern.edu/Purchasing/
+
+Redirect /ctd/      http://www.ctd.northwestern.edu/
+
+Redirect /materials/    http://www.matsci.northwestern.edu/
+
+Redirect /icair/    http://www.icair.org/
+
+# test host like icair 10-21-08
+Redirect /icair-test/       http://nuinfo-proto13.northwestern.edu/
+
+Redirect /university-services/  http://www.univsvcs.northwestern.edu/
+
+Redirect /iti/      http://www.iti.northwestern.edu/
+
+Redirect /economics/ http://www.econ.northwestern.edu/
+
+Redirect /hereandnow/ http://hereandnow.northwestern.edu/
+
+Redirect /nu150/    http://www.nu150.northwestern.edu/
+
+Redirect /registrar/ http://www.registrar.northwestern.edu/
+
+# wnur redirects, added 1-12-99
+# one of these directories is a symlink
+
+Redirect /WNUR/ http://www.wnur.org/
+Redirect /WNUR http://www.wnur.org/
+
+Redirect /wnur/ http://www.wnur.org/
+Redirect /wnur http://www.wnur.org/
+
+Redirect /biochemistry/         http://www.biochem.northwestern.edu/
+# new primary biochemistry document root added 12-20-06
+Redirect /biochemistry-main/    http://www.biochem.northwestern.edu/
+Redirect /biochemistry          http://www.biochem.northwestern.edu/
+
+Redirect /museum/ http://www.blockmuseum.northwestern.edu/
+Redirect /museum  http://www.blockmuseum.northwestern.edu/
+
+Redirect /research/nanotechinstitute/   http://www.nanotechnology.northwestern.edu/
+Redirect /research/nanofabrication/ http://www.nanofabrication.northwestern.edu/
+# www.ctn.northwestern.edu taken out of production 8-15-06
+Redirect /research/transportation/  http://www.nanotechnology.northwestern.edu/
+
+Redirect /nanotechnology/   http://www.nanotechnology.northwestern.edu/
+Redirect /nanofabrication/  http://www.nanofabrication.northwestern.edu/
+# www.ctn.northwestern.edu taken out of production 8-15-06
+# main redirect changed to http://www.iinano.org/ home page 6-6-07, fixed here 6-20-08
+Redirect /ctn/  http://www.iinano.org/
+
+Redirect /ibnam/    http://www.ibnam.northwestern.edu/
+
+Redirect /status/ http://www.status.northwestern.edu/
+
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+#	Redirect /nuds/     http://www.nuds.northwestern.edu/
+
+# IT virtual host (top menus are in their own directory)
+# 8-9-04 no longer primary, but keep redirects
+Redirect /it/       http://www.it.northwestern.edu/
+Redirect /it-menu/  http://www.it.northwestern.edu/
+
+# moved to http://www.nu-nsec.org/ 1-6-2012 for Ron Blitz
+# Redirect /nsec/ http://www.nsec.northwestern.edu/
+Redirect permanent       /nsec/     http://www.nu-nsec.org/
+RedirectMatch permanent ^/nsec$     http://www.nu-nsec.org/
+
+# TSS virtual hosts 10-19-01
+Redirect /tss-virtual/  http://www.tss.northwestern.edu/
+
+Redirect /helpdesk/     http://helpdesk.tss.northwestern.edu
+
+# retired 2-1-08
+#Redirect /entrepreneur/    http://www.entrepreneur.northwestern.edu/
+
+# 2nd Block Museum redirect 1-29-02
+Redirect /blockmuseum/  http://www.blockmuseum.northwestern.edu/
+#
+
+# UR proto host 2-20-02
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+#Redirect /nuinfo-proto5/    http://nuinfo-proto5.northwestern.edu/
+
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+# newsfeed total redirect
+#	Redirect    /newsfeed/  http://www.northwestern.edu/univ-relations/media_relations/newsfeed.html
+
+# 7-30-02 redirect in other direction
+#Redirect /univ-relations/web_comm/standards/    http://www.webstandards.northwestern.edu/
+#Redirect /univ-relations/web_comm/standards    http://www.webstandards.northwestern.edu/
+#
+
+# 3-24-03 early redirects for two development virtual hosts being moved from another site
+Redirect /development/  http://www.development.northwestern.edu/
+Redirect /development   http://www.development.northwestern.edu/
+
+Redirect /campaign/ http://www.campaign.northwestern.edu/
+Redirect /campaign  http://www.campaign.northwestern.edu/
+
+# 10-13-03
+# it-isa is aliased/redirected onto /isa/ on www.it.northwestern.edu
+# virtual host
+Redirect /it-isa/   http://www.it.northwestern.edu/isa/
+Redirect /it-isa    http://www.it.northwestern.edu/isa/
+#
+# 3-19-04
+# Redirect /studentloans/   http://www.studentloans.northwestern.edu/
+# Redirect /studentloans    http://www.studentloans.northwestern.edu/
+#
+# 7-30-07 total host redirect to http://www.northwestern.edu/sfs/
+
+Redirect /studentloans/ http://www.northwestern.edu/sfs/
+Redirect /studentloans  http://www.northwestern.edu/sfs/
+#
+# 4-15-04
+Redirect /adminplan/ http://www.adminplan.northwestern.edu/
+Redirect /adminplan  http://www.adminplan.northwestern.edu/
+#
+# new IT virtual host docroot 8-9-04, added test host redirect 8-31-05
+Redirect /it-virtual-test/  http://www.it.northwestern.edu/
+Redirect /it-virtual-test   http://www.it.northwestern.edu/
+#
+Redirect /it-virtual/   http://www.it.northwestern.edu/
+Redirect /it-virtual    http://www.it.northwestern.edu/
+#
+# "Department of Athletics and Recreation: Fitness, Aquatics, and Recreational Sports" 2-35-05
+Redirect /nudar/    http://www.fitrec.northwestern.edu/
+Redirect /nudar     http://www.fitrec.northwestern.edu/
+#
+# new top menus 7-28-05
+Redirect /www-v5/   http://www.northwestern.edu/
+#
+
+# two new nanotechnology hosts 10-11-05
+Redirect /nanoscape/    http://www.nanoscape.northwestern.edu/
+Redirect /nanoscape     http://www.nanoscape.northwestern.edu/
+
+# moved to http://www.nu-ccne.org/ 1-6-2012 for Ron Blitz
+#Redirect /ccne/         http://www.ccne.northwestern.edu/
+#Redirect /ccne          http://www.ccne.northwestern.edu/
+Redirect permanent       /ccne/     http://www.nu-ccne.org/
+RedirectMatch permanent ^/ccne$     http://www.nu-ccne.org/
+
+#
+
+# UR prototype host 7-31-06
+Redirect /nuinfo-proto12/   http://www.northwestern.edu/
+#
+# UR virtual host 9-13-06
+Redirect /podcasting/   http://podcasting.northwestern.edu/
+Redirect /podcasting    http://podcasting.northwestern.edu/
+#
+# 10-4-06 make http://www.music.northwestern.edu/ the prefered address
+# not http://www.northwestern.edu/music
+Redirect /music/    http://www.music.northwestern.edu/
+Redirect /music     http://www.music.northwestern.edu/
+#
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+# Chemistry sub-groups site
+#	Redirect /chemgroups/   http://chemgroups.northwestern.edu/
+#	Redirect /chemgroups    http://chemgroups.northwestern.edu/
+
+# Chemistry of Life Processes 10-18-07
+Redirect /clp/  http://www.clp.northwestern.edu/
+Redirect /clp   http://www.clp.northwestern.edu/
+
+# BMBCB's Molecular Biophysics Program 4-20-07
+Redirect /biophysics/   http://www.biophysics.northwestern.edu/
+Redirect /biophysics    http://www.biophysics.northwestern.edu/
+#
+
+# Center for the Commercialization of Innovative Transportation Technology 11-1-07
+Redirect /ccitt/    http://www.ccitt.northwestern.edu/
+Redirect /ccitt     http://www.ccitt.northwestern.edu/
+#
+
+# 11-29-07
+Redirect /qatar/        http://www.qatar.northwestern.edu/
+Redirect /qatar         http://www.qatar.northwestern.edu/
+#
+# 10-9-08 redirect test and production sites created for AT
+# note potential for conflict with existing /research/ redirects in main-only.conf
+#
+Redirect    /researchcomputing-test/    http://nuinfo-proto16.northwestern.edu/
+
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+#	Redirect    /researchcomputing/         http://researchcomputing.northwestern.edu/
+#	Redirect    /researchcomputing          http://researchcomputing.northwestern.edu/
+#
+
+# REMOVED 08/13/2014 requested by Terry A Jolley SM #155374
+# Redirect /itunes/   http://www.itunes.northwestern.edu/
+# Redirect /itunes    http://www.itunes.northwestern.edu/
+#
+
+# 4-15-09
+Redirect /collegesportsproject/     http://www.collegesportsproject.org/
+Redirect /collegesportsproject      http://www.collegesportsproject.org/
+
+Redirect /engage/   http://www.engage.northwestern.edu/
+Redirect /engage    http://www.engage.northwestern.edu/
+
+# 5-28-09
+Redirect /sxns11/   http://www.sxns11.northwestern.edu/
+Redirect /sxns11    http://www.sxns11.northwestern.edu/
+
+# new top menus 8-5-09
+Redirect /www-v6/   http://www.northwestern.edu/
+
+Redirect /policies/ http://policies.northwestern.edu/
+Redirect /policies  http://policies.northwestern.edu/
+
+# policies.northwestern.edu 12-16-09
+# use RedirectMatch avoid redirect conflict with similar stuff
+Redirect /policies/         http://policies.northwestern.edu/
+RedirectMatch ^/policies$   http://policies.northwestern.edu/
+
+# 2-14-2010
+Redirect /educationinmedicine/  http://educationinmedicine.northwestern.edu/
+Redirect /educationinmedicine   http://educationinmedicine.northwestern.edu/
+
+# 7-9-2010
+Redirect /corporate/        http://corporate.northwestern.edu/
+RedirectMatch ^/corporate$  http://corporate.northwestern.edu/
+
+# 7-20-10
+Redirect /ipd/          http://www.ipd.northwestern.edu/
+RedirectMatch ^/ipd$    http://www.ipd.northwestern.edu/
+
+# 12-20-2010
+Redirect /nucats/       http://www.nucats.northwestern.edu/
+RedirectMatch ^/nucats$ http://www.nucats.northwestern.edu/
+
+#REMOVED 05/29/2014 requested by Jacob Arnold SM #13082
+# 5-3-2011
+#	Redirect       /nuinfotest/     http://nuinfotest.northwestern.edu/
+#	RedirectMatch ^/nuinfotest$     http://nuinfotest.northwestern.edu/
+
+# 5-31-2011
+Redirect /nuwrite/          http://nuwrite.northwestern.edu/
+RedirectMatch ^/nuwrite$    http://nuwrite.northwestern.edu/
+
+Redirect permanent       /ctecimages/       http://ctecimages.it.northwestern.edu/
+RedirectMatch permanent ^/ctecimages$       http://ctecimages.it.northwestern.edu/
+
+# REMOVED 05/27/2014 requested  by Nimisha Joshi  SM #130635
+# 1-17-2012
+# Redirect /hpaw/	http://www.nuhs.northwestern.edu/evanston/ed/Default.aspx requested by Janet on 01/17/2012 
+#	Redirect permanent       /hpaw/     http://www.nuhs.northwestern.edu/evanston/ed/Default.aspx 
+#	RedirectMatch permanent ^/hpaw$     http://www.nuhs.northwestern.edu/evanston/ed/Default.aspx 
+
+# 8-3-2012 by Jacob Arnold
+# redirect is added in main-only.conf to another site on 9/20/2012
+#Redirect	/greenpledge/	http://www.northwestern.edu/fm/sustainability/index.html
+#RedirectMatch        ^/greenpledge$   http://www.northwestern.edu/fm/sustainability/index.html
+
+# 11-27-2012 by Jacob Arnold, IM88775
+Redirect	/nico/	http://www.nico.northwestern.edu/
+RedirectMatch	^/nico$	http://www.nico.northwestern.edu/
+
+# 03-18-2013 by Jacob Arnold, ticket 7664
+Redirect        /nemmers/  http://www.nemmers.northwestern.edu/
+RedirectMatch   ^/nemmers$ http://www.nemmers.northwestern.edu/
+
+# 05-17-2013 by Jacob Arnold, ticket 24072
+#Redirect       permanent   /community-engaged-research/alliance-for-research-in-chicago-communities/     http://www.nucats.northwestern.edu/resources-services/community-and-practice-engagement/alliance-for-research-in-chicago-communities/
+#RedirectMatch  permanent  ^/community-engaged-research/alliance-for-research-in-chicago-communities$   http://www.nucats.northwestern.edu/resources-services/community-and-practice-engagement/alliance-for-research-in-chicago-communities/
+
+# 05-17-2013 by Jacob Arnold, ticket 24072
+#Redirect        permanent   /education-career-development/clinical-research-professionals-training/    http://www.northwestern.edu/sustainability/
+#RedirectMatch   permanent  ^/education-career-development/clinical-research-professionals-training$   http://www.nucats.northwestern.edu/education-career-development/research-support-staff-training/
+
+# Request from Jacob Arnold, Footprints ticket# 209847, completed 1/27/2015 by Napoleon Gulley (ntg720)
+#Redirect        permanent       /resources-for/faculty/excellence-in-doctoral-mentoring*        http://www.tgs.northwestern.edu/resources-for/faculty/excellence-in-mentoring/index.html
+#RedirectMatch   permanent       ^/resources-for/faculty/excellence-in-doctoral-mentoring*       http://www.tgs.northwestern.edu/resources-for/faculty/excellence-in-mentoring/index.html
+
+# As requested by Jacob Arnold on 02/26/2015, Footprints ticket# 226315
+#Redirect /ugadm/         http://www.ugadm.northwestern.edu/
+#RedirectMatch ^/ugadm$   http://www.ugadm.northwestern.edu/
+
+# As requested by Jacob Arnold on 03/02/2015, Footprints ticket# 227051
+RedirectMatch   ^/buffett/?   http://buffettinstitute.northwestern.edu/
+
+
+# end with a comment

@@ -1,0 +1,268 @@
+#!/bin/sh
+#
+# chkconfig: 35 85 15
+# description: Production Apache httpd port 80
+#
+JAVA_HOME="/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64"
+export JAVA_HOME
+#
+PATH="$JAVA_HOME/bin:/sbin:/bin:/usr/bin:/sbin:/ucb:/local/bin"
+export PATH
+
+apachebinary="/usr/sbin/httpd"
+logs_folder="/var/log/cron_wrapper"
+conf_folder="/etc/httpd/conf"
+pid_file="/var/run/httpd.pid"
+instance_name="Production"
+web_user="webserv"
+start_log_name="httpd"
+
+verbose=1
+if [ "$CLUSTER_ANT_QUIET" = "true" ]; then
+    verbose=0
+fi
+#echo verbose=$verbose CLUSTER_ANT_QUIET=$CLUSTER_ANT_QUIET
+
+
+rval=0
+
+set_return() {
+        x=$?
+        if [ $x -ne 0 ]; then
+                echo "EXIT CODE: $x"  >&2
+                rval=1  # script FAILed
+        fi
+
+}
+
+
+killproc() {
+#
+#      ps -ef is used to allow matching on full path
+#      Use of column ranges with cut reduces ambiguity in parsing
+#      tokens (old processes have date instead of time in ps -ef)
+#      This is not very portable
+#          The range to "cut" is the pid and the column before the start
+#      of the full path
+#
+#               HP-UX used this:    9-14,48-120
+     #  pid=`ps -ef | cut -c 9-13,47-120 | awk '{print"="$2"="$1"="}'\
+     #      | egrep -e "^=$1=" | awk -F= '{print $3}'`
+
+
+       pid=`ps -ef | awk '{ print $2" " $8}' | awk '{print"="$2"="$1"="}'\
+           | egrep -e "^=$1=" | awk -F= '{print $3}'`
+
+     if [ "X$pid" != "X" ]; then
+                for p in $pid
+                  do
+                    if /bin/kill -9 $p; then
+                            /bin/echo "$1 pid $p stopped"
+                    else
+                            rval=1
+                echo "pid is "$p
+                            /bin/echo "Unable to stop $1i pid $p" >&2
+                    fi
+                done
+        #else
+           # echo "No $1 processes found"  >&2
+        fi
+}
+
+killcgi() {
+#
+# kill lingering CGIs still running as $web_user
+
+       pid=`ps -fu $web_user | egrep $web_user | awk '{print $2}'`
+        if [ "X$pid" != "X" ]; then
+                for p in $pid
+                  do
+                    if /bin/kill -9 $p; then
+                            /bin/echo "$web_user process pid $p stopped"
+                    else
+                            rval=1
+                            /bin/echo "Unable to stop $web_user process pid $p" >&2
+                    fi
+                done
+        #else
+           # echo "No lingering $web_user processes found"  >&2
+        fi
+}
+
+
+startweb() {
+
+    if [ -f $apachebinary ]; then
+
+        rm -f $logs_folder/${start_log_name}-start.$$;
+        touch $logs_folder/${start_log_name}-start.$$;
+
+        OPTIONS=`grep -v '^#' $conf_folder/apache-options | grep -v '^$'`
+        #/bin/echo $OPTIONS
+
+        # start with nohup to isolate apache better from the launching scripts 
+        /usr/bin/nohup $apachebinary -f $conf_folder/httpd.conf $OPTIONS $1 > $logs_folder/${start_log_name}-start.$$ 2>&1
+
+        x=$?
+        if [ $x -ne 0 ]; then
+            /bin/echo "** Failed to start httpd ** $1"  >&2
+            cat $logs_folder/${start_log_name}-start.$$  >&2
+            /bin/echo "EXIT CODE: $x"  >&2
+            rval=1  # script FAILed
+        else
+            if [ $verbose -gt 0 ] ; then
+                /bin/echo "Started httpd $1 Options: $OPTIONS"
+            fi
+        fi
+    else
+        rval=1
+        /bin/echo "Can't find httpd"  >&2
+    fi
+
+}
+
+stopweb(){
+
+        if [ -f $pid_file ]; then
+
+                # gentle cleanup via the master server
+                if [ $verbose -gt 0 ] ; then
+                    /bin/echo Send kill to master server
+                fi
+                /bin/kill -TERM `cat $pid_file`
+                set_return;
+                sleep 20;
+        fi
+
+        # forced termination to get stray processes
+        if [ $verbose -gt 0 ] ; then
+            /bin/echo "cleanup: round 1"
+        fi
+        killproc 'httpd'
+        if [ $verbose -gt 0 ] ; then
+            /bin/echo "cleanup: round 2"
+        fi
+        killproc 'httpd'
+        if [ $verbose -gt 0 ] ; then
+            /bin/echo "cleanup lingering CGIs"
+        fi
+        
+        killcgi
+        if [ $verbose -gt 0 ] ; then
+            /bin/echo cleanup: Done
+        fi
+
+}
+
+# Reload the web server Apache configuration
+# fail if we can't find a pid file
+hupweb(){
+
+    if [ -f $pid_file ]; then
+        /bin/echo Send HUP to master server
+        /usr/bin/kill -HUP `/bin/cat $pid_file`
+    else
+        /bin/echo PID file $pid_file not found
+        rval=1
+    fi
+
+}
+
+# "Gracefully" reload the web server Apache configuration
+# fail if we can't find a pid file
+graceful(){
+
+    if [ -f $pid_file ]; then
+        /bin/echo 'Send USR1 (graceful restart) to master server'
+        /usr/bin/kill -USR1 `/bin/cat $pid_file`
+    else
+        /bin/echo PID file $pid_file not found
+        rval=1
+    fi
+
+}
+
+# Apache config syntax check
+# Note: this swallows its output on a normal result, so the "Syntax OK" message is hidden.
+# The result is reflected in the exit status
+check() {
+
+    if [ -f $apachebinary ]; then
+
+        rm -f $logs_folder/${start_log_name}-check.$$;
+        touch $logs_folder/${start_log_name}-check.$$;
+
+        OPTIONS=`grep -v '^#' $conf_folder/apache-options | grep -v '^$'`
+
+        $apachebinary -t -f $conf_folder/httpd.conf $OPTIONS $1  >&2
+
+        x=$?
+        if [ $x -ne 0 ]; then
+            echo "Check $instance_name Apache Config Failed $1"  >&2
+            /bin/cat $logs_folder/${start_log_name}-check.$$  >&2
+            rval=$x  # script FAILed
+        fi
+    else
+        rval=1
+        /bin/echo "Can't find httpd"  >&2
+    fi
+
+}
+
+
+case $1 in
+'start')
+    startweb
+    sleep 5
+
+    ;;
+
+'stop')
+    stopweb
+    ;;
+
+# start with no waiting afterwards
+'quickstart')
+    startweb
+
+    ;;
+
+# extra options like redhat linux
+'restart')
+    stopweb
+    startweb
+    sleep 5
+
+    ;;
+
+'reload')
+    hupweb
+
+    ;;
+
+'hup')
+    hupweb
+
+    ;;
+
+'graceful')
+    graceful
+
+    ;;
+
+'check')
+    check
+
+    ;;
+
+*)
+    echo "usage: $0 {start|stop|restart|reload|quickstart|hup|graceful|check}"
+    rval=1
+    ;;
+esac
+
+#
+exit $rval
+#
+
+# end with a comment
