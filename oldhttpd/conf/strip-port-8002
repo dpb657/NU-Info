@@ -1,7 +1,0 @@
-#!/usr/bin/perl
-while(<>){
-	chomp;
-	s/(\w+):8002/\1/;
-	print "$_\n";
-
-};

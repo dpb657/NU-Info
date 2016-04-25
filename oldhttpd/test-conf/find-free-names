@@ -1,5 +1,0 @@
-#!/bin/sh
-# find nuinfo-protoNN names in use
-egrep 'nuinfo-proto[0-9]+' virtual.conf | egrep -v '\#' | \
-	egrep Server | awk '{print $2}' | sort -u
-#
