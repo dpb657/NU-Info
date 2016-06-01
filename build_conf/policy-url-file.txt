@@ -930,6 +930,14 @@ http://www.northwestern.edu/transportation-parking/secure
 http://www.registrar.northwestern.edu/secure_all/
 http://www.registrar.northwestern.edu/secure_all
 
+# Request by Nimisha Joshi (nsj448) 05/17/2016, Ticket 389336
+# Added by Darryl Baker (dpb657)
+http://www.northwestern.edu/auxiliary-services/secure/
+http://www.northwestern.edu/auxiliary-services/secure
+
+
+
+
 
 
 ################################################################################

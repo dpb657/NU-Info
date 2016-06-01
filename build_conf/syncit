@@ -1,0 +1,17 @@
+#! /bin/sh
+# Keep the major Apache configuration files not being modified as part
+# of the refresh in sync with the active configuration in production.
+#
+# I am setting rsync not to overwrite newer files incase this script
+# is left running after cutover.
+#
+
+PROD_HOST=evnuinfow1.it.northwestern.edu
+RSYNC=/bin/rsync
+RSYNC_OPTS=" --archive --update --checksum"
+
+for i in main-head.conf main-only.conf mime.types policy-url-file.txt \
+	virtual.conf virtual-host-map.txt virtual-redirect.conf
+do
+	$RSYNC $RSYNC_OPTS ${PROD_HOST}:/etc/httpd/test-conf/$i /etc/httpd/build_conf/$i
+done

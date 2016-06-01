@@ -1,1 +1,5 @@
-./oldhttpd
+oldhttpd
+run
+logs
+modules
+*.swp
