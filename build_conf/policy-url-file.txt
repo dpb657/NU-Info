@@ -935,6 +935,16 @@ http://www.registrar.northwestern.edu/secure_all
 http://www.northwestern.edu/auxiliary-services/secure/
 http://www.northwestern.edu/auxiliary-services/secure
 
+# Request by Nimisha Joshi (nsj448) 06/17/2016, Ticket 400194
+# Added by Darryl Baker (dpb657)
+http://www.northwestern.edu/wildcard/secure/
+http://www.northwestern.edu/wildcard/secure
+
+# Request by Jacob Arnold (jar472) 06/23/2016, Ticket 400902
+# Added by Darryl Baker (dpb657)
+http://www.northwestern.edu/united-way/secure/
+http://www.northwestern.edu/united-way/secure
+
 
 
 
