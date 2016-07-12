@@ -1,0 +1,3 @@
+/^#/!s/northwsestern.edu/${local_Domain_Name}/
+/nwu.edu/d
+/:8002/d
