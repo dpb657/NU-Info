@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/sh -e
 # Keep the major Apache configuration files not being modified as part
 # of the refresh in sync with the active configuration in production.
 #
@@ -8,10 +8,29 @@
 
 PROD_HOST=evnuinfow1.it.northwestern.edu
 RSYNC=/bin/rsync
-RSYNC_OPTS=" --archive --update --checksum"
+RSYNC_OPTS="-ac"
 
-for i in main-head.conf main-only.conf mime.types policy-url-file.txt \
+# Originally tried sed but it was not enough for the task
+SED=/bin/sed
+SED_OPTS="-f /etc/httpd/build_conf/sed-transform"
+
+# Got a bigger hammer
+PERL=/bin/perl
+PERL_OPTS="-f config-transform.pl"
+
+CP=/bin/cp
+CP_OPTS=-p
+
+
+for CurrentFile in main-head.conf main-only.conf mime.types policy-url-file.txt \
 	virtual.conf virtual-host-map.txt virtual-redirect.conf
 do
-	$RSYNC $RSYNC_OPTS ${PROD_HOST}:/etc/httpd/test-conf/$i /etc/httpd/build_conf/$i
+	$RSYNC $RSYNC_OPTS ${PROD_HOST}:/etc/httpd/test-conf/${CurrentFile} /etc/httpd/build_conf/transfer/${CurrentFile}
+	if [ ${CurrentFile} = "virtual-host-map.txt" -o ${CurrentFile} = "policy-url-file.txt" ]
+	then
+		$CP $CP_OPTS /etc/httpd/build_conf/transfer/${CurrentFile} /etc/httpd/build_conf/${CurrentFile}
+	else
+		# $SED $SED_OPTS < /etc/httpd/build_conf/transfer/${CurrentFile} >  /etc/httpd/build_conf/${CurrentFile}
+		$PERL $PERL_OPTS < /etc/httpd/build_conf/transfer/${CurrentFile} >  /etc/httpd/build_conf/${CurrentFile}
+	fi
 done
