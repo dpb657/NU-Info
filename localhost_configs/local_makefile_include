@@ -1,0 +1,7 @@
+#! /bin/make # This is never used but tells vim how to highlight the syntax
+
+THIS_DOMAIN = ci.northwestern.edu
+
+CH_OTHER_HOSTS = chnuinfoprodweb1.$(THIS_DOMAIN) chnuinfoprodweb2.$(THIS_DOMAIN) chnuinfoprodweb3.$(THIS_DOMAIN)
+
+EV_OTHER_HOSTS = evnuinfoprodweb2.$(THIS_DOMAIN) evnuinfoprodweb3.$(THIS_DOMAIN)
