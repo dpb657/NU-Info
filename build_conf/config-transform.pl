@@ -13,11 +13,14 @@ my $restofline = "";
 #
 while ( <> ) {
 	chomp $_;
-	if (/^$/) {					# Skip empty lines
+	if (/^#STRIP_OUT.*$/) {				# Remove lines marked for deletion
+		next;
+	}
+	if (/^$/) {					# Skip processing empty lines
 		print  $_ , "\n";
 		next;
 	}
-	if (/^(\s*)(#.*)$/) {				# Skip Comment only lines
+	if (/^(\s*)(#.*)$/) {				# Skip processing comment only lines
 		$whitespace = $1;
 		$restofline = $2;
 		printf "%s%s\n", $whitespace, $restofline;
@@ -48,7 +51,7 @@ while ( <> ) {
 		$whitespace = $1;
 		$restofline = $2;
 		if ($prevdeny ne "") {
-			printf "%s%s\t%s%s\n", $whitespace, "Require all denied", $restofline, "# Updated for 2.4 Syntax";
+			printf "%s%s%s\n", $whitespace, "Require all denied", $restofline;
 			$whitespace = $restofline = $prevdeny = "";	# Reset all the variables
 			next;
 		} else {
@@ -68,7 +71,7 @@ while ( <> ) {
 		$whitespace = $1;
 		$restofline = $2;
 		if ($prevallow ne "") {
-			printf "%s%s%s\t%s\n", $whitespace, "Require all granted", $restofline, "# Updated for 2.4 Syntax";
+			printf "%s%s%s\n", $whitespace, "Require all granted", $restofline;
 			$whitespace = $restofline = $prevallow = "";	# Reset all the variables
 			next;
 		} else {
@@ -79,12 +82,12 @@ while ( <> ) {
 	#
 	# Modify any remaining "allow from" lines
 	#
-	} elsif (/(\s*)allow\s*from(.*)$/i) {
-		$whitespace = $1;
-		$restofline = $2;
-		printf "%s%s %s\t%s\n", $whitespace, "Require from", $restofline, "# Updated for 2.4 Syntax";
-		$whitespace = $restofline = "";				# Reset all the variables
-		next;
+	#} elsif (/(\s*)allow\s*from(.*)$/i) {
+	#	$whitespace = $1;
+	#	$restofline = $2;
+	#	printf "%s%s%s\n", $whitespace, "Require from", $restofline;
+	#	$whitespace = $restofline = "";				# Reset all the variables
+	#	next;
 	# 
 	# Flush any stored content
 	#

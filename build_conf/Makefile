@@ -1,86 +1,135 @@
 # NU Info Build, Test and Deploy Makefile
-# We are using rsync instead of cp because of error checking and timestamp maintanence
+#
+BUILD_DIR		= /etc/httpd/build_conf
+CONFIG_TARGET_DIR	= /etc/httpd/conf.d/
+AMAgent_CONF_DIR	= /opt/websso/web_agents/apache24_agent/Agent_001/config/
 
-FILES = /etc/httpd/conf/httpd.conf /etc/httpd/conf/apache-load-modules.conf /etc/httpd/conf/apache-options.conf /etc/httpd/conf/main-head.conf /etc/httpd/conf/main-only.conf /etc/httpd/conf/mime.types /etc/httpd/conf/policy-url-file.txt /etc/httpd/conf/virtual.conf /etc/httpd/conf/virtual-host-map.txt /etc/httpd/conf/virtual-redirect.conf
+AMAgent_CONF		= OpenSSOAgentConfiguration.properties
+FILES			= $(CONFIG_TARGET_DIR)httpd.conf \
+			  $(CONFIG_TARGET_DIR)apache-load-modules.conf \
+			  $(CONFIG_TARGET_DIR)apache-options.conf \
+			  $(CONFIG_TARGET_DIR)main-head.conf \
+			  $(CONFIG_TARGET_DIR)main-only.conf \
+			  $(CONFIG_TARGET_DIR)mime.types \
+			  $(CONFIG_TARGET_DIR)policy-url-file.txt \
+			  $(CONFIG_TARGET_DIR)virtual.conf \
+			  $(CONFIG_TARGET_DIR)virtual-host-map.txt \
+			  $(CONFIG_TARGET_DIR)virtual-redirect.conf
 
-RSYNC = /bin/rsync
+#
+# We are using rsync instead of cp locally because of error the checking
+#
+RSYNC			= /bin/rsync
 # Locally we want the current timestamp
-RSYNC_OPTS_LOCAL = --archive --update --checksum --no-t
+RSYNC_OPTS_LOCAL	= --archive --update --checksum --no-t
 # On the remotes we want the timestamps to be the same
-RSYNC_OPTS_REMOTE = --archive --update --checksum
+RSYNC_OPTS_REMOTE	= --archive --update --checksum
 
-SSH = /bin/ssh
-SSH_OPTS = 
+PERL			= /bin/perl
+PERL_OPTS		= -f
 
-HTTPD_RESTART = "/usr/sbin/httpd -k stop && /bin/sleep 15 && /usr/sbin/httpd -k start"
+SED			= /bin/sed
+RM			= /bin/rm -f
+
+SSH			= /bin/ssh
+SSH_OPTS		= 
+
+HTTPD_RESTART		= "/usr/sbin/httpd -k stop && /bin/sleep 10 && /usr/sbin/httpd -k start || exit -1"
 
 include /etc/httpd/localhost_configs/local_makefile_include
 
-Default:
-	@echo "You must supply a TARGET"
-	@echo "Vaild Targets are Test deployChicago deployEvanston"
+DEFAULT:
+	@tput bold
+	@echo "You must supply a make target!"
+	@echo "Vaild targets are: test deployChicago deployEvanston"
+	@tput sgr0
 	@exit 1
 
-# ALL is not to be used directly in production.
-ALL: $(FILES) Test
+# ALL is not intended to be used directly in production.
+ALL: $(FILES) $(AMAgent_CONF_DIR)$(AMAgent_CONF) test
 	@echo "Build of all Complete"
 
-/etc/httpd/conf/httpd.conf: /etc/httpd/build_conf/httpd.conf
+$(CONFIG_TARGET_DIR)httpd.conf: $(BUILD_DIR)/httpd.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/httpd.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/httpd.conf $@
 
-/etc/httpd/conf/apache-load-modules.conf:  /etc/httpd/build_conf/apache-load-modules.conf 
+$(CONFIG_TARGET_DIR)apache-load-modules.conf:  $(BUILD_DIR)/apache-load-modules.conf 
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/apache-load-modules.conf  $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/apache-load-modules.conf  $@
 
-/etc/httpd/conf/apache-options.conf: /etc/httpd/build_conf/apache-options.conf
+$(CONFIG_TARGET_DIR)apache-options.conf: $(BUILD_DIR)/apache-options.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/apache-options.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/apache-options.conf $@
 
-/etc/httpd/conf/main-head.conf: /etc/httpd/build_conf/main-head.conf
+$(CONFIG_TARGET_DIR)main-head.conf: $(BUILD_DIR)/main-head.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/main-head.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/main-head.conf $@
 
-/etc/httpd/conf/main-only.conf: /etc/httpd/build_conf/main-only.conf
+$(CONFIG_TARGET_DIR)main-only.conf: $(BUILD_DIR)/main-only.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/main-only.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/main-only.conf $@
 
-/etc/httpd/conf/mime.types: /etc/httpd/build_conf/mime.types
+$(CONFIG_TARGET_DIR)mime.types: $(BUILD_DIR)/mime.types
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/mime.types $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/mime.types $@
 
-/etc/httpd/conf/policy-url-file.txt: /etc/httpd/build_conf/policy-url-file.txt
+$(CONFIG_TARGET_DIR)policy-url-file.txt: $(BUILD_DIR)/policy-url-file.txt
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/policy-url-file.txt $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/policy-url-file.txt $@
 
-/etc/httpd/conf/virtual.conf: /etc/httpd/build_conf/virtual.conf
+$(CONFIG_TARGET_DIR)virtual.conf: $(BUILD_DIR)/virtual.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/virtual.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/virtual.conf $@
 
-/etc/httpd/conf/virtual-host-map.txt: /etc/httpd/build_conf/virtual-host-map.txt
+$(CONFIG_TARGET_DIR)virtual-host-map.txt: $(BUILD_DIR)/virtual-host-map.txt
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/virtual-host-map.txt $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/virtual-host-map.txt $@
 
-/etc/httpd/conf/virtual-redirect.conf: /etc/httpd/build_conf/virtual-redirect.conf
+$(CONFIG_TARGET_DIR)virtual-redirect.conf: $(BUILD_DIR)/virtual-redirect.conf
 	@echo "Updating $@"
-	@$(RSYNC) $(RSYNC_OPTS_LOCAL) /etc/httpd/build_conf/virtual-redirect.conf $@
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/virtual-redirect.conf $@
 
-Test: 
-	@echo "********************************************************************************"
-	@echo "******** The passing argument warning message is normal and ignorable. *********"
-	@echo "********************************************************************************"
-	apachectl -t -f /etc/httpd/build_conf/httpd.conf
- 
-# deployChicago and deployEvanston are using GNU make specific syntax
+$(AMAgent_CONF_DIR)$(AMAgent_CONF): $(BUILD_DIR)/$(AMAgent_CONF)
+	@echo "Updating $@"
+	@$(RSYNC) $(RSYNC_OPTS_LOCAL) $(BUILD_DIR)/$(AMAgent_CONF) $(AMAgent_CONF_DIR)
+
+$(BUILD_DIR)/$(AMAgent_CONF): $(BUILD_DIR)/$(AMAgent_CONF).template $(BUILD_DIR)/policy-transform.pl
+	@sh -c "cd $(BUILD_DIR) && $(PERL) $(PERL_OPTS) $(BUILD_DIR)/policy-transform.pl"
+
+# TEST_DIR has the effect of switching all the includes to come from the build directory
+test: 
+	@/usr/sbin/httpd -t -f $(BUILD_DIR)/httpd.conf -DTEST_DIR
+
+#
+# deployChicago and deployEvanston are using GNU make specific syntax - foreach
+#
 
 deployChicago: ALL
-	$(foreach REMOTE_HOST, $(CH_OTHER_HOSTS), $(RSYNC) $(RSYNC_OPTS_REMOTE) /etc/httpd/build_conf/ $(REMOTE_HOST):/etc/httpd/build_conf/;)
-	$(foreach REMOTE_HOST, $(CH_OTHER_HOSTS), $(RSYNC) $(RSYNC_OPTS_REMOTE) /etc/httpd/conf/ $(REMOTE_HOST):/etc/httpd/conf/;)
-	$(foreach REMOTE_HOST, $(CH_OTHER_HOSTS), $(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART);)
+	@echo -e "Begin rsyncing $(BUILD_DIR) for target $@"
+	@$(foreach REMOTE_HOST, $(CH_OTHER_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR)/ $(REMOTE_HOST):$(BUILD_DIR)/;)
+	@echo -e "Done rsyncing $(BUILD_DIR) for target $@\n"
+	@echo -e "Begin rsyncing $(CONFIG_TARGET_DIR) for target $@"
+	@$(foreach REMOTE_HOST, $(CH_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(RSYNC) $(RSYNC_OPTS_REMOTE) $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR);)
+	@echo -e "Done rsyncing $(CONFIG_TARGET_DIR) for target $@\n"
+	@echo -e "Begin rsyncing $(AMAgent_CONF) for target $@"
+	@$(foreach REMOTE_HOST, $(CH_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(SED) s/@LOCALHOSTNAME@/$(REMOTE_HOST)/ < $(BUILD_DIR)/$(AMAgent_CONF) > $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST) && $(RSYNC) $(RSYNC_REMOTE_OPTS) $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/ && $(RM) $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST);)
+	@echo -e "Done rsyncing $(AMAgent_CONF) for target $@\n"
+	@echo -e "Beginning restarting httpd servers for $@"
+	@$(foreach REMOTE_HOST, $(CH_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART)|| exit -1;)
+	@echo -e "Done with target $@\n"
 
 
 deployEvanston: ALL
-	$(foreach REMOTE_HOST, $(EV_OTHER_HOSTS), $(RSYNC) $(RSYNC_OPTS_REMOTE) /etc/httpd/build_conf/ $(REMOTE_HOST):/etc/httpd/build_conf/;)
-	$(foreach REMOTE_HOST, $(EV_OTHER_HOSTS), $(RSYNC) $(RSYNC_OPTS_REMOTE) /etc/httpd/conf/ $(REMOTE_HOST):/etc/httpd/conf;)
-	$(foreach REMOTE_HOST, $(EV_OTHER_HOSTS), $(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART);)
+	@echo -e "Begin rsyncing $(BUILD_DIR) for target $@"
+	@$(foreach REMOTE_HOST, $(EV_OTHER_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR)/ $(REMOTE_HOST):$(BUILD_DIR)/;)
+	@echo -e "Done rsyncing $(BUILD_DIR) for target $@\n"
+	@echo -e "Begin rsyncing $(CONFIG_TARGET_DIR) for target $@"
+	@$(foreach REMOTE_HOST, $(EV_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(RSYNC) $(RSYNC_OPTS_REMOTE) $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR)/;)
+	@echo -e "Done rsyncing $(CONFIG_TARGET_DIR) for target $@\n"
+	@echo -e "Begin rsyncing $(AMAgent_CONF) for target $@"
+	@$(foreach REMOTE_HOST, $(EV_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(SED) s/@LOCALHOSTNAME@/$(REMOTE_HOST)/ < $(BUILD_DIR)/$(AMAgent_CONF) > $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST) && $(RSYNC) $(RSYNC_REMOTE_OPTS) $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/$(AMAgent_CONF) && $(RM) $(BUILD_DIR)/$(AMAgent_CONF).$(REMOTE_HOST);)
+	@echo -e "Done rsyncing $(AMAgent_CONF) for target $@\n"
+	@echo -e "Beginning restarting httpd servers for $@"
+	@$(foreach REMOTE_HOST, $(EV_HOSTS), echo -e "\t$(REMOTE_HOST)" ; $(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART) || exit -1;)
+	@echo -e "Done with target $@\n"
 
