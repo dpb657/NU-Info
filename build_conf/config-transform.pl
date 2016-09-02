@@ -8,27 +8,52 @@ my $prevdeny = "";
 my $prevallow = "";
 my $whitespace = "";
 my $restofline = "";
+my $retainedname = "";
+my $printalias = 0;
+
 #
 # Read from STDIN
 #
 while ( <> ) {
 	chomp $_;
-	if (/^#STRIP_OUT.*$/) {				# Remove lines marked for deletion
-		next;
-	}
 	if (/^$/) {					# Skip processing empty lines
-		print  $_ , "\n";
+		print "\n";
 		next;
 	}
-	if (/^(\s*)(#.*)$/) {				# Skip processing comment only lines
+	if (/^(\s*)(#.*)$/) {				# Skip processing comment only lines but maintain the placement
 		$whitespace = $1;
 		$restofline = $2;
 		printf "%s%s\n", $whitespace, $restofline;
 		next;
 	}
+	if (/NameVirtualHost/i) {		# Comment out to eliminate warning message
+		print  "#", $_ , "\n";
+		next;
+	}
+	if (/VirtualHost/i) {
+		print  $_ , "\n";
+		next;
+	}
 	if (/:8002/) {next;}				# Remove references to old test port except in comments
 	if (/nwu.edu/) {next;}				# Remove references to old domain name except in comments
-	s/northwestern.edu/\$\{local_Domain_Name\}/g;	# Turn current domain name into macro except in comments
+	if (/(\s)*ServerName\s*(.*)$/i) {
+		$whitespace = $1;			# Store leading whitespace to keep the indentation correct
+		$retainedname = $restofline = $2;	# Modify the name to use the macro
+		if ( ! defined ( $whitespace )) { $whitespace = ""; }
+		if ( /northwestern.edu/i ) {
+			$restofline =~ s/northwestern.edu/\$\{local_Domain_Name\}/g;
+			$printalias = 1;
+		};
+		printf "%sServerName  %s\n", $whitespace, $retainedname;
+		if ( $printalias ) {
+			printf "%sServerAlias %s\n", $whitespace, $restofline;
+			$printalias = 0;
+		}
+		next
+	} else { 
+		s/northwestern.edu/\$\{local_Domain_Name\}/g;
+		next;
+	}
 	#
 	# Change:
 	# 	Order deny,allow

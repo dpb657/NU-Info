@@ -34,7 +34,10 @@ RM			= /bin/rm -f
 SSH			= /bin/ssh
 SSH_OPTS		= 
 
-HTTPD_RESTART		= "/usr/sbin/httpd -k stop && /bin/sleep 10 && /usr/sbin/httpd -k start || exit -1"
+# Directly manage httpd ignoring systemd
+#HTTPD_RESTART		= "/usr/sbin/httpd -k stop && /bin/sleep 10 && /usr/sbin/httpd -k start || exit -1"
+# In keeping with RHEL7 using the systemd commands
+HTTPD_RESTART		= "/bin/systemctl stop httpd && /bin/sleep 10 && /bin/systemctl start httpd || exit -1"
 
 include /etc/httpd/localhost_configs/local_makefile_include
 
