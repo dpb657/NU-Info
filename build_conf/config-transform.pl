@@ -14,6 +14,7 @@ my $printalias = 0;
 #
 # Read from STDIN
 #
+print "# vim: syntax=apache\n#\n";
 while ( <> ) {
 	chomp $_;
 	if (/^$/) {					# Skip processing empty lines
@@ -44,15 +45,16 @@ while ( <> ) {
 			$restofline =~ s/northwestern.edu/\$\{local_Domain_Name\}/g;
 			$printalias = 1;
 		};
-		printf "%sServerName  %s\n", $whitespace, $retainedname;
+		#printf "%sServerName  %s\n", $whitespace, $retainedname;
+		printf "%sServerName  %s\n", $whitespace, $restofline;
 		if ( $printalias ) {
-			printf "%sServerAlias %s\n", $whitespace, $restofline;
+			# printf "%sServerAlias %s\n", $whitespace, $restofline;
+			printf "%sServerAlias %s\n", $whitespace, $retainedname;
 			$printalias = 0;
 		}
 		next
 	} else { 
 		s/northwestern.edu/\$\{local_Domain_Name\}/g;
-		next;
 	}
 	#
 	# Change:

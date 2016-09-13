@@ -144,7 +144,7 @@ com.sun.identity.agents.config.debug.file.size = 10000000
 #
 com.sun.identity.agents.config.audit.accesstype = LOG_NONE
 com.sun.identity.agents.config.log.disposition = REMOTE
-com.sun.identity.agents.config.remote.logfile = amAgent_@LOCALHOSTNAME@_ci_northwestern_edu_80.log
+com.sun.identity.agents.config.remote.logfile = amAgent_%LOCALHOSTNAME%_ci_northwestern_edu_80.log
 com.sun.identity.agents.config.remote.log.interval = 5
 com.sun.identity.agents.config.local.log.rotate = false
 com.sun.identity.agents.config.local.log.size = 52428800
@@ -161,7 +161,7 @@ com.sun.identity.agents.config.local.log.size = 52428800
 # Hot-Swap Enabled: No
 #
 com.sun.identity.agents.config.notification.enable = false
-com.sun.identity.client.notification.url = http://@LOCALHOSTNAME@.ci.northwestern.edu:80/UpdateAgentCacheServlet?shortcircuit=false
+com.sun.identity.client.notification.url = http://%LOCALHOSTNAME%.ci.northwestern.edu:80/UpdateAgentCacheServlet?shortcircuit=false
 
 #
 # URL CASE SENSITIVITY CHECK 
@@ -353,7 +353,7 @@ com.sun.identity.agents.config.load.balancer.enable = false
 #
 # Hot-Swap Enabled: No
 #
-com.sun.identity.agents.config.agenturi.prefix = http://@LOCALHOSTNAME@.ci.northwestern.edu:80/amagent
+com.sun.identity.agents.config.agenturi.prefix = http://%LOCALHOSTNAME%.ci.northwestern.edu:80/amagent
 
 #
 # LOCALE

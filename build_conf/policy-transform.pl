@@ -1,7 +1,10 @@
 #! /bin/perl
 use strict;
 use warnings;
+use Getopt::Std;
 
+my %options=();
+my $test_transform		= 0;
 
 my $build_directory		= "/etc/httpd/build_conf";
 #
@@ -49,6 +52,11 @@ sub process_policy_file {
 		if ($row =~ /^#/ || $row =~ /^$/)			# Skip Comments and blank lines
 		{
 			next;
+		}
+		# we may need either the real domain or the test one, print both
+		if ( $test_transform ) {
+			printf $fh_output "%s[%d] = %s\n", $AMAgent_notenforced, $index++, $row;
+			$row =~ s/northwestern.edu/nuinfo-test.northwestern.edu/i;
 		}
 		printf $fh_output "%s[%d] = %s\n", $AMAgent_notenforced, $index++, $row;
 	}
@@ -111,6 +119,12 @@ sub skip_to {
 		printf $fh_output "%s\n", $current_line;
 	}
 }
+# Process options
+getopts("t", \%options);
+	if ( defined $options{t}) {
+	$test_transform = 1;
+	print STDERR "Policy test flag set!\nDO NOT USE IN PRODUCTION!\n";
+};
 # 
 # Open the main input and output files
 #

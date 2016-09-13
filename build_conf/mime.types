@@ -1,3 +1,5 @@
+# vim: syntax=apache
+#
 # 6/10/97
 # This file contains mime types merged from several sources
 # including nuinfo, pubweb, and apache distributions
@@ -113,7 +115,147 @@
 # 10-27-2015
 # add woff and woff2
 #
+application/astound                     asn
+application/font-woff			woff
 # woff2 is per IANA draft specification subject to change
+application/font-woff2			woff2
+application/futuresplash                spl
+application/java-archive                jar
+application/json                        json
+application/json                        map
+application/mac-binhex40                hqx
+application/mac-compactpro              cpt
+application/msword                      doc docx
+application/octet-stream                bin class dms exe lha lzh sea
+application/oda                         oda
+application/ogg                         ogx
+application/pdf                         pdf
+application/pkix-cert                   cer
+application/postscript                  ai eps ps
+application/powerpoint                  ppt pptx
+application/rss+xml                     rss
+application/rtf                         rtf
+application/vnd.wap.wmlc                wmlc
+application/vnd.wap.wmlscriptc          wmlsc
+application/wordperfect5.1              wp
+application/x-authorware-bin            aab
+application/x-authorware-map            aam
+application/x-authorware-seg            aas
+application/x-bcpio                     bcpio
+application/x-cdlink                    vcd
+application/x-compress                  Z
+application/x-cpio                      cpio
+application/x-csh                       csh
+application/x-director                  dcr dir dxr
+application/x-dvi                       dvi
+application/x-edoc                      edoc
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet                     xlsx
+application/x-excel                     xls
+application/x-gtar                      gtar
+application/x-gzip                      gz
+application/x-hdf                       hdf
+application/x-javascript                js
+application/x-koan                      skd skm skp skt
+application/x-latex                     latex
+application/x-mif                       mif
+application/x-ms-wmd                    wmd
+application/x-ms-wmz                    wmz
+application/x-netcdf                    cdf nc
+application/x-sh                        sh
+application/x-shar                      shar
+application/x-shockwave-flash           swf
+application/x-spt                       spt
+application/x-stuffit                   sit
+application/x-sv4cpio                   sv4cpio
+application/x-sv4crc                    sv4crc
+application/x-tar                       tar
+application/x-tcl                       tcl
+application/x-tex                       tex
+application/x-texinfo                   texi texinfo
+application/x-troff                     roff t tr
+application/x-troff-man                 man
+application/x-troff-me                  me
+application/x-troff-ms                  ms
+application/x-ustar                     ustar
+application/x-wais-source               src
+application/x-x509-ca-cert              crt der
+application/xhtml+xml                   xht xhtml
+application/zip                         zip
+audio/basic                             au snd
+audio/midi                              kar mid midi
+audio/mpeg                              mp2 mp3 mpga
+audio/ogg                               oga ogg spx
+audio/x-aiff                            aif aifc aiff
+audio/x-ms-wax                          wax
+audio/x-ms-wma                          wma
+audio/x-ms-wmv                          wmv
+audio/x-pn-realaudio                    ra rae ram
+audio/x-pn-realaudio-plugin             rpm
+audio/x-wav                             wav
+chemical/ncbi-asn1-binary               val
+chemical/x-cif                          cif
+chemical/x-csml                         csm csml
+chemical/x-cxf                          cxf
+chemical/x-daylight-smiles              smi
+chemical/x-embl-dl-nucleotide           emb embl
+chemical/x-gaussian-input               gau
+chemical/x-gcg8-sequence                gcg
+chemical/x-genbank                      gen
+chemical/x-jcamp-dx                     jdx
+chemical/x-kinemage                     kin
+chemical/x-macromodel-input             mmd mmod
+chemical/x-mdl-molfile                  mol
+chemical/x-mdl-rdf                      rdf
+chemical/x-mdl-rxn                      rxn
+chemical/x-mdl-sdf                      sdf
+chemical/x-mdl-tgf                      tgf
+chemical/x-mopac-input                  mop
+chemical/x-pdb                          pdb
+chemical/x-rosdal                       ros
+chemical/x-xyz                          xyz
+image/gif                               gif
+image/ief                               ief
+image/jpeg                              jpe jpeg jpg
+image/png                               png
+image/tiff                              tif tiff
+image/vnd.wap.wbmp                      wbmp
+image/x-cmu-raster                      ras
+image/x-freehand                        fh fh4 fh5 fh7 fhc
+image/x-pict                            pict
+image/x-portable-anymap                 pnm
+image/x-portable-bitmap                 pbm
+image/x-portable-graymap                pgm
+image/x-portable-pixmap                 ppm
+image/x-rgb                             rgb
+image/x-xbitmap                         xbm
+image/x-xpixmap                         xpm
+image/x-xwindowdump                     xwd
+image/svg+xml                           svg
+model/iges                              iges igs
+model/mesh                              mesh msh silo
+model/vrml                              vrml wrl xaf xof
+text/calendar                           ics
+text/css                                css
+text/html                               htm html
+text/plain                              txt
+text/richtext                           rtx
+text/sgml                               sgm sgml
+text/tab-separated-values               tsv
+text/vnd.sun.j2me.app-descriptor        jad
+text/vnd.wap.wml                        wml
+text/vnd.wap.wmlscript                  wmls
+text/x-setext                           etx
+text/xml                                xml xsl
+video/mpeg                              mpe mpeg mpg
+video/ogg                               ogv
+video/quicktime                         mov qt
+video/x-ms-asf                          asf asx
+video/x-ms-wm                           wm
+video/x-ms-wmx                          wmx
+video/x-ms-wvx                          wvx
+video/x-msvideo                         avi
+video/x-sgi-movie                       movie
+x-conference/x-cooltalk                 ice
 #
 # end with a comment
 #
