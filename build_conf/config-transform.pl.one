@@ -1,0 +1,12 @@
+$/ = undef;
+$s = <>;
+next if /\n(\s*(#.*)?)?\n/;
+$s =~ /\n#.*\n/;
+$s =~ s/\n.*:8002.*\n/\n/g;
+$s =~ s/\n.*nwu.edu.*\n/\n/g;
+$s =~ s/northwestern.edu/\$\{local_Domain_Name\}/g;
+$s =~ s/\n.*[Oo]rder deny,allow.*\n.*[Dd]eny from all.*\n/\n\tRequire all denied\n/g;
+$s =~ s/\n.*[Oo]rder allow,deny.*\n.*[Aa]llow from all.*\n/\n\tRequire all granted\n/g;
+$s =~ s/[Aa]llow from/Require/g;
+$s =~ s/deny from/Deny from/g;
+print $s

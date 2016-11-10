@@ -1,0 +1,546 @@
+# host name list for nuinfo statistics, and for access manager
+#
+# format
+# full host name alias-for-stats [+]
+#
+# A plus designates the primary ServerName (this is not used now but may be in the future)
+# "*" for alias means the main host
+#
+# If this list does not contain all valid host names access manager
+# may be misconfigured.
+#
+www.nwu.edu *
+www.northwestern.edu * +
+nuinfo.nwu.edu *
+nuinfo.northwestern.edu *
+www.acns.nwu.edu *
+#
+# for future move of A record 1-12-2012
+northwestern.edu *
+#
+# chicago mirror host 12-12-07
+chnuinfo.northwestern.edu *
+
+# to defeat snap proxy rewriting 10-17-03
+nuinfo-noproxy.northwestern.edu *
+# NOT www.it.northwestern.edu see below
+# other it.northwestern.edu names may not carry over from acns
+# but are included to keep the stats consistent if they do
+nuinfo.acns.nwu.edu *
+nuinfo.it.northwestern.edu *
+gopher.acns.nwu.edu *
+gopher.it.northwestern.edu *
+gopher.nwu.edu *
+gopher.northwestern.edu *
+www.northwestern.edu *
+# aliases of main host for Solaris tests 2002
+newmoon.northwestern.edu *
+newmoon.nwu.edu *
+# aliases of main host for cluster tests 2012
+evnuinfo-proto2.northwestern.edu *
+chnuinfo-proto2.northwestern.edu *
+# test virtual hosts
+nuinfo2.nwu.edu nuinfo2
+nuinfo2.northwestern.edu nuinfo2
+nuinfo3.nwu.edu nuinfo3
+nuinfo3.northwestern.edu nuinfo3
+nuinfo5.nwu.edu nuinfo5
+nuinfo5.northwestern.edu nuinfo5
+nuinfo6.nwu.edu nuinfo6
+nuinfo6.northwestern.edu nuinfo6
+nuinfo7.nwu.edu nuinfo7
+nuinfo7.northwestern.edu nuinfo7
+#
+nuinfo4.nwu.edu it
+nuinfo4.northwestern.edu it
+www.it.nwu.edu it
+www.it.northwestern.edu it +
+it.northwestern.edu it
+evnuinfo-proto1.northwestern.edu	it
+#
+nuinfo8.nwu.edu wnur
+nuinfo8.northwestern.edu wnur
+www.wnur.org wnur +
+wnur.nwu.edu wnur
+wnur.northwestern.edu wnur
+#
+nuinfo9.nwu.edu virtualstore
+nuinfo9.northwestern.edu virtualstore
+www.virtualstore.nwu.edu virtualstore
+www.virtualstore.northwestern.edu virtualstore +
+#
+nuinfo10.nwu.edu ctd
+nuinfo10.northwestern.edu ctd 
+www.ctd.nwu.edu ctd
+www.ctd.northwestern.edu ctd +
+ctdnet.ctd.nwu.edu ctd
+ctdnet.ctd.northwestern.edu ctd
+ctdnet.acns.nwu.edu ctd
+ctdnet.it.northwestern.edu ctd
+#
+nuinfo11.nwu.edu need-it
+nuinfo11.northwestern.edu need-it
+www.need-it.nwu.edu need-it
+www.need-it.northwestern.edu need-it +
+#
+nuinfo12.nwu.edu matsci
+nuinfo12.northwestern.edu matsci
+www.matsci.nwu.edu matsci
+www.matsci.northwestern.edu matsci +
+matsci.northwestern.edu matsci
+#
+nuinfo13.nwu.edu icair
+nuinfo13.northwestern.edu icair
+www.icair.org icair +
+#
+nuinfo14.nwu.edu univsvcs
+nuinfo14.northwestern.edu univsvcs
+www.univsvcs.nwu.edu univsvcs
+www.univsvcs.northwestern.edu univsvcs +
+www.gensvcs.nwu.edu univsvcs
+www.gensvcs.northwestern.edu univsvcs
+# add univsvcs.northwestern.edu 8-14-06 if DNS available
+univsvcs.northwestern.edu univsvcs
+#
+# iti moved elsewhere 9/27/00
+nuinfo15.nwu.edu iti
+nuinfo15.northwestern.edu iti
+www.iti.nwu.edu iti
+www.iti.northwestern.edu iti +
+iti.acns.nwu.edu iti
+iti.it.northwestern.edu iti
+#
+nuinfo16.nwu.edu proto
+nuinfo16.northwestern.edu proto
+#
+nuinfo17.nwu.edu econ
+nuinfo17.northwestern.edu econ
+www.econ.nwu.edu econ
+www.econ.northwestern.edu econ +
+#
+nuinfo18.nwu.edu hereandnow
+nuinfo18.northwestern.edu hereandnow
+www.hereandnow.nwu.edu hereandnow
+www.hereandnow.northwestern.edu hereandnow
+hereandnow.nwu.edu hereandnow
+hereandnow.northwestern.edu hereandnow +
+#
+nuinfo19.nwu.edu nu150
+nuinfo19.northwestern.edu nu150
+www.nu150.nwu.edu nu150
+www.nu150.northwestern.edu nu150 +
+#
+nuinfo20.nwu.edu registrar
+nuinfo20.northwestern.edu registrar
+www.registrar.nwu.edu registrar
+www.registrar.northwestern.edu registrar +
+#
+nuinfo21.nwu.edu biochem
+nuinfo21.northwestern.edu biochem
+x.biochem.nwu.edu biochem
+x.biochem.northwestern.edu biochem
+www.biochem.nwu.edu biochem
+www.biochem.northwestern.edu biochem +
+#
+nuinfo22.northwestern.edu			blockmuseum
+nuinfo22.nwu.edu					blockmuseum
+www.blockmuseum.northwestern.edu	blockmuseum +
+www.blockmuseum.nwu.edu				blockmuseum
+blockmuseum.northwestern.edu		blockmuseum
+#
+# nuinfo23.northwestern.edu	was briefly www.ctn.northwestern.edu (etc.)
+#
+# begin name-based virtual hosts 12-7-00
+#
+www.nanotechnology.northwestern.edu	nanotechnology +
+www.nanotechnology.nwu.edu	nanotechnology
+nanotechnology.northwestern.edu	nanotechnology
+nanotechnology.nwu.edu	nanotechnology
+#
+www.nanofabrication.northwestern.edu	nanofabrication +
+www.nanofabrication.nwu.edu	nanofabrication
+nanofabrication.northwestern.edu	nanofabrication
+nanofabrication.nwu.edu	nanofabrication
+#
+www.ctn.northwestern.edu	ctn +
+www.ctn.nwu.edu	ctn
+ctn.northwestern.edu	ctn
+ctn.nwu.edu	ctn
+#
+www.ibnam.northwestern.edu ibnam +
+www.ibnam.nwu.edu ibnam
+#
+www.status.northwestern.edu	status
+www.status.nwu.edu	status
+status.northwestern.edu	status +
+status.nwu.edu	status
+#
+www.nuds.northwestern.edu	nuds +
+www.nuds.nwu.edu	nuds
+#
+www.nsec.northwestern.edu	nsec +
+www.nsec.nwu.edu	nsec
+#
+www.tss.northwestern.edu	tss +
+www.tss.nwu.edu	tss
+#
+helpdesk.northwestern.edu	helpdesk +
+helpdesk.nwu.edu	helpdesk
+www.helpdesk.northwestern.edu	helpdesk
+www.helpdesk.nwu.edu	helpdesk
+#
+www-new.northwestern.edu	www-new +
+www-new.nwu.edu				www-new
+#
+# reired 2-1-08
+#www.entrepreneur.northwestern.edu	entrepreneur +
+#www.entrepreneur.nwu.edu	entrepreneur
+#
+www.cbt.northwestern.edu	cbt +
+www.cbt.nwu.edu	cbt
+#
+# www.newsfeed.nwu.edu not requested, but configured
+www.newsfeed.northwestern.edu	newsfeed +
+www.newsfeed.nwu.edu			newsfeed
+newsfeed.northwestern.edu		newsfeed
+#
+www.stuaff.northwestern.edu	stuaff +
+www.stuaff.nwu.edu	stuaff
+stuaff.northwestern.edu	stuaff
+stuaff.nwu.edu	stuaff
+#
+# www.webstandards.nwu.edu not requested, but configured
+www.webstandards.northwestern.edu	webstandards
+www.webstandards.nwu.edu			webstandards
+webstandards.northwestern.edu		webstandards +
+webstandards.nwu.edu				webstandards
+#
+www.development.northwestern.edu	development +
+www.development.nwu.edu	development
+www.giving.northwestern.edu	development
+giving.northwestern.edu	development
+#
+www.campaign.northwestern.edu	campaign +
+www.campaign.nwu.edu	campaign
+#
+webmail.northwestern.edu		webmail +
+webmail.nwu.edu					webmail
+webmail.it.northwestern.edu		webmail
+webmail.it.nwu.edu				webmail
+webemail.northwestern.edu		webmail
+webemail.nwu.edu				webmail
+webemail.it.northwestern.edu	webmail
+webemail.it.nwu.edu				webmail
+#
+www.studentloans.northwestern.edu	studentloans +
+www.studentloan.northwestern.edu	studentloans
+studentloans.northwestern.edu		studentloans
+studentloan.northwestern.edu 		studentloans
+#
+www.adminplan.northwestern.edu		adminplan +
+adminplan.crown.northwestern.edu	adminplan
+#
+www.cics.northwestern.edu	cics +
+www.cics.nwu.edu		cics
+#
+wildcardadv.northwestern.edu	wildcardadv +
+#
+# www.fitness.northwestern.edu et. al
+www.fitness.northwestern.edu		fitness
+www.fitrec.northwestern.edu			fitrec
+www.fars.northwestern.edu			fars
+www.aquatics.northwestern.edu		aquatics
+www.clubs.northwestern.edu			clubs
+www.wildcatcamp.northwestern.edu	wildcatcamp
+www.nuim.northwestern.edu			nuim
+#
+www.usrp.northwestern.edu	usrp
+#
+www.nanoscape.northwestern.edu	nanoscape
+nanoscape.northwestern.edu	nanoscape +
+#
+www.ccne.northwestern.edu	ccne +
+ccne.northwestern.edu	ccne
+#
+# new name for default "no-such-host" virtual host 10-26-05
+fallback.northwestern.edu	fallback
+#
+www.music.northwestern.edu	music +
+music.northwestern.edu	music
+#
+# podcasting.northwestern.edu is preferred name 9-13-06
+podcasting.northwestern.edu	podcasting +
+www.podcasting.northwestern.edu	podcasting
+#
+# these are minor hosts added as part of sun wam support
+# because all host names are being listed 11-1-06
+experts.northwestern.edu		experts
+www.experts.northwestern.edu	experts +
+#
+helpdesk.tss.northwestern.edu	helpdesk +
+#
+nuinfo-proto-itdev.northwestern.edu	nuinfo-proto-itdev +
+#
+nuinfo-proto1.northwestern.edu	nuinfo-proto1
+nuinfo-proto2.northwestern.edu	nuinfo-proto2
+nuinfo-proto3.northwestern.edu	nuinfo-proto3
+nuinfo-proto4.northwestern.edu	nuinfo-proto4
+nuinfo-proto5.northwestern.edu	nuinfo-proto5
+nuinfo-proto6.northwestern.edu	nuinfo-proto6
+nuinfo-proto7.northwestern.edu	nuinfo-proto7
+nuinfo-proto8.northwestern.edu	nuinfo-proto8
+nuinfo-proto9.northwestern.edu	nuinfo-proto9
+nuinfo-proto10.northwestern.edu	nuinfo-proto10
+nuinfo-proto11.northwestern.edu	nuinfo-proto11
+nuinfo-proto12.northwestern.edu	nuinfo-proto12
+nuinfo-proto13.northwestern.edu	nuinfo-proto13
+nuinfo-proto14.northwestern.edu	nuinfo-proto14
+nuinfo-proto15.northwestern.edu	nuinfo-proto15
+nuinfo-proto16.northwestern.edu	nuinfo-proto16
+nuinfo-proto17.northwestern.edu	nuinfo-proto17
+nuinfo-proto18.northwestern.edu	nuinfo-proto18
+nuinfo-proto19.northwestern.edu	nuinfo-proto19
+nuinfo-proto20.northwestern.edu	nuinfo-proto20
+nuinfo-proto20.northwestern.edu	nuinfo-proto20
+nuinfo-proto21.northwestern.edu	nuinfo-proto21
+nuinfo-proto22.northwestern.edu	nuinfo-proto22
+nuinfo-proto23.northwestern.edu	nuinfo-proto23
+nuinfo-proto24.northwestern.edu	nuinfo-proto24
+nuinfo-proto25.northwestern.edu	nuinfo-proto25
+nuinfo-proto26.northwestern.edu	nuinfo-proto26
+nuinfo-proto27.northwestern.edu	nuinfo-proto27
+nuinfo-proto28.northwestern.edu	nuinfo-proto28
+nuinfo-proto29.northwestern.edu	nuinfo-proto29
+nuinfo-proto30.northwestern.edu	nuinfo-proto30
+#
+shuttle.northwestern.edu shuttle +
+#
+vending.northwestern.edu vending +
+#
+wildcardcashstripe.northwestern.edu wildcardcashstripe +
+#
+www.benefits.northwestern.edu	benefits +
+#
+# host to move from other server at a later date 11-5-06
+www.mrsec.northwestern.edu		mrsec +
+#
+# redirect to URL on fitrec  12-7-06
+www.sailing.northwestern.edu	sailing +
+#
+# 5 dss names moved to redirect hosts on nuinfo 12-15-06
+1800.northwestern.edu	1800 +
+sos.northwestern.edu	sos +
+www.sos.northwestern.edu	sos
+www.cancercentercgm.northwestern.edu cancercentercgm +
+contracthelp.northwestern.edu	contracthelp +
+abf.northwestern.edu	abf +
+#
+# chemistry groups site 2-14-07
+chemgroups.northwestern.edu		chemgroups +
+www.chemgroups.northwestern.edu	chemgroups
+#
+# Chemistry of Life Processes 4-16-07
+www.clp.northwestern.edu	clp	+
+#
+# BMBCB's Molecular Biophysics Program
+www.biophysics.northwestern.edu	biophysics	+
+biophysics.northwestern.edu	biophysics
+#
+# Interdepartmental Biological Sciences Program
+ibis.northwestern.edu	ibis	+
+www.ibis.northwestern.edu	ibis
+#
+# Center for the Commercialization of Innovative Transportation Technology 11-1-07
+www.ccitt.northwestern.edu	ccitt	+
+ccitt.northwestern.edu	ccitt
+#
+# 11-29-07
+www.qatar.northwestern.edu	qatar	+
+qatar.northwestern.edu		qatar
+#
+# 1-14-08 for Institute for Policy Research
+www.jcpr.org	jcpr	+
+jcpr.org	jcpr
+#
+# 4-4-08 for DSS
+posupport.northwestern.edu	posupport	+
+#
+# 5-5-08 for Searle Center for Teaching Excellence
+teach.northwestern.edu	teach	+
+#
+# 8-6-08 for Undergraduate Financial Aid
+www.ug-finaid.northwestern.edu ug-finaid	+
+ug-finaid.northwestern.edu ug-finaid
+#
+# 10-9-08 for IT/Academic Technologies
+researchcomputing.northwestern.edu	researchcomputing	+
+www.researchcomputing.northwestern.edu	researchcomputing
+#
+# 10-30-08 for Chris Fabri
+# (redirect to nualumnae.org)
+www.alumnae.northwestern.edu	alumnae	+
+alumnae.northwestern.edu	alumnae
+#
+# 2-6-09 for Anisha Mack,IT, UR and A&RT
+www.itunes.northwestern.edu itunes +
+itunes.northwestern.edu		itunes
+#
+# 2-16-09 for Anisha Mack,IT
+# total-redirect placeholder, no www name
+sscc.northwestern.edu sscc	+
+# 
+# 3-3-09 for NU IT/TSS IT/ITMS
+nuvalidate.northwestern.edu		nuvalidate +
+www.nuvalidate.northwestern.edu	nuvalidate
+#
+# 4-15-09 for the (inter-edu) "College Sports Project"
+www.collegesportsproject.org	collegesportsproject	+
+collegesportsproject.org		collegesportsproject
+#
+# 5-4-09 Center for Civic Engagement 
+www.engage.northwestern.edu	engage	+
+engage.northwestern.edu		engage
+#
+
+# 5-18-09 for Anton Verlyho
+# Visualization Lab site redirect to within the IT site
+vislab.northwestern.edu vislab	+
+
+# 5-28-09 for the Materials Research Center
+# "SXNS-11, the 11th international conference on 
+# Surface X-ray and Neutron Scattering"
+www.sxns11.northwestern.edu	sxns11	+
+sxns11.northwestern.edu		sxns11
+
+# 12-16-09 for the Northwestern Policy Review Committee
+policies.northwestern.edu	policies	+
+www.policies.northwestern.edu	policies
+www.policy.northwestern.edu	policies
+policy.northwestern.edu	policies
+
+# Fineberg-related site managed by CMS 3-14-2010
+educationinmedicine.northwestern.edu	educationinmedicine	+
+www.educationinmedicine.northwestern.edu	educationinmedicine
+
+# Fineberg-related site 10-01-2012, ticket #IM81579
+cem.northwestern.edu    cem     +
+www.cem.northwestern.edu        cem
+
+# site for Corporate Relations requested by Jacob Arnold 7-9-2010
+corporate.northwestern.edu	corporate +
+www.corporate.northwestern.edu	corporate
+
+# moving to nuinfo virtual host for cms management 7-20-2010
+www.ipd.northwestern.edu	ipd	+
+ipd.northwestern.edu	ipd
+
+# host to redirect to IT service manager login for Terry Jolley 10-20-2010
+itservice.northwestern.edu	itservice	+
+www.itservice.northwestern.edu	itservice
+
+# moving to nuinfo virtual host for cms management to deploy 12-20-2010, set up 12-3-2010
+www.nucats.northwestern.edu	nucats	+
+nucats.northwestern.edu	nucats
+
+# virtual host for Linux node testing 5-3-2011
+# nuinfotest and web node names
+# I'm listing thru 4 even though nodes numbered four do not exist yet
+nuinfotest.it.northwestern.edu	nuinfotest +
+evnuinfow1.it.northwestern.edu	nuinfotest
+evnuinfow2.it.northwestern.edu	nuinfotest
+evnuinfow3.it.northwestern.edu	nuinfotest
+evnuinfow4.it.northwestern.edu	nuinfotest
+chnuinfow1.it.northwestern.edu	nuinfotest
+chnuinfow2.it.northwestern.edu	nuinfotest
+chnuinfow3.it.northwestern.edu	nuinfotest
+chnuinfow4.it.northwestern.edu	nuinfotest
+
+
+# nuwrite.northwestern.edu 5-31-11 to deploy 6-2-11
+# www.nuwrite.northwestern.edu
+# add legacy name nuwrite.at.northwestern.edu 6-21-11
+nuwrite.northwestern.edu nuwrite +
+www.nuwrite.northwestern.edu nuwrite
+nuwrite.at.northwestern.edu nuwrite
+
+# Office of the Registrar
+# res.northwestern.edu
+# redirect to third-party class scheduling site
+# requested by kendrafoss@northwestern.edu 6-10-2011
+# needs OK, DNS change
+res.northwestern.edu res +
+www.res.northwestern.edu res
+
+# University Services 7-20-2011
+# redirect to a web page
+travel.northwestern.edu travel +
+www.travel.northwestern.edu travel
+
+# proto names for the Linux cluster load-balanced IPs
+# comment out here and move elsewhere as needed
+# move to it
+#evnuinfo-proto1.northwestern.edu	nuinfotest
+#evnuinfo-proto1.northwestern.edu	nuinfotest
+#evnuinfo-proto2.northwestern.edu	nuinfotest
+evnuinfo-proto3.northwestern.edu	nuinfotest
+evnuinfo-proto4.northwestern.edu	nuinfotest
+evnuinfo-proto5.northwestern.edu	nuinfotest
+evnuinfo-proto6.northwestern.edu	nuinfotest
+evnuinfo-proto7.northwestern.edu	nuinfotest
+evnuinfo-proto8.northwestern.edu	nuinfotest
+evnuinfo-proto9.northwestern.edu	nuinfotest
+evnuinfo-proto10.northwestern.edu	nuinfotest
+#chnuinfo-proto1.northwestern.edu	nuinfotest
+#chnuinfo-proto2.northwestern.edu	nuinfotest
+chnuinfo-proto3.northwestern.edu	nuinfotest
+chnuinfo-proto4.northwestern.edu	nuinfotest
+chnuinfo-proto5.northwestern.edu	nuinfotest
+chnuinfo-proto6.northwestern.edu	nuinfotest
+chnuinfo-proto7.northwestern.edu	nuinfotest
+chnuinfo-proto8.northwestern.edu	nuinfotest
+chnuinfo-proto9.northwestern.edu	nuinfotest
+chnuinfo-proto10.northwestern.edu	nuinfotest
+
+
+# Northwestern Scholars redirect host 12-12-11
+# not in use 1-5-2012
+#www.scholars.northwestern.edu	scholars +
+#scholars.northwestern.edu		scholars
+
+# CTEC images placeholder 1-5-2012
+ctecimages.it.northwestern.edu	ctecimages +
+
+# The graduate school 09/12/12
+tgs.northwestern.edu tgs +
+www.tgs.northwestern.edu tgs
+
+# Law school 09/12/12
+law.northwestern.edu  law +
+www.law.northwestern.edu law
+
+# biology 09/12/12
+biology.northwestern.edu   biology +
+www.biology.northwestern.edu  biology
+
+# nemmers prize 03/18/13
+nemmers.northwestern.edu   nemmers +
+www.nemmers.northwestern.edu   nemmers
+
+# devcon2013 04/29/13
+devcon2013.northwestern.edu		devcon2013 +
+www.devcon2013.northwestern.edu		devcon2013
+
+# sustainability 05/09/2013
+sustainability.northwestern.edu		sustainability +
+www.sustainability.northwestern.edu	sustainability
+
+
+# sustainability 05/29/2013
+action.northwestern.edu		action +
+www.action.northwestern.edu	action
+
+# turkishstudies 08/05/2015
+turkishstudies.northwestern.edu         turkishstudies +
+www.turkishstudies.northwestern.edu     turkishstudies
+
+# end with a comment

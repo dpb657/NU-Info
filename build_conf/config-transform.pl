@@ -1,6 +1,7 @@
 #! /bin/perl
 use strict;
 use warnings;
+use Data::Dumper qw(Dumper);
 #
 # Declare and initialize variables
 #
@@ -131,5 +132,34 @@ while ( <> ) {
 			next;
 		}
 	}
+	if (/^(\s*)Options/) {
+		$whitespace = $1;
+
+		my @options;
+		my $elements;
+		my $item;
+		my $char;
+		my $skip = 1;
+
+		@options = split /\s/, $_;
+		$elements = scalar(@options);
+
+		foreach $item (@options) {
+			if($item eq "Options") {
+				printf "%s%s", $whitespace, $item;
+				$skip = 0;
+			} elsif ($skip != 1) {
+				$char = substr($item, 0, 1);
+				if($char ne "-" && $char ne "+") {
+					printf " %s%s", "+", $item;
+				} else {
+					printf " %s", $item;
+				}
+			}
+		}
+		print "\n";
+		next;
+	}
 	print $_, "\n";
 }
+# vim: syntax=perl

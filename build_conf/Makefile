@@ -1,5 +1,9 @@
 # NU Info Build, Test and Deploy Makefile
 #
+
+# Turn off in production
+TRANSFORM_TEST = -t
+
 BUILD_DIR		= /etc/httpd/build_conf/
 CONFIG_TARGET_DIR	= /etc/httpd/conf.d/
 
@@ -58,38 +62,46 @@ ALL: $(FILES) $(BUILD_DIR)$(AMAgent_CONF)
 
 $(CONFIG_TARGET_DIR)httpd.conf: $(BUILD_DIR)httpd.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)httpd.conf $@
 
 $(CONFIG_TARGET_DIR)apache-load-modules.conf:  $(BUILD_DIR)apache-load-modules.conf 
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)apache-load-modules.conf $@
 
 $(CONFIG_TARGET_DIR)apache-options.conf: $(BUILD_DIR)apache-options.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)apache-options.conf $@
 
 $(CONFIG_TARGET_DIR)main-head.conf: $(BUILD_DIR)main-head.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)main-head.conf $@
 
 $(CONFIG_TARGET_DIR)main-only.conf: $(BUILD_DIR)main-only.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)main-only.conf $@
 
 $(CONFIG_TARGET_DIR)mime.types: $(BUILD_DIR)mime.types
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)mime.types $@
 
 $(CONFIG_TARGET_DIR)virtual.conf: $(BUILD_DIR)virtual.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)virtual.conf $@
 
 $(CONFIG_TARGET_DIR)virtual-redirect.conf: $(BUILD_DIR)virtual-redirect.conf
 	@echo "Updating $@"
+	@test -s $< || ( echo "File $< is zero length" &&  exit 255 )
 	@$(CP) $(BUILD_DIR)virtual-redirect.conf $@
 
 $(BUILD_DIR)$(AMAgent_CONF): $(BUILD_DIR)policy-url-file.txt $(BUILD_DIR)$(AMAgent_CONF).template $(BUILD_DIR)policy-transform.pl
-	@sh -c "cd $(BUILD_DIR) && $(PERL) $(PERL_OPTS) $(BUILD_DIR)policy-transform.pl -t " 
+	@sh -c "cd $(BUILD_DIR) && $(PERL) $(PERL_OPTS) $(BUILD_DIR)policy-transform.pl $(TRANSFORM_TEST) " 
 
 #
 # TEST_DIR has the effect of switching all the includes to come from the build directory

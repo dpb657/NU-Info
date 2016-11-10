@@ -56,9 +56,15 @@ sub process_policy_file {
 		# we may need either the real domain or the test one, print both
 		if ( $test_transform ) {
 			printf $fh_output "%s[%d] = %s\n", $AMAgent_notenforced, $index++, $row;
+			if ($row =~ /\/$/) {
+				printf $fh_output "%s[%d] = %s*\n", $AMAgent_notenforced, $index++, $row;
+			}
 			$row =~ s/northwestern.edu/nuinfo-test.northwestern.edu/i;
 		}
 		printf $fh_output "%s[%d] = %s\n", $AMAgent_notenforced, $index++, $row;
+		if ($row =~ /\/$/) {
+			printf $fh_output "%s[%d] = %s*\n", $AMAgent_notenforced, $index++, $row;
+		}
 	}
 	close($fh_policy_url)  || warn $policy_url_close_fail;
 }
@@ -124,7 +130,9 @@ getopts("t", \%options);
 	if ( defined $options{t}) {
 	$test_transform = 1;
 	print STDERR "Policy test flag set!\nDO NOT USE IN PRODUCTION!\n";
-};
+} else {
+	print STDOUT "Standard AM Agent policy being built.\n";
+}
 # 
 # Open the main input and output files
 #
