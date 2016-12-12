@@ -16,10 +16,12 @@ SED_OPTS="-f /etc/httpd/build_conf/sed-transform"
 
 # Got a bigger hammer
 PERL=/bin/perl
-PERL_OPTS="-f config-transform.pl"
+PERL_OPTS="-f /etc/httpd/build_conf/config-transform.pl"
 
 CP=/bin/cp
 CP_OPTS=-p
+
+MV=/usr/bin/mv
 
 
 for CurrentFile in main-head.conf main-only.conf mime.types policy-url-file.txt \

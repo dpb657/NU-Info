@@ -128,7 +128,7 @@ deployChicago: ALL test
 	echo -e "Deploying to $(REMOTE_HOST)" && \
 	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
 	echo -e "\tBuild directory synchronized" && \
-	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude=Makefile $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
 	echo -e "\tConfiguration directory synchronized" && \
 	$(SED) -e "s/\%LOCALHOSTNAME\%/$(REMOTE_HOST)/" < $(BUILD_DIR)$(AMAgent_CONF) > $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
 	echo -e "\tCustom AMAgent configuration built for this system" && \
@@ -144,7 +144,7 @@ deployEvanston: ALL test
 	echo -e "Deploying to $(REMOTE_HOST)" && \
 	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
 	echo -e "\tBuild directory synchronized" && \
-	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude=Makefile $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
 	echo -e "\tConfiguration directory synchronized" && \
 	$(SED) s/\%LOCALHOSTNAME\%/$(REMOTE_HOST)/ < $(BUILD_DIR)$(AMAgent_CONF) > $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
 	echo -e "\tCustom AMAgent configuration built for this system" && \

@@ -57,6 +57,7 @@
 # Hot-Swap Enabled: Yes
 #
 com.sun.identity.agents.config.login.url[0] = https://websso.it.northwestern.edu:443/amserver/UI/Login
+# com.sun.identity.agents.config.login.url[0] = https://evssodev4.ci.northwestern.edu:443/amserver/UI/Login
 
 #
 # SSO TOKEN COOKIE NAME
@@ -110,7 +111,7 @@ com.sun.identity.agents.config.cookie.secure = false
 #
 # Hot-Swap Enabled: Yes
 #
-com.sun.identity.agents.config.debug.level = all:1
+com.sun.identity.agents.config.debug.level = all:3
 
 #
 # AGENT DEBUG LOG FILE PROPERTIES
@@ -122,7 +123,7 @@ com.sun.identity.agents.config.debug.level = all:1
 #
 # Hot-Swap Enabled: Yes
 #
-com.sun.identity.agents.config.debug.file.rotate = false
+com.sun.identity.agents.config.debug.file.rotate = true
 com.sun.identity.agents.config.debug.file.size = 10000000 
 
 #
@@ -146,7 +147,7 @@ com.sun.identity.agents.config.audit.accesstype = LOG_NONE
 com.sun.identity.agents.config.log.disposition = REMOTE
 com.sun.identity.agents.config.remote.logfile = amAgent_%LOCALHOSTNAME%_ci_northwestern_edu_80.log
 com.sun.identity.agents.config.remote.log.interval = 5
-com.sun.identity.agents.config.local.log.rotate = false
+com.sun.identity.agents.config.local.log.rotate = true
 com.sun.identity.agents.config.local.log.size = 52428800
 
 #
@@ -598,6 +599,7 @@ com.sun.identity.agents.config.profile.attribute.cookie.maxage = 300
 #
 com.sun.identity.agents.config.cdsso.enable = false
 com.sun.identity.agents.config.cdsso.cdcservlet.url[0] = https://websso.it.northwestern.edu:443/amserver/cdcservlet
+# com.sun.identity.agents.config.cdsso.cdcservlet.url[0] = https://evssodev4.ci.northwestern.edu:443/amserver/cdcservlet
 com.sun.identity.agents.config.cdsso.cookie.domain[0] = 
 
 #
@@ -616,6 +618,7 @@ com.sun.identity.agents.config.cdsso.cookie.domain[0] =
 # Hot-Swap Enabled: Yes
 #
 com.sun.identity.agents.config.logout.url[0] = https://websso.it.northwestern.edu:443/amserver/UI/Logout
+# com.sun.identity.agents.config.logout.url[0] = https://evssodev4.ci.northwestern.edu:443/amserver/UI/Logout
 com.sun.identity.agents.config.agent.logout.url[0] = 
 com.sun.identity.agents.config.logout.cookie.reset[0] = 
 com.sun.identity.agents.config.logout.redirect.url = 
