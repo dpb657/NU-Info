@@ -8,6 +8,7 @@ use Data::Dumper qw(Dumper);
 my $prevdeny = "";
 my $prevallow = "";
 my $whitespace = "";
+my $directive = "";
 my $restofline = "";
 my $retainedname = "";
 my $printalias = 0;
@@ -38,21 +39,21 @@ while ( <> ) {
 	}
 	if (/:8002/) {next;}				# Remove references to old test port except in comments
 	if (/nwu.edu/) {next;}				# Remove references to old domain name except in comments
-	if (/(\s)*ServerName\s*(.*)$/i) {
+	if (/(\s*)(ServerName)\s*(.*)$/i or /(\s*)(ServerAlias)\s*(.*)$/i) {
 		$whitespace = $1;			# Store leading whitespace to keep the indentation correct
-		$retainedname = $restofline = $2;	# Modify the name to use the macro
+		$directive = $2;
+		$retainedname = $restofline = $3;	# Modify the name to use the macro
 		if ( ! defined ( $whitespace )) { $whitespace = ""; }
 		if ( /northwestern.edu/i ) {
 			$restofline =~ s/northwestern.edu/\$\{local_Domain_Name\}/g;
 			$printalias = 1;
 		};
-		#printf "%sServerName  %s\n", $whitespace, $retainedname;
-		printf "%sServerName  %s\n", $whitespace, $restofline;
-		if ( $printalias ) {
-			# printf "%sServerAlias %s\n", $whitespace, $restofline;
-			printf "%sServerAlias %s\n", $whitespace, $retainedname;
-			$printalias = 0;
-		}
+		printf "%s%s  %s\n", $whitespace, $directive, $restofline;
+		# Remove the following for final copy
+#		if ( $printalias ) {
+#			#printf "%sServerAlias %s\n", $whitespace, $retainedname;
+#			$printalias = 0;
+#		}
 		next
 	} else { 
 		s/northwestern.edu/\$\{local_Domain_Name\}/g;

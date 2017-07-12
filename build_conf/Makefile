@@ -2,7 +2,7 @@
 #
 
 # Turn off in production
-TRANSFORM_TEST = -t
+TRANSFORM_TEST = 
 
 BUILD_DIR		= /etc/httpd/build_conf/
 CONFIG_TARGET_DIR	= /etc/httpd/conf.d/
@@ -42,10 +42,14 @@ CP			= /bin/cp
 SCP			= /bin/scp
 SCP_OPTS		= -qp
 
+CURL			= /bin/curl
+CURL_OPTS		= -s -o /dev/null 
+
 # Directly manage httpd ignoring systemd
 #HTTPD_RESTART		= "/usr/sbin/httpd -k stop && /bin/sleep 10 && /usr/sbin/httpd -k start || exit -1"
 # In keeping with RHEL7 using the systemd commands
 HTTPD_RESTART		= "/bin/systemctl stop httpd && /bin/sleep 10 && /bin/systemctl start httpd || exit -1"
+HTTPD_RELOAD		= "/bin/systemctl reload httpd && /bin/sleep 10 || exit -1"
 
 include /etc/httpd/localhost_configs/local_makefile_include
 
@@ -135,9 +139,12 @@ deployChicago: ALL test
 	$(SCP) $(SCP_OPTS) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/$(AMAgent_CONF) && \
 	$(RM) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
 	echo -e "\tCustom AMAgent configuration copied and removed" && \
-	echo -e "\tBegin Apache Restart" && \
-	$(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART) && \
-	echo -e "\tApache restarted successfully\n" || exit -1;)
+	echo -e "\tBegin Apache Redeploy" && \
+	$(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RELOAD) && \
+	echo -e "\tApache Redeployed successfully" && \
+	echo -e "\tCURL HTTP check of $(REMOTE_HOST) \c" && \
+	$(CURL) $(CURL_OPTS) http://$(REMOTE_HOST)/ && \
+	echo -e "SUCCESSFUL!\n"  || exit -1;)
 
 deployEvanston: ALL test
 	@$(foreach REMOTE_HOST, $(EV_HOSTS), \
@@ -151,7 +158,49 @@ deployEvanston: ALL test
 	$(SCP) $(SCP_OPTS) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/$(AMAgent_CONF) && \
 	$(RM) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
 	echo -e "\tCustom AMAgent configuration copied and removed" && \
+	echo -e "\tBegin Apache Redeploy" && \
+	$(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RELOAD) && \
+	echo -e "\tApache Redeployed successfully" && \
+	echo -e "\tCURL HTTP check of $(REMOTE_HOST) \c" && \
+	$(CURL) $(CURL_OPTS) http://$(REMOTE_HOST)/ && \
+	echo -e "SUCCESSFUL!\n"  || exit -1;)
+
+
+restartChicago: ALL test
+	@$(foreach REMOTE_HOST, $(CH_HOSTS), \
+	echo -e "Deploying to $(REMOTE_HOST)" && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
+	echo -e "\tBuild directory synchronized" && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude=Makefile $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
+	echo -e "\tConfiguration directory synchronized" && \
+	$(SED) -e "s/\%LOCALHOSTNAME\%/$(REMOTE_HOST)/" < $(BUILD_DIR)$(AMAgent_CONF) > $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
+	echo -e "\tCustom AMAgent configuration built for this system" && \
+	$(SCP) $(SCP_OPTS) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/$(AMAgent_CONF) && \
+	$(RM) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
+	echo -e "\tCustom AMAgent configuration copied and removed" && \
 	echo -e "\tBegin Apache Restart" && \
 	$(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART) && \
-	echo -e "\tApache restarted successfully\n" || exit -1;)
+	echo -e "\tApache Restarted successfully" && \
+	echo -e "\tCURL HTTP check of $(REMOTE_HOST) \c" && \
+	$(CURL) $(CURL_OPTS) http://$(REMOTE_HOST)/ && \
+	echo -e "SUCCESSFUL!\n"  || exit -1;)
+
+restartEvanston: ALL test
+	@$(foreach REMOTE_HOST, $(EV_HOSTS), \
+	echo -e "Deploying to $(REMOTE_HOST)" && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
+	echo -e "\tBuild directory synchronized" && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude=Makefile $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
+	echo -e "\tConfiguration directory synchronized" && \
+	$(SED) s/\%LOCALHOSTNAME\%/$(REMOTE_HOST)/ < $(BUILD_DIR)$(AMAgent_CONF) > $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
+	echo -e "\tCustom AMAgent configuration built for this system" && \
+	$(SCP) $(SCP_OPTS) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) $(REMOTE_HOST):/opt/websso/web_agents/apache24_agent/Agent_001/config/$(AMAgent_CONF) && \
+	$(RM) $(BUILD_DIR)$(AMAgent_CONF).$(REMOTE_HOST) && \
+	echo -e "\tCustom AMAgent configuration copied and removed" && \
+	echo -e "\tBegin Apache Restart" && \
+	$(SSH) $(SSH_OPTS) $(REMOTE_HOST) $(HTTPD_RESTART) && \
+	echo -e "\tApache Restarted successfully" && \
+	echo -e "\tCURL HTTP check of $(REMOTE_HOST) \c" && \
+	$(CURL) $(CURL_OPTS) http://$(REMOTE_HOST)/ && \
+	echo -e "SUCCESSFUL!\n"  || exit -1;)
 

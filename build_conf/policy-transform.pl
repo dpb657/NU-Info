@@ -53,6 +53,8 @@ sub process_policy_file {
 		{
 			next;
 		}
+		# If I make policy-url-file.txt consistent with Apache configuration files.
+		$row =~ s/\$\{local_Domain_Name\}/northwestern.edu/i;
 		# we may need either the real domain or the test one, print both
 		if ( $test_transform ) {
 			printf $fh_output "%s[%d] = %s\n", $AMAgent_notenforced, $index++, $row;

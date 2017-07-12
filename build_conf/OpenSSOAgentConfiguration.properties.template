@@ -111,7 +111,7 @@ com.sun.identity.agents.config.cookie.secure = false
 #
 # Hot-Swap Enabled: Yes
 #
-com.sun.identity.agents.config.debug.level = all:3
+com.sun.identity.agents.config.debug.level = all:2
 
 #
 # AGENT DEBUG LOG FILE PROPERTIES
@@ -124,7 +124,10 @@ com.sun.identity.agents.config.debug.level = all:3
 # Hot-Swap Enabled: Yes
 #
 com.sun.identity.agents.config.debug.file.rotate = true
-com.sun.identity.agents.config.debug.file.size = 10000000 
+# 10 Mb decimal
+# com.sun.identity.agents.config.debug.file.size = 10000000 
+# 100 * 1024 * 1024 or 100 true megabytes
+com.sun.identity.agents.config.debug.file.size = 104857600
 
 #
 # AUDIT LOG PROPERTIES
@@ -135,7 +138,7 @@ com.sun.identity.agents.config.debug.file.size = 10000000
 #     ALL.
 #   - remote.logfile: Specifies the file name to be used on the remote server
 #     if the log.disposition is set to REMOTE or ALL.
-#   - remote.log.interval: Specifies the periodic interval time in minutes, 
+#   - remote.un.identity.agents.config.debug.og.interval: Specifies the periodic interval time in minutes, 
 #     thereby agent sends audit messages to server.
 #   - local.log.rotate: A flag that indicates if the rotation of audit log
 #     local file is enabled or disabled.
