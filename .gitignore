@@ -6,14 +6,9 @@ oldhttpd
 run
 *.swp
 transfer/
+localhost_configs/
 .vimrc
 build_conf/AMAgent_enforced.txt
 build_conf/Agent_Enforced_URLs
 build_conf/OpenSSOAgentConfiguration.properties
-build_conf/main-head.conf
-build_conf/main-only.conf
-build_conf/policy-url-file.txt
-build_conf/sed-transform
-build_conf/virtual-redirect.conf
-build_conf/virtual.conf
 
