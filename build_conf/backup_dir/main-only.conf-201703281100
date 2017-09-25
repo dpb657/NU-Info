@@ -5039,9 +5039,7 @@ RedirectMatch permanent ^/living/about-us/b1g-hoc/ http://www.${local_Domain_Nam
 
 # Request from Nimisha Joshi (nsj448), completed 06/07/2016 by Darryl Baker (dpb657) Footprints ticket #396300
 # Begin 396300
-# Request from Phil Tracy completed 8/25/17 by Ron Blitz (rjb918) Footprints ticket #581829
-# RedirectMatch permanent ^/mfa-register https://idmapp.itcs.${local_Domain_Name}/duoenroll/app
-RedirectMatch permanent ^/mfa-register https://duoenroll.it.northwestern.edu/
+RedirectMatch permanent ^/mfa-register https://idmapp.itcs.${local_Domain_Name}/duoenroll/app
 RedirectMatch permanent ^/mfa-test https://idmapp.itcs.${local_Domain_Name}/duo-test
 # End 396300
 
@@ -5102,10 +5100,9 @@ RedirectMatch   permanent ^/cirpbiom2017	http://sites.${local_Domain_Name}/cirpb
 # End 403836
 
 # Request from Nimisha Joshi (nsj448), completed 08/05/2016 by Darryl Baker (dpb657) Footprints ticket #419345
-# Request from Nimisha Joshi (nsj448) ticket #581295 by Ron Blitz (rjb918) 08/24/2017
 # Begin 419345
-RedirectMatch permanent ^/up/bct$	http://www.${local_Domain_Name}/up/how-to-report/threatening-behavior.html
-RedirectMatch permanent ^/up/bct/$	http://www.${local_Domain_Name}/up/how-to-report/threatening-behavior.html
+RedirectMatch permanent ^/up/bct$	http://www.${local_Domain_Name}/up/crime/threat-assessment.html
+RedirectMatch permanent ^/up/bct/$	http://www.${local_Domain_Name}/up/crime/threat-assessment.html
 # End 419345
 
 # Request from Nimisha Joshi (nsj448), completed 08/10/2016 by Darryl Baker (dpb657) Footprints ticket #420766
@@ -5266,9 +5263,8 @@ RedirectMatch permanent ^/remote/$ http://support.it.${local_Domain_Name}
 # End #479519
 
 # Request from Jacob Arnold (jar472) ticket #491166 by Darryl Baker (dpb657) 
-# Removed by request from Nimisha Joshi (nsj442) ticket #522400 by Darryl Baker (dpb657) 04/17/2017
 # Begin #491166
-# Redirect permanent /studentaffairs/student-engagement/student-recognition/wildcat-impact-awards/impact-fall-2016/index.html http://www.${local_Domain_Name}/studentaffairs/student-engagement/student-input/wildcat-impact-awards/impact-fall-2016/index.html
+Redirect permanent /studentaffairs/student-engagement/student-recognition/wildcat-impact-awards/impact-fall-2016/index.html http://www.${local_Domain_Name}/studentaffairs/student-engagement/student-input/wildcat-impact-awards/impact-fall-2016/index.html
 # End #491166
 
 # Request from Jacob Arnold (jar472) ticket #491166 by Darryl Baker (dpb657) 02/15/2017
@@ -5294,207 +5290,31 @@ Redirect permanent /provost/faculty-resources/faculty-salary-table.html					http
 
 # Request from Jacob Arnold (jar472) ticket #491166 by Darryl Baker (dpb657) 02/24/2017
 # Begin #499898
-Redirect permanent /summer/ http://sps.${local_Domain_Name}/program-areas/summer/
+Redirect permanent /summer/ http://sps.northwestern.edu/program-areas/summer/
 # End #499898
 
 # Request from Nimisha Joshi (nsj442) ticket #501187 by Darryl Baker (dpb657) 03/02/2017
 # Begin #501187
 # Commenting out all previous sexual-harassment redirects see "# Removed #501187"
-RedirectMatch permanent ^/sexual-misconduct/prevention/news-and-announcements/campus-climate-survey-report.html$ http://www.${local_Domain_Name}/sexual-misconduct/about-us/reports.html
-RedirectMatch permanent ^/sexual-harassment/?		http://www.${local_Domain_Name}/sexual-misconduct/index.html
+RedirectMatch permanent ^/sexual-misconduct/prevention/news-and-announcements/campus-climate-survey-report.html$ http://www.northwestern.edu/sexual-misconduct/about-us/reports.html
+RedirectMatch permanent ^/sexual-harassment/?		http://www.northwestern.edu/sexual-misconduct/index.html
 # End #501187
 
 # Request from Nimisha Joshi (nsj442) ticket #506895 by Darryl Baker (dpb657) 03/15/2017
 # Begin #506895
-RedirectMatch permanent ^/general-counsel/staff/?		http://www.${local_Domain_Name}/general-counsel/our-staff/index.html
-RedirectMatch permanent ^/general-counsel/contracts/?		http://www.${local_Domain_Name}/general-counsel/index.html
-Redirect permanent /general-counsel/contracts.html		http://www.${local_Domain_Name}/general-counsel/index.html
-Redirect permanent /general-counsel/policies/index.html		http://www.${local_Domain_Name}/general-counsel/index.html
-Redirect permanent /general-counsel/policies/political.html	http://www.${local_Domain_Name}/general-counsel/index.html
-Redirect permanent /general-counsel/ip-primer/index.html	http://www.${local_Domain_Name}/general-counsel/index.html
+RedirectMatch permanent ^/general-counsel/staff/?		http://northwestern.edu/general-counsel/our-staff/index.html
+RedirectMatch permanent ^/general-counsel/contracts/?		http://northwestern.edu/general-counsel/index.html
+Redirect permanent /general-counsel/contracts.html		http://northwestern.edu/general-counsel/index.html
+Redirect permanent /general-counsel/policies/index.html		http://northwestern.edu/general-counsel/index.html
+Redirect permanent /general-counsel/policies/political.html	http://northwestern.edu/general-counsel/index.html
+Redirect permanent /general-counsel/ip-primer/index.html	http://northwestern.edu/general-counsel/index.html
 # End #506895
 
-# Request from Nimisha Joshi (nsj442) ticket #512299 by Darryl Baker (dpb657) 03/15/2017
+# Request from Nimisha Joshi (nsj442) ticket #506895 by Darryl Baker (dpb657) 03/15/2017
 # Begin #512299
-RedirectMatch permanent ^/undocumented$		http://www.${local_Domain_Name}/enrichment/undocumented-daca/welcome/index.html
-RedirectMatch permanent ^/undocumented/$	http://www.${local_Domain_Name}/enrichment/undocumented-daca/welcome/index.html
-RedirectMatch permanent ^/undocumented/?	http://www.${local_Domain_Name}/enrichment/undocumented-daca/welcome/index.html
-# End #512299
-
-# Request from Nimisha Joshi (nsj442) ticket #513512 by Darryl Baker (dpb657) 03/28/2017
-# Begin #513512
-Redirect      permanent /procurement/payment/procard/index.html	http://www.${local_Domain_Name}/procurement/payment/corporate-card/index.html
-RedirectMatch permanent ^/procurement/payment/procard$		http://www.${local_Domain_Name}/procurement/payment/corporate-card/index.html
-RedirectMatch permanent ^/procurement/payment/procard/$		http://www.${local_Domain_Name}/procurement/payment/corporate-card/index.html
-# End #513512
-
-# Request from Nimisha Joshi (nsj442) ticket #518977 by Darryl Baker (dpb657) 04/07/2017
-# Begin #518977
-Redirect      permanent /sexual-misconduct/file-a-report/faqs.html		http://www.${local_Domain_Name}/sexual-misconduct/index.html 
-RedirectMatch permanent ^/provost/sexual-harassment/.*				http://www.${local_Domain_Name}/sexual-misconduct/index.html 
-RedirectMatch permanent ^/sexual-misconduct/university-policy/.*		http://www.${local_Domain_Name}/sexual-misconduct/index.html 
-RedirectMatch permanent ^/sexual-misconduct/prevention/.*			http://www.${local_Domain_Name}/sexual-misconduct/index.html 
-RedirectMatch permanent ^/sexual-misconduct/sexual-misconduct-and-title-IX/.*	http://www.${local_Domain_Name}/sexual-misconduct/index.html
-# End #518977
-
-# Request from Nimisha Joshi (nsj442) ticket #524484 by Darryl Baker (dpb657) 04/24/2017
-# Begin #524484
-Redirect permanent /auxiliary-services/travel/make-reservation/index.html			http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-Redirect permanent /auxiliary-services/travel/make-reservation/egencia/index.html		http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/egencia/index.html
-Redirect permanent /auxiliary-services/travel/make-reservation/egencia/faqs-traveler.html	http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/egencia/faqs.html
-Redirect permanent /auxiliary-services/travel/make-reservation/egencia/faqs-arranger.html	http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/egencia/faqs.html
-Redirect permanent /auxiliary-services/travel/make-reservation/orbitz.html			http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/egencia/index.html
-Redirect permanent /auxiliary-services/travel/make-reservation/approved-travel-agencies.html	http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/index.html
-Redirect permanent /auxiliary-services/travel/hotels/rates-billing.html				http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/index.html
-Redirect permanent /auxiliary-services/secure/travel/evanston.html				http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-Redirect permanent /auxiliary-services/secure/travel/chicago.html				http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-Redirect permanent /auxiliary-services/secure/travel/extended-stay.html				http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-Redirect permanent /auxiliary-services/secure/travel/nation.html				http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-Redirect permanent /auxiliary-services/travel/car_rental/accidents-insurance.html		http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/index.html
-Redirect permanent /auxiliary-services/travel/reimbursement.html				http://www.${local_Domain_Name}/auxiliary-services/travel/policies.html
-Redirect permanent /auxiliary-services/travel/resources/index.html				http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-Redirect permanent /auxiliary-services/travel/resources/quickref.html				http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-Redirect permanent /auxiliary-services/travel/resources/rate_references.html			http://www.${local_Domain_Name}/auxiliary-services/travel/policies.html
-Redirect permanent /auxiliary-services/travel/resources/sites.html				http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-Redirect permanent /auxiliary-services/travel/news-tips.html					http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-Redirect permanent /auxiliary-services/secure/travel/index.html					http://www.${local_Domain_Name}/auxiliary-services/travel/index.html
-# End #524484
-
-# Request from Nimisha Joshi (nsj442) ticket #529133 by Darryl Baker (dpb657) 05/03/2017
-# Begin #529133
-Redirect permanent /risk/policies/university-vehicle/index.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/index.html
-Redirect permanent /risk/policies/university-vehicle/list-of-approved-drivers.html	http://www.${local_Domain_Name}/risk/policies/approved-drivers/list-of-approved-drivers.html
-Redirect permanent /risk/policies/university-vehicle/a-c.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/a-c.html
-Redirect permanent /risk/policies/university-vehicle/d-j.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/d-j.html
-Redirect permanent /risk/policies/university-vehicle/k-o.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/k-o.html
-Redirect permanent /risk/policies/university-vehicle/p-s.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/p-s.html
-Redirect permanent /risk/policies/university-vehicle/t-z.html				http://www.${local_Domain_Name}/risk/policies/approved-drivers/t-z.html
-Redirect permanent /risk/policies/university-vehicle/recent-drivers.html		http://www.${local_Domain_Name}/risk/policies/approved-drivers/recent-drivers.html
-Redirect permanent /risk/policies/university-vehicle/expiring-drivers.html		http://www.${local_Domain_Name}/risk/policies/approved-drivers/expiring-drivers.html
-# End #529133
-
-# Request from Nimisha Joshi (nsj442) ticket #529529 by Darryl Baker (dpb657) 05/04/2017
-# Begin #529529
-RedirectMatch permanent ^/brand/brand-assets/presentation-tools/* http://www.${local_Domain_Name}/brand/brand-assets/presentation-materials/power-point-templates/index.html
-
-# Request from Nimisha Joshi (nsj442) ticket #536471 by Darryl Baker (dpb657) 05/18/2017
-# Begin #536471
-RedirectMatch	permanent ^/univ-relations/index.html				http://www.${local_Domain_Name}/global-marketing-communications/index.html
-Redirect	permanent /univ-relations/staff.html				http://www.${local_Domain_Name}/global-marketing-communications/our-team/index.html
-Redirect	permanent /univ-relations/our-groups/media-relations.html	http://www.${local_Domain_Name}/global-marketing-communications/our-team/index.html
-Redirect	permanent /univ-relations/our-groups/northwestern-magazine.html	http://www.${local_Domain_Name}/global-marketing-communications/our-team/index.html
-Redirect	permanent /univ-relations/our-groups/publications.html		http://www.${local_Domain_Name}/global-marketing-communications/our-team/index.html
-Redirect	permanent /univ-relations/our-groups/web-communications.html	http://www.${local_Domain_Name}/global-marketing-communications/our-team/index.html
-RedirectMatch	permanent ^/gmc$						http://www.${local_Domain_Name}/global-marketing-communications/
-RedirectMatch	permanent ^/gmc/(.*)$						http://www.${local_Domain_Name}/global-marketing-communications/$1
-# End #536471
-
-# Request from Nimisha Joshi (nsj442) ticket #539874 by Darryl Baker (dpb657) 05/19/2017
-# Begin #539874
-Redirect permanent /univ-relations/webcomm/project-request/index.html	http://www.${local_Domain_Name}/global-marketing-communications/work-with-us/initiate-a-request.html
-Redirect permanent /univ-relations/webcomm/projects/index.html	http://www.${local_Domain_Name}/global-marketing-communications/portfolio/index.html
-# End #539874
-
-# Request from Nimisha Joshi (nsj442) ticket #564939 by Darryl Baker (dpb657) 07/24/2017
-# Begin #564939
-Redirect permanent /academic-resource-center	http://www.${local_Domain_Name}/searle/resources/undergraduate-academic-resources/index.html
-Redirect permanent /arc				http://www.${local_Domain_Name}/searle/resources/undergraduate-academic-resources/index.html
-# End #564939
-
-# Request from Nimisha Joshi (nsj442) ticket #566510  by Darryl Baker (dpb657) 05/28/2017
-# Begin #566510
-Redirect permanent /up/about/body-worn-cameras.html						http://www.${local_Domain_Name}/up/your-safety/body-worn-cameras/index.html
-Redirect permanent /up/special/big-10-police-chiefs-annual-meeting.html				http://www.${local_Domain_Name}/up/about/big-10-police-chiefs-annual-conference.html
-Redirect permanent /up/safety/campus-security-authorities.html					http://www.${local_Domain_Name}/ethics/campus-security/campus-security-authorities.html
-Redirect permanent /up/safety/crime-report-form.html						http://www.${local_Domain_Name}/up/how-to-report/crimes/crime-report-form.html
-Redirect permanent /up/safety/annual-report/secure/csa-status-change.html			http://www.${local_Domain_Name}/ethics/campus-security/annual-report/secure/csa-status-change.html
-Redirect permanent /up/safety/annual-report/secure/non-campus-property-registration.html	http://www.${local_Domain_Name}/ethics/campus-security/annual-report/secure/non-campus-property-registration.html
-Redirect permanent /up/safety/annual-report/secure/student-trip-report-form.html		http://www.${local_Domain_Name}/ethics/campus-security/annual-report/secure/student-trip-report-form.html
-Redirect permanent /up/csa-verify/csa-additional-incidents.html					http://www.${local_Domain_Name}/ethics/campus-security/csa-verify/csa-additional-incidents.html
-Redirect permanent /up/csa-verify/csa-tally-full.html						http://www.${local_Domain_Name}/ethics/campus-security/csa-verify/csa-tally-full.html
-Redirect permanent /up/csa-verify/csa-tally-mini.html						http://www.${local_Domain_Name}/ethics/campus-security/csa-verify/csa-tally-mini.html
-Redirect permanent /up/csa-verify/csa-tally-unreported.html					http://www.${local_Domain_Name}/ethics/campus-security/csa-verify/csa-tally-unreported.html
-Redirect permanent /up/safety/clery-liaison-program/clery-liaison-registration-form.html	http://www.${local_Domain_Name}/ethics/campus-security/clery-liaison-program/clery-liaison-registration-form.html
-Redirect permanent /up/safety/annual-report/index.html						http://www.${local_Domain_Name}/up/your-safety/clery-act-safety-reports.html
-Redirect permanent /up/special/bike-registration-locks.html					http://www.${local_Domain_Name}/up/community-services/bike-registration/index.html
-Redirect permanent /up/crime/awareness/activeshooter.html					http://www.${local_Domain_Name}/up/your-safety/emergency-procedures/active-violence.html
-Redirect permanent /up/about/contact/department-directory.html					http://www.${local_Domain_Name}/up/about/contact/directory.html
-Redirect permanent /up/docs/annual-security-report-evanston-chicago.pdf				http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-evanston-chicago.pdf
-Redirect permanent /up/docs/annual-security-report-miami.pdf					http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-miami.pdf
-Redirect permanent /up/docs/annual-security-report-qatar.pdf					http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-qatar.pdf
-Redirect permanent /up/docs/annual-security-report-washngton.pdf				http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-washngton.pdf
-Redirect permanent /up/docs/annual-security-report-evanston-chicago.pdf				http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-evanston-chicago.pdf
-Redirect permanent /up/docs/annual-security-report-miami.pdf					http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-miami.pdf
-Redirect permanent /up/docs/annual-security-report-qatar.pdf					http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-qatar.pdf
-Redirect permanent /up/docs/annual-security-report-washngton.pdf				http://www.${local_Domain_Name}/ethics/campus-security/annual-security-report-washngton.pdf
-Redirect permanent /up/blotter/blotter_ev.html							http://www.${local_Domain_Name}/up/facts-and-figures/campus-crime/daily-blotter/evanston-campus-police-blotter.html
-Redirect permanent /up/blotter/blotter_ch.html							http://www.${local_Domain_Name}/up/facts-and-figures/campus-crime/daily-blotter/chicago-campus-police-blotter.html
-Redirect permanent /up/safety/crime-alerts/index.html						http://www.${local_Domain_Name}/up/your-safety/crime-alerts.html
-RedirectMatch permanent ^/up/emergency/(.*)$							http://www.${local_Domain_Name}/emergency-management/$1
-# End #566510
-
-# Request from Nimisha Joshi (nsj442) ticket #570157  by Darryl Baker (dpb657) 08/01/2017
-# Begin #570157
-Redirect permanent /foundationrelations/finding-funders/title.html http://www.${local_Domain_Name}/foundationrelations/finding-funders/requests-for-proposals.html
-# End #570157
-
-# Request from Nimisha Joshi (nsj442) ticket #576507  by Darryl Baker (dpb657) 08/01/2017
-# Begin #576507
-Redirect permanent /auxiliary-services/travel/car_rental/index.html	http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/index.html
-Redirect permanent /auxiliary-services/travel/hotels/rates-billing.html	http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-Redirect permanent /auxiliary-services/travel/air.html			http://www.${local_Domain_Name}/auxiliary-services/travel/air/index.html
-Redirect permanent /auxiliary-services/travel/car_rental/car_rental/accidents-insurance.html	http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/index.html
-Redirect permanent /auxiliary-services/secure/travel/enterprise.html	http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/companies.html
-Redirect permanent /auxiliary-services/secure/travel/national.html	http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/companies.html
-Redirect permanent /auxiliary-services/secure/travel/compare.html	http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/index.html
-# Begin #576507
-
-# Request from Jacob Arnold (jar472) ticket #579054 by Darryl Baker (dpb657) 08/18/2017
-# Begin #579054
-Redirect permanent /up/about/compliments-complaints.html http://www.${local_Domain_Name}/up/how-to-report/feedback-on-police-service.html
-# End #579054
-
-# Request from Jacob Arnold (jar472) ticket #580420 by Ron Blitz (rjb918) 08/22/2017
-# Begin #580420
-Redirect permanent /searle/academic-skill-advancement    http://www.${local_Domain_Name}/searle/programs-events/undergrad/academic-skill-advancement/index.html
-Redirect permanent /searle/group-study-tutoring          http://www.${local_Domain_Name}/searle/programs-events/undergrad/group-study/index.html
-# End #580420
-
-# Request from Nimisha Joshi (nsj442) ticket #584062  by Darryl Baker (dpb657) 09/05/2017
-# Begin #584062
-Redirect permanent /provost/policies/civility-and-campus-safety/non-retaliation.html http://policies.${local_Domain_Name}/under-review/secure/index.html
-# End #584062
-
-# Request from Jacob Arnold (jar472) ticket #583974 by Darryl Baker (dpb657) 09/06/2017
-# Begin #583974
-RedirectMatch permanent ^/invo/(.*)$ https://invo.${local_Domain_Name}/$1
-# End #583974
-
-# Request from Ian Martinez (cim417) ticket #583015  by Darryl Baker (dpb657) 09/13/2017
-# Begin #583015
-RedirectMatch permanent ^/joinallofus$ http://sites.${local_Domain_Name}/joinallofus
-RedirectMatch permanent ^/joinallofus/(.*) http://sites.${local_Domain_Name}/joinallofus
-# End #583015
-
-# Request from Nimisha Joshi (nsj442) ticket #578418  by Darryl Baker (dpb657) 09/13/2017
-# Begin #578418
-Redirect permanent /hr/workplace-learning/performance-excellence/index.html	http://perform.${local_Domain_Name}/index.html
-Redirect permanent /hr/workplace-learning/new-performance-excellence/index.html	http://perform.${local_Domain_Name}/index.html
-# End #578418
-
-# Request from Nimisha Joshi (nsj442) ticket #591209  by Darryl Baker (dpb657) 09/14/2017
-# Begin #591209
-RedirectMatch permanent ^/studentorgs/get-involved/rsos-fairs/index(.*) http://www.${local_Domain_Name}/studentorgs/students/upcoming-fairs/index.html
-# End #591209
-
-# Request from Nimisha Joshi (nsj442) ticket #591594  by Darryl Baker (dpb657) 09/15/2017
-# Begin #591594
-RedirectMatch permanent ^/searle/drop-in-tutoring(.*) http://www.${local_Domain_Name}/searle/programs-events/undergrad/group-study/drop-in-peer-tutoring.html
-# End #591594
-   
-
-
-
+RedirectMatch permanent ^/undocumented$		http://www.northwestern.edu/enrichment/undocumented-daca/welcome/index.html
+RedirectMatch permanent ^/undocumented/$	http://www.northwestern.edu/enrichment/undocumented-daca/welcome/index.html
+RedirectMatch permanent ^/undocumented/?	http://www.northwestern.edu/enrichment/undocumented-daca/welcome/index.html
 
 
 

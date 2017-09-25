@@ -37,27 +37,26 @@ RewriteCond %{HTTP_HOST}        !^$
 </IfDefine>
 
 <IfDefine EXPOSENODES>
-#   Following commented out 8/29/17 DPB
-#     Expose the cluster nodes as names for the main host and do not redirect 
-#     them to wwww.northwestern.edu
-#     We DO NOT want to do this in production
-#     Access manager rules for the main host were not designed with this in mind, they only list
-#     www.northwestern.edu and/or chnuinfo.northwestern.edu
-#     add load-balanced VIP addresses to this list 11-11-2011
-#     add cross-campus VIP 12-2-11
-#     <IfDefine !TESTSERVER>
-#         RewriteCond %{HTTP_HOST}        !=evnuinfow1.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=evnuinfow2.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=evnuinfow3.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=chnuinfow1.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=chnuinfow2.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=chnuinfow3.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=nuinfo-vip.it.${local_Domain_Name}        [NC]
-#         RewriteCond %{HTTP_HOST}        !=chnuinfo-vip.it.${local_Domain_Name}      [NC]
-#         RewriteCond %{HTTP_HOST}        !=nuinfo.wideip.${local_Domain_Name}        [NC]
-#     </IfDefine>
-#     <IfDefine TESTSERVER>
-#     </IfDefine>
+    # Expose the cluster nodes as names for the main host and do not redirect 
+    # them to wwww.northwestern.edu
+    # We DO NOT want to do this in production
+    # Access manager rules for the main host were not designed with this in mind, they only list
+    # www.northwestern.edu and/or chnuinfo.northwestern.edu
+    # add load-balanced VIP addresses to this list 11-11-2011
+    # add cross-campus VIP 12-2-11
+    <IfDefine !TESTSERVER>
+        RewriteCond %{HTTP_HOST}        !=evnuinfow1.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=evnuinfow2.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=evnuinfow3.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=chnuinfow1.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=chnuinfow2.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=chnuinfow3.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=nuinfo-vip.it.${local_Domain_Name}        [NC]
+        RewriteCond %{HTTP_HOST}        !=chnuinfo-vip.it.${local_Domain_Name}      [NC]
+        RewriteCond %{HTTP_HOST}        !=nuinfo.wideip.${local_Domain_Name}        [NC]
+    </IfDefine>
+    <IfDefine TESTSERVER>
+    </IfDefine>
     <IfDefine NUINFO_REDUX>
         RewriteCond %{HTTP_HOST}        !=evnuinfoprodweb1.ci.${local_Domain_Name}   [NC]
         RewriteCond %{HTTP_HOST}        !=evnuinfoprodweb2.ci.${local_Domain_Name}   [NC]
@@ -77,11 +76,11 @@ RewriteCond %{HTTP_HOST}        !^$
 # continue POST exclusion 11-26-08
 # P.S. NOTE redirecting POST breaks Sun access manager
 RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-# <IfDefine !TESTSERVER>
-#     RewriteRule ^/(.*)$     http://www.${local_Domain_Name}/$1          [R=permanent,L,NS]
-# </IfDefine>
-# <IfDefine TESTSERVER>
-# </IfDefine>
+<IfDefine !TESTSERVER>
+    RewriteRule ^/(.*)$     http://www.${local_Domain_Name}/$1          [R=permanent,L,NS]
+</IfDefine>
+<IfDefine TESTSERVER>
+</IfDefine>
 
 # special treatment of robots.txt for mirror test name, chnuinfo 1-30-08
 # If accessed as chnuinfo, return exclude-all for robots.txt
@@ -93,9 +92,9 @@ RewriteCond %{REQUEST_METHOD}   !=POST                                          
 # return the normal robots.txt to those IPs
 RewriteCond %{REMOTE_ADDR}      !=129.105.16.40
 RewriteCond %{REMOTE_ADDR}      !=129.105.233.20
-# RewriteCond %{HTTP_HOST}        =chnuinfo.${local_Domain_Name}              [NC,OR]
+RewriteCond %{HTTP_HOST}        =chnuinfo.${local_Domain_Name}              [NC,OR]
 # use PT (passthrough) to allow referencing an aliased URL
-# RewriteRule ^/robots.txt$       /exclude-all-robots.txt                 [NC,PT]
+#RewriteRule ^/robots.txt$       /exclude-all-robots.txt                 [NC,PT]
 RewriteRule ^/robots.txt$        /chnuinfo-robots.txt                    [NC,PT]
 
 
@@ -121,10 +120,10 @@ RewriteRule ^/robots.txt$        /chnuinfo-robots.txt                    [NC,PT]
     # add load-balanced VIP addresses to this list 11-11-2011
     RewriteCond %{HTTP_HOST}        =nuinfo-vip.it.${local_Domain_Name}              [NC,OR]
     RewriteCond %{HTTP_HOST}        =chnuinfo-vip.it.${local_Domain_Name}            [NC,OR]
-    # RewriteCond %{HTTP_HOST}        =nuinfo.wideip.${local_Domain_Name}              [NC,OR]
+    RewriteCond %{HTTP_HOST}        =nuinfo.wideip.${local_Domain_Name}              [NC,OR]
     RewriteCond %{HTTP_HOST}        =nuinfotest.it.${local_Domain_Name}              [NC,OR]
 	# use PT (passthrough) to allow referencing an aliased URL
-	# RewriteRule ^/robots.txt$       /exclude-all-robots.txt                 [NC,PT]
+	RewriteRule ^/robots.txt$       /exclude-all-robots.txt                 [NC,PT]
 </IfDefine>
 
 Alias /exclude-all-robots.txt /nuinfo/httpd/more-docs/robots-exclude-all/robots.txt
@@ -138,6 +137,31 @@ Alias /chnuinfo-robots.txt    /nuinfo/httpd/more-docs/robots-chnuinfo/robots.txt
 <Directory /nuinfo/httpd/more-docs/robots-chnuinfo >
 	ExpiresByType text/plain "access plus 2 weeks"
 </Directory>
+
+<IfDefine MOBHOME>
+
+    # "Mobile Homepage" a special case redirect of NU Homepage
+    RewriteCond %{HTTP_USER_AGENT} "Mobile.+Safari" [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} "Android [234]" [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} "iPhone OS" [NC]
+    RewriteCond %{HTTP_USER_AGENT} !ipad [NC]
+    RewriteCond %{HTTP_COOKIE} !nomobile.*
+    RewriteCond %{REQUEST_URI} ^/index. [NC,OR]
+    RewriteCond %{REQUEST_URI} ^/$         
+    RewriteRule ^(.*) http://m.${local_Domain_Name}/ [R,L]
+
+</IfDefine>
+
+# redirect for Northwestern Magazine as moved to nuinfo 5-1-01
+# http://www.northwestern.edu/magazine/ to
+# http://www.northwestern.edu/magazine/northwestern/magazine.htm
+# this must be placed here so it doesn't hit the generic 2nd level redirect
+
+# turn off redirect 6-1-06
+
+#RewriteRule ^/magazine$            http://www.northwestern.edu/magazine/northwestern/magazine.htm  [R,L,NS]
+#RewriteRule ^/magazine/$           http://www.northwestern.edu/magazine/northwestern/magazine.htm  [R,L,NS]
+#RewriteRule ^/magazine/index.html$ http://www.northwestern.edu/magazine/northwestern/magazine.htm  [R,L,NS]
 
 # redirect for /resnet/ home page 8/31/01
 # put here to avoid the generic 2nd level redirect

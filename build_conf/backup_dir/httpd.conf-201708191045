@@ -203,7 +203,7 @@ LogFormat "%h %l %u %t \"%r\" %>s %B \"%{Referer}i\" \"%{User-agent}i\" %V %a" c
 # new log format for cluster replaces access_log+traffic_log with an expanded access log:
 #
 # timestamp node number "combined log" virtual-host canonical-virtual-host IP-address input-bytes output-bytes
-LogFormat "%{%Y-%m-%d %H:%M:%S}t %{NODENUMBER}e %h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{X-Forwarded-For}i\" \"%{User-agent}i\" %V %v %a  %I %O" extended1
+LogFormat "%{%Y-%m-%d %H:%M:%S}t %{NODENUMBER}e %h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" %V %v %a  %I %O" extended1
 
 # Note: The access log for the cluster is defined below
 
@@ -218,8 +218,6 @@ LogFormat "%{%Y-%m-%d %H:%M:%S}t %{NODENUMBER}e %h %l %u %t \"%r\" %s %b \"%{Ref
 # /usr/local/sbin/rotatelogs was built as a static binary from
 # Apache 2.2.21 sources
 
-# LogFormat "%v %{X-Forwarded-For}i %a %{c}a %l %u %t \"%r\" %>s %b" X-Forwarded-For
-# CustomLog /var/log/httpd/x-forwarded-for.log X-Forwarded-For
 
 <IfDefine HEVNUINFOPRODWEB1>
     # server evnuinfoprodweb1.it.${local_Domain_Name}
@@ -483,7 +481,8 @@ MaxSpareThreads 6000
 # Compensate for F5 showing as the source IP
 # Use X-Forwarded-For as the source IP
 RemoteIPHeader X-Forwarded-For
-RemoteIPTrustedProxy 129.105.136.0/8 165.124.135.0/8
+RemoteIPTrustedProxy 129.105.136.0/8
+RemoteIPTrustedProxy 165.124.135.0/8
 #
 
 TypesConfig /etc/httpd/conf.d/mime.types

@@ -4800,7 +4800,7 @@ ServerAlias  chnuinfo-proto7.${local_Domain_Name}
 </Location>
 
 # <<<<< hard-wire exclude all robots.txt - not in production www.it.northwestern.edu
-# Alias /robots.txt   /nuinfo/httpd/more-docs/robots-exclude-all/robots.txt
+Alias /robots.txt   /nuinfo/httpd/more-docs/robots-exclude-all/robots.txt
 
 
 # move /shared/nuit/ out of more-docs for this host so it can be CMS managed 9-30-2010
@@ -7771,8 +7771,7 @@ RewriteCond %{HTTP_HOST}        !^$
 RewriteCond %{REQUEST_METHOD}   !=POST                                     [NC]
 #RewriteRule ^/(.*)$             http://admissions.northwestern.edu:8002/$1      [R=permanent,L,NS]
 
-# Request from Jacob Arnold, Footprints ticket #595226, completed 9/21/2017 by Darryl Baker (dpb657)
-# FP#595226  RewriteRule ^/apply/application-options.html$     /apply/index.html                                                        [R=permanent,L,NS]
+RewriteRule ^/apply/application-options.html$     /apply/index.html                                                        [R=permanent,L,NS]
 RewriteRule ^/apply/application-instructions/index.html$     /apply/index.html                                             [R=permanent,L,NS]
 RewriteRule ^/apply/test-scores.html$     /apply/index.html                                                                [R=permanent,L,NS]
 RewriteRule ^/visit/plan-your-visit/visit-calendar.html$     /visit/plan-your-visit/index.html                             [R=permanent,L,NS]
@@ -7815,11 +7814,11 @@ RewriteRule ^/apply/credits/credit-transfer.html$     /faqs/high-school-courses/
 RewriteRule ^/student-life/northwestern-traditions/index.html$     /student-life/index.html                                [R=permanent,L,NS]
 RewriteRule ^/apply/application-deadlines-and-options.html$     /apply/index.html                                          [R=permanent,L,NS]
 
-# Request from Nimisha Joshi, Footprints ticket #244015, completed 4/18/2015 by Napoleon Gulley (ntg720)
+# Request from Nimisha Joshi, Footprints ticket# 244015, completed 4/18/2015 by Napoleon Gulley (ntg720)
 # Modified by Darryl Baker #312458
 RedirectMatch permanent ^/domestic-travel/?     http://admissions.${local_Domain_Name}/visit/northwestern-comes-to-you/domestic.html
 
-# Request from Jacob Arnold, Footprints ticket #285717, completed 8/10/2015 by Ron Blitz (rjb918)
+# Request from Jacob Arnold, Footprints ticket# 285717, completed 8/10/2015 by Ron Blitz (rjb918)
 # Modified by Darryl Baker #312458
 RedirectMatch permanent ^/session/international/?     http://admissions.${local_Domain_Name}/visit/northwestern-comes-to-you/international.html
 
@@ -7827,14 +7826,6 @@ RedirectMatch permanent ^/session/international/?     http://admissions.${local_
 # Begin #564837
 Redirect permanent /tuition-aid/international-student-aid.html http://admissions.northwestern.edu/tuition-aid/international-student-aid/index.html
 # End #564837
-
-# Request from Jacob Arnold, Footprints ticket #595226, completed 9/22/2017 by Darryl Baker (dpb657)
-# Begin #595226
-RewriteRule ^/apply/international.html$		/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/regular-decision.html$	/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/transfer.html$		/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/tips.html$			/apply/advice/index.html	[R=permanent,L,NS]
-# End #595226
 
 </VirtualHost>
 
@@ -8457,7 +8448,7 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
     RewriteEngine on
     RewriteOptions inherit
 
-    RedirectMatch permanent ^/(.*) http://www.${local_Domain_Name}/myhr/91-redirect.html
+    Redirect permanent / http://www.${local_Domain_Name}/myhr/91-redirect.html
 
     DocumentRoot /nuinfo/httpd/htdocs/not-in-production
 
@@ -8722,8 +8713,8 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
 </VirtualHost>
 # End #577716
 
-# Request from Nimisha Joshi (nsj442) ticket #578418  completed by Darryl Baker (dpb657) on 08/16/2017
-# Begin #578418
+# Request from Nimisha Joshi (nsj442) ticket #58418  completed by Darryl Baker (dpb657) on 08/16/2017
+# Begin #58418
 <VirtualHost *>
     ServerName   perform.${local_Domain_Name}
     ServerAlias  www.perform.${local_Domain_Name}
@@ -8846,12 +8837,6 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
     RedirectMatch permanent ^/invoforward/(.*)	https://www.invo.${local_Domain_Name}/training/invoforward.html
     RedirectMatch permanent ^/invoforward$	https://www.invo.${local_Domain_Name}/training/invoforward.html
     # End #587295
-
-    # Request from Nimisha Joshi (nsj442) ticket #589337 completed by Darryl Baker (dpb657) on 09/13/2017
-    # Begin #589337
-    RedirectMatch permanent /invoreach/(.*)	https://www.invo.${local_Domain_Name}/startup-resources/invoreach.html
-    RedirectMatch permanent /invoreach$		https://www.invo.${local_Domain_Name}/startup-resources/invoreach.html
-    # End #589337
 
 </VirtualHost>
 # End #583881

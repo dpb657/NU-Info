@@ -4800,7 +4800,7 @@ ServerAlias  chnuinfo-proto7.${local_Domain_Name}
 </Location>
 
 # <<<<< hard-wire exclude all robots.txt - not in production www.it.northwestern.edu
-# Alias /robots.txt   /nuinfo/httpd/more-docs/robots-exclude-all/robots.txt
+Alias /robots.txt   /nuinfo/httpd/more-docs/robots-exclude-all/robots.txt
 
 
 # move /shared/nuit/ out of more-docs for this host so it can be CMS managed 9-30-2010
@@ -5674,15 +5674,7 @@ Redirect /precollegecommunity/musicacademy/forms.html http://www.music.${local_D
 Redirect /nemmers/ http://www.music.${local_Domain_Name}/about/prizes/nemmers-prize/
 Redirect /studentnews/ http://www.music.${local_Domain_Name}/about/news/student.html
 Redirect /stringped/ http://www.music.${local_Domain_Name}/academics/areas-of-study/string-pedagogy.html
-# Request from Nimisha Joshi (nsj442) ticket #587205  completed by Darryl Baker (dpb657) on 09/07/2017
-# Begin #587205
-# Redirect /non-major/ http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/
-RedirectMatch permanent ^/non-major$ http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/index.html
-RedirectMatch permanent ^/non-major/(.*) http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/index.html
-RedirectMatch permanent ^/nonmajor$ http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/index.html
-RedirectMatch permanent ^/nonmajor/(.*) http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/index.html
-# End #587205
-
+Redirect /non-major/ http://www.music.${local_Domain_Name}/academics/opportunities-for-non-majors/
 #-------------------------------------------------
 
 
@@ -5820,11 +5812,8 @@ Redirect /nemmers                           http://www.music.${local_Domain_Name
 Redirect /nhsmi/                            http://www.music.${local_Domain_Name}/precollegecommunity/nhsmi/
 Redirect /nhsmi                             http://www.music.${local_Domain_Name}/precollegecommunity/nhsmi/
 #
-# Request from Nimisha Joshi (nsj442) ticket #587205  completed by Darryl Baker (dpb657) on 09/07/2017
-# Begin #587205
-# Redirect /non-major/                        http://www.music.${local_Domain_Name}/programs/nonmajors.html
-# Redirect /non-major                         http://www.music.${local_Domain_Name}/programs/nonmajors.html
-# End #587205
+Redirect /non-major/                        http://www.music.${local_Domain_Name}/programs/nonmajors.html
+Redirect /non-major                         http://www.music.${local_Domain_Name}/programs/nonmajors.html
 #
 Redirect /stringped/                        http://www.music.${local_Domain_Name}/programs/stringpedagogy.html
 Redirect /stringped                         http://www.music.${local_Domain_Name}/programs/stringpedagogy.html
@@ -6132,24 +6121,6 @@ DocumentRoot /nuinfo/httpd/htdocs/ccitt
 
 </VirtualHost>
 
-
-# Request from Nimisha Joshi (nsj442) ticket #563423  completed by Darryl Baker (dpb657) on 07/17/2017
-# For safety this is put before the www.qatar.northwestern.edu definition in case that is ever expanded
-# to include qatar.northwestern.edu.
-# Begin #563423
-<VirtualHost *>
-    ServerName   common.qatar.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    DocumentRoot /nuinfo/httpd/htdocs/common-qatar
-</VirtualHost>
-# End #563423
 
 # www.qatar.northwestern.edu 11-29-07
 # Grant Upson is intial contact
@@ -7771,8 +7742,7 @@ RewriteCond %{HTTP_HOST}        !^$
 RewriteCond %{REQUEST_METHOD}   !=POST                                     [NC]
 #RewriteRule ^/(.*)$             http://admissions.northwestern.edu:8002/$1      [R=permanent,L,NS]
 
-# Request from Jacob Arnold, Footprints ticket #595226, completed 9/21/2017 by Darryl Baker (dpb657)
-# FP#595226  RewriteRule ^/apply/application-options.html$     /apply/index.html                                                        [R=permanent,L,NS]
+RewriteRule ^/apply/application-options.html$     /apply/index.html                                                        [R=permanent,L,NS]
 RewriteRule ^/apply/application-instructions/index.html$     /apply/index.html                                             [R=permanent,L,NS]
 RewriteRule ^/apply/test-scores.html$     /apply/index.html                                                                [R=permanent,L,NS]
 RewriteRule ^/visit/plan-your-visit/visit-calendar.html$     /visit/plan-your-visit/index.html                             [R=permanent,L,NS]
@@ -7815,26 +7785,13 @@ RewriteRule ^/apply/credits/credit-transfer.html$     /faqs/high-school-courses/
 RewriteRule ^/student-life/northwestern-traditions/index.html$     /student-life/index.html                                [R=permanent,L,NS]
 RewriteRule ^/apply/application-deadlines-and-options.html$     /apply/index.html                                          [R=permanent,L,NS]
 
-# Request from Nimisha Joshi, Footprints ticket #244015, completed 4/18/2015 by Napoleon Gulley (ntg720)
+# Request from Nimisha Joshi, Footprints ticket# 244015, completed 4/18/2015 by Napoleon Gulley (ntg720)
 # Modified by Darryl Baker #312458
 RedirectMatch permanent ^/domestic-travel/?     http://admissions.${local_Domain_Name}/visit/northwestern-comes-to-you/domestic.html
 
-# Request from Jacob Arnold, Footprints ticket #285717, completed 8/10/2015 by Ron Blitz (rjb918)
+# Request from Jacob Arnold, Footprints ticket# 285717, completed 8/10/2015 by Ron Blitz (rjb918)
 # Modified by Darryl Baker #312458
 RedirectMatch permanent ^/session/international/?     http://admissions.${local_Domain_Name}/visit/northwestern-comes-to-you/international.html
-
-# Request from Nimisha Joshi, Footprints ticket #564837, completed 4/18/2015 by Darryl Baker (dpb657)
-# Begin #564837
-Redirect permanent /tuition-aid/international-student-aid.html http://admissions.northwestern.edu/tuition-aid/international-student-aid/index.html
-# End #564837
-
-# Request from Jacob Arnold, Footprints ticket #595226, completed 9/22/2017 by Darryl Baker (dpb657)
-# Begin #595226
-RewriteRule ^/apply/international.html$		/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/regular-decision.html$	/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/transfer.html$		/apply/application-options.html	[R=permanent,L,NS]
-RewriteRule ^/apply/tips.html$			/apply/advice/index.html	[R=permanent,L,NS]
-# End #595226
 
 </VirtualHost>
 
@@ -8236,28 +8193,26 @@ DocumentRoot /nuinfo/httpd/htdocs/not-in-production
 
 # Request from Nimisha Joshi (nsj448), completed 05/06/2016 by Darryl Baker (dpb657)
 # Begin Footprints Ticket #385508
-# Request from Nimisha Joshi (nsj448) to remove virtual host, completed 09/12/2017 by Ron Blitz (rjb918)
-# Footprints Ticket 578418
-##<VirtualHost *>
-##ServerName  www.perform.${local_Domain_Name}
-##ServerAlias  perform.${local_Domain_Name}
+<VirtualHost *>
+ServerName  www.perform.${local_Domain_Name}
+ServerAlias  perform.${local_Domain_Name}
 
 # RewriteEngine on
 # RewriteOptions inherit
 
 # Request from Nimisha Joshi (nsj448), completed 10/19/2016 by Darryl Baker (dpb657)
 # Begin Footprints Ticket #447946
-##RedirectMatch permanent ^$            http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
-##RedirectMatch permanent ^/$           http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
-##RedirectMatch permanent ^/index.html$ http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
-##RedirectMatch permanent ^/(.*)        http://www.${local_Domain_Name}/hr/workplace-learning/performance-excellence/$1
+RedirectMatch permanent ^$            http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
+RedirectMatch permanent ^/$           http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
+RedirectMatch permanent ^/index.html$ http://www.${local_Domain_Name}/hr/workplace-learning/new-performance-excellence/index.html
+RedirectMatch permanent ^/(.*)        http://www.${local_Domain_Name}/hr/workplace-learning/performance-excellence/$1
 
 # RewriteRule ^/(.*)$ http://www.northwestern.edu/hr/workplace-learning/performance-excellence/$1	[R=permanent,L,NS]
 # End Footprints Ticket #447946
 
-##DocumentRoot /nuinfo/httpd/htdocs/not-in-production
+DocumentRoot /nuinfo/httpd/htdocs/not-in-production
 
-##</VirtualHost>
+</VirtualHost>
 
 <VirtualHost *>
 ServerName  www.leadership.${local_Domain_Name}
@@ -8446,9 +8401,13 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
 </VirtualHost>
 # End #453818
 
-# Request from Leslie Johnson (laj243) ticket #577821  completed by Darryl Baker (dpb657) on 09/05/2017
-# Begin #577821
+# Request from Nimisha Joshi (nsj442) ticket #469720  completed by Darryl Baker (dpb657) on 12/11/2016
+# Begin #469720
+# 02/08/2017 Added additional server aliases for nupa and nuhr in preparation for retiring those 2 VIPs on the F5
+# One redirect for all the old HR URLs
 <VirtualHost *>
+    ServerName  www.hr.${local_Domain_Name}
+    ServerAlias  hr.${local_Domain_Name}
     ServerAlias  nuhr.${local_Domain_Name}
     ServerAlias  www.nuhr.${local_Domain_Name}
     ServerAlias  nupa.${local_Domain_Name}
@@ -8457,12 +8416,14 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
     RewriteEngine on
     RewriteOptions inherit
 
-    RedirectMatch permanent ^/(.*) http://www.${local_Domain_Name}/myhr/91-redirect.html
+    Redirect permanent /hr91prod_er/eRecruit_login.html http://careers.${local_Domain_Name}
+
+    Redirect permanent / http://www.${local_Domain_Name}/myhr
 
     DocumentRoot /nuinfo/httpd/htdocs/not-in-production
 
 </VirtualHost>
-# End #577821
+# End #469720
 
 # Request from Christine Ganjani (cgs406) ticket #470593  completed by Darryl Baker (dpb657) on 12/13/2016
 # Begin #470593
@@ -8570,16 +8531,6 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
 
     </Directory>
 
-    #
-    # Compensate for F5 showing as the source IP
-    # Use X-Forwarded-For as the source IP
-    RemoteIPHeader X-Forwarded-For
-    RemoteIPTrustedProxy 129.105.136.0/8 165.124.135.0/8
-
-    <Location /restricted-ip >
-    	Require all denied
-	Require ip 129.105.0.0/16 165.124.0.0/16
-    </Location>
     # end fancy rules --------------------------------------
 
     <Directory "/nuinfo/httpd/htdocs/it-virtual-v2/admin-systems/secure">
@@ -8666,10 +8617,10 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
 # End #524090
 
 <VirtualHost *>
-    ServerName   facultyrecruiting.${local_Domain_Name}
-    ServerAlias  www.facultyrecruiting.${local_Domain_Name}
-    ServerAlias  facultyrecruitingqa.${local_Domain_Name}
-    ServerAlias  www.facultyrecruitingqa.${local_Domain_Name}
+    ServerName   facultyrecruting.${local_Domain_Name}
+    ServerAlias  www.facultyrecruting.${local_Domain_Name}
+    ServerAlias  facultyrecrutingqa.${local_Domain_Name}
+    ServerAlias  www.facultyrecrutingqa.${local_Domain_Name}
 
     RewriteEngine on
     RewriteOptions inherit
@@ -8681,205 +8632,6 @@ Redirect permanent /libraries-collections/united-library/index.html http://www.l
     DocumentRoot /nuinfo/httpd/htdocs/facultyrecruiting
 
 </VirtualHost>
-
-<VirtualHost *>
-    ServerName   www.fig.${local_Domain_Name}
-    ServerAlias  fig.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    DocumentRoot /nuinfo/httpd/htdocs/fig
-
-    Redirect permanent /faculty.html	http://www.fig.${local_Domain_Name}/faculty-exchanges/index.html
-    Redirect permanent /graduate.html	http://www.fig.${local_Domain_Name}/student-opportunities-in-france/index.html
-    Redirect permanent /events.html	http://www.fig.${local_Domain_Name}/about/events/index.html
-    Redirect permanent /contact.html	http://www.fig.${local_Domain_Name}/about/contact-us.html
-
-</VirtualHost>
-
-# Request from Chris Ganjani (cgs406) ticket #577716  completed by Darryl Baker (dpb657) on 08/16/2017
-# Begin #577716
-<VirtualHost *>
-    ServerName   courses.${local_Domain_Name}
-    ServerAlias  www.courses.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    Redirect permanent / http://www.it.${local_Domain_Name}/education/login.html
-
-    DocumentRoot /nuinfo/httpd/htdocs/not-in-production
-
-</VirtualHost>
-# End #577716
-
-# Request from Nimisha Joshi (nsj442) ticket #578418  completed by Darryl Baker (dpb657) on 08/16/2017
-# Begin #578418
-<VirtualHost *>
-    ServerName   perform.${local_Domain_Name}
-    ServerAlias  www.perform.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    DocumentRoot /nuinfo/httpd/htdocs/perform
-
-</VirtualHost>
-# End #58418
-
-# Request from Jacob Arnold (jar472) ticket #583881 completed by Darryl Baker (dpb657) on 08/30/2017
-# Begin #583881
-<VirtualHost *>
-    ServerName   invo.${local_Domain_Name}
-    ServerAlias  www.invo.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    DocumentRoot /nuinfo/httpd/htdocs/invo
-
-    # Request from Nimisha Joshi (nsj442) ticket #583974 completed by Darryl Baker (dpb657) on 09/06/2017
-    # Begin #583974
-    RedirectMatch permanent ^/about/join-our-team/(.*)					https://www.invo.${local_Domain_Name}/about/staff/join-our-team.html
-    RedirectMatch permanent ^/about/join-our-team$					https://www.invo.${local_Domain_Name}/about/staff/join-our-team.html
-    RedirectMatch permanent ^/agreements/(.*)						https://www.invo.${local_Domain_Name}/invention-disclosure/agreements/index.html
-    RedirectMatch permanent ^/agreements$						https://www.invo.${local_Domain_Name}/invention-disclosure/agreements/index.html
-    RedirectMatch permanent ^/contact-us/(.*)						https://www.invo.${local_Domain_Name}/about/contact-us.html
-    RedirectMatch permanent ^/contact-us$						https://www.invo.${local_Domain_Name}/about/contact-us.html
-    RedirectMatch permanent ^/educational-opportunities-overview/(.*)			https://www.invo.${local_Domain_Name}/training/index.html
-    RedirectMatch permanent ^/educational-opportunities-overview$			https://www.invo.${local_Domain_Name}/training/index.html
-    RedirectMatch permanent ^/forms/guidelines-confidentiality-agreements/(.*)		https://www.invo.${local_Domain_Name}/invention-disclosure/agreements/guidelines-confidentiality-agreements.html
-    RedirectMatch permanent ^/forms/guidelines-confidentiality-agreements$		https://www.invo.${local_Domain_Name}/invention-disclosure/agreements/guidelines-confidentiality-agreements.html
-    RedirectMatch permanent ^/forms/(.*)						https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/index.html
-    RedirectMatch permanent ^/forms$							https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/index.html
-    RedirectMatch permanent ^/funds/(.*)						https://www.invo.${local_Domain_Name}/startup-resources/funding/index.html
-    RedirectMatch permanent ^/funds$							https://www.invo.${local_Domain_Name}/startup-resources/funding/index.html
-    RedirectMatch permanent ^/industry-pipelines/(.*)					https://www.invo.${local_Domain_Name}/technologies/technologies/industry-pipelines/index.html
-    RedirectMatch permanent ^/industry-pipelines$					https://www.invo.${local_Domain_Name}/technologies/technologies/industry-pipelines/index.html
-    RedirectMatch permanent ^/innovation-commercialization-i2c-fellowship/(.*)		https://www.invo.${local_Domain_Name}/training/index.html
-    RedirectMatch permanent ^/innovation-commercialization-i2c-fellowship$		https://www.invo.${local_Domain_Name}/training/index.html
-    RedirectMatch permanent ^/investor-advisory-board/(.*)				https://www.invo.${local_Domain_Name}/about/staff/investor-advisory-board.html
-    RedirectMatch permanent ^/investor-advisory-board$					https://www.invo.${local_Domain_Name}/about/staff/investor-advisory-board.html
-    RedirectMatch permanent ^/invohub/(.*)						https://www.invo.${local_Domain_Name}/startup-resources/space/invohub.html
-    RedirectMatch permanent ^/invohub$							https://www.invo.${local_Domain_Name}/startup-resources/space/invohub.html
-    RedirectMatch permanent ^/invo-practicum/(.*)					https://www.invo.${local_Domain_Name}/training/invo-practicum.html
-    RedirectMatch permanent ^/invo-practicum$						https://www.invo.${local_Domain_Name}/training/invo-practicum.html
-    RedirectMatch permanent ^/invo-seminars/(.*)					https://www.invo.${local_Domain_Name}/training/seminars-commercialization-clinics.html
-    RedirectMatch permanent ^/invo-seminars$						https://www.invo.${local_Domain_Name}/training/seminars-commercialization-clinics.html
-    RedirectMatch permanent ^/mentoring/(.*)						https://www.invo.${local_Domain_Name}/startup-resources/mentorship/index.html
-    RedirectMatch permanent ^/mentoring$						https://www.invo.${local_Domain_Name}/startup-resources/mentorship/index.html
-    RedirectMatch permanent ^/news/(.*)							https://www.invo.${local_Domain_Name}/about/news/index.html
-    RedirectMatch permanent ^/news$							https://www.invo.${local_Domain_Name}/about/news/index.html
-    RedirectMatch permanent ^/new-ventures-guide/(.*)					https://www.invo.${local_Domain_Name}/startup-resources/guide/index.html
-    RedirectMatch permanent ^/new-ventures-guide$					https://www.invo.${local_Domain_Name}/startup-resources/guide/index.html
-    RedirectMatch permanent ^/new-ventures-resources-overview/(.*)			https://www.invo.${local_Domain_Name}/startup-resources/index.html
-    RedirectMatch permanent ^/new-ventures-resources-overview$				https://www.invo.${local_Domain_Name}/startup-resources/index.html
-    RedirectMatch permanent ^/overview-public-disclosures/(.*)				https://www.invo.${local_Domain_Name}/invention-disclosure/understanding-disclosures/what/overview-public-disclosure.html
-    RedirectMatch permanent ^/overview-public-disclosures$				https://www.invo.${local_Domain_Name}/invention-disclosure/understanding-disclosures/what/overview-public-disclosure.html
-    RedirectMatch permanent ^/policies/copyright-policy/(.*)				https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/copyright-policy/index.html
-    RedirectMatch permanent ^/policies/copyright-policy$				https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/copyright-policy/index.html
-    RedirectMatch permanent ^/policies/patent-invention-policy-current/(.*)		https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/patent-invention-policy.html
-    RedirectMatch permanent ^/policies/patent-invention-policy-current$			https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/patent-invention-policy.html
-    RedirectMatch permanent ^/policies/royalty-distribution-policy/(.*)			https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/royalty-distribution-policy.html
-    RedirectMatch permanent ^/policies/royalty-distribution-policy$			https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/royalty-distribution-policy.html
-    RedirectMatch permanent ^/policies/students/(.*)					https://www.invo.${local_Domain_Name}/invention-disclosure/student-inventors/index.html
-    RedirectMatch permanent ^/policies/students$					https://www.invo.${local_Domain_Name}/invention-disclosure/student-inventors/index.html
-    RedirectMatch permanent ^/policies/(.*)						https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/index.html
-    RedirectMatch permanent ^/policies$							https://www.invo.${local_Domain_Name}/invention-disclosure/policies-forms/index.html
-    RedirectMatch permanent ^/process/(.*)						https://www.invo.${local_Domain_Name}/invention-disclosure/index.html
-    RedirectMatch permanent ^/process$							https://www.invo.${local_Domain_Name}/invention-disclosure/index.html
-    RedirectMatch permanent ^/space/(.*)						https://www.invo.${local_Domain_Name}/startup-resources/space/index.html
-    RedirectMatch permanent ^/space$							https://www.invo.${local_Domain_Name}/startup-resources/space/index.html
-    RedirectMatch permanent ^/staff/bio/alicia-loffler/(.*)				https://www.invo.${local_Domain_Name}/about/staff/alicia-loffler.html
-    RedirectMatch permanent ^/staff/bio/alicia-loffler$					https://www.invo.${local_Domain_Name}/about/staff/alicia-loffler.html
-    RedirectMatch permanent ^/staff/bio/billy-banks/(.*)				https://www.invo.${local_Domain_Name}/about/staff/billy-banks.html
-    RedirectMatch permanent ^/staff/bio/billy-banks$					https://www.invo.${local_Domain_Name}/about/staff/billy-banks.html
-    RedirectMatch permanent ^/staff/bio/dimitra-georganopoulou/(.*)			https://www.invo.${local_Domain_Name}/about/staff/dimitra-georganopoulou.html
-    RedirectMatch permanent ^/staff/bio/dimitra-georganopoulou$				https://www.invo.${local_Domain_Name}/about/staff/dimitra-georganopoulou.html
-    RedirectMatch permanent ^/staff/bio/jeff-coney-cpa/(.*)				https://www.invo.${local_Domain_Name}/about/staff/jeff-coney.html
-    RedirectMatch permanent ^/staff/bio/jeff-coney-cpa$					https://www.invo.${local_Domain_Name}/about/staff/jeff-coney.html
-    RedirectMatch permanent ^/staff/bio/lisa-dhar/(.*)					https://www.invo.${local_Domain_Name}/about/staff/lisa-dhar.html
-    RedirectMatch permanent ^/staff/bio/lisa-dhar$					https://www.invo.${local_Domain_Name}/about/staff/lisa-dhar.html
-    RedirectMatch permanent ^/staff/bio/michael-moore/(.*)				https://www.invo.${local_Domain_Name}/about/staff/michael-moore.html
-    RedirectMatch permanent ^/staff/bio/michael-moore$					https://www.invo.${local_Domain_Name}/about/staff/michael-moore.html
-    RedirectMatch permanent ^/staff/bio/nick-maull/(.*)					https://www.invo.${local_Domain_Name}/about/staff/nick-maull.html
-    RedirectMatch permanent ^/staff/bio/nick-maull$					https://www.invo.${local_Domain_Name}/about/staff/nick-maull.html
-    RedirectMatch permanent ^/staff/bio/nicole-janovick/(.*)				https://www.invo.${local_Domain_Name}/about/staff/nicole-janovick.html
-    RedirectMatch permanent ^/staff/bio/nicole-janovick$				https://www.invo.${local_Domain_Name}/about/staff/nicole-janovick.html
-    RedirectMatch permanent ^/staff/(.*)						https://www.invo.${local_Domain_Name}/about/staff/index.html
-    RedirectMatch permanent ^/staff$							https://www.invo.${local_Domain_Name}/about/staff/index.html
-    RedirectMatch permanent ^/startup-guide/basics-startups/requirements-startup/(.*)	https://www.invo.${local_Domain_Name}/startup-resources/guide/index.html
-    RedirectMatch permanent ^/startup-guide/basics-startups/requirements-startup$	https://www.invo.${local_Domain_Name}/startup-resources/guide/index.html
-    RedirectMatch permanent ^/start-ups/(.*)						https://www.invo.${local_Domain_Name}/technologies/startups/index.html
-    RedirectMatch permanent ^/start-ups$						https://www.invo.${local_Domain_Name}/technologies/startups/index.html
-    RedirectMatch permanent ^/start-ups/starsight-inc/(.*)				https://www.invo.${local_Domain_Name}/technologies/startups/starsight-inc.html
-    RedirectMatch permanent ^/start-ups/starsight-inc$					https://www.invo.${local_Domain_Name}/technologies/startups/starsight-inc.html
-    RedirectMatch permanent ^/technologies/$						https://www.invo.${local_Domain_Name}/technologies/technologies/index.html
-    RedirectMatch permanent ^/technologies/$						https://www.invo.${local_Domain_Name}/technologies/technologies/index.html
-    RedirectMatch permanent ^/technologies$						https://www.invo.${local_Domain_Name}/technologies/technologies/index.html
-    RedirectMatch permanent ^/technologies$						https://www.invo.${local_Domain_Name}/technologies/technologies/index.html
-    RedirectMatch permanent ^/technologies-overview/(.*)				https://www.invo.${local_Domain_Name}/technologies/index.html
-    RedirectMatch permanent ^/technologies-overview$					https://www.invo.${local_Domain_Name}/technologies/index.html
-    RedirectMatch permanent ^/working-with-students/(.*)				https://www.invo.${local_Domain_Name}/startup-resources/students.html
-    RedirectMatch permanent ^/working-with-students$					https://www.invo.${local_Domain_Name}/startup-resources/students.html
-    # End #583974
-
-    # Request from Nimisha Joshi (nsj442) ticket #587295 completed by Darryl Baker (dpb657) on 09/07/2017
-    # Begin #587295
-    RedirectMatch permanent ^/invoforward/(.*)	https://www.invo.${local_Domain_Name}/training/invoforward.html
-    RedirectMatch permanent ^/invoforward$	https://www.invo.${local_Domain_Name}/training/invoforward.html
-    # End #587295
-
-    # Request from Nimisha Joshi (nsj442) ticket #589337 completed by Darryl Baker (dpb657) on 09/13/2017
-    # Begin #589337
-    RedirectMatch permanent /invoreach/(.*)	https://www.invo.${local_Domain_Name}/startup-resources/invoreach.html
-    RedirectMatch permanent /invoreach$		https://www.invo.${local_Domain_Name}/startup-resources/invoreach.html
-    # End #589337
-
-</VirtualHost>
-# End #583881
-
-# Request from Nimisha Joshi (nsj442) ticket #583394  completed by Darryl Baker (dpb657) on 08/16/2017
-# Begin #583394
-<VirtualHost *>
-    ServerName   edgs.${local_Domain_Name}
-    ServerAlias  www.edgs.${local_Domain_Name}
-
-    RewriteEngine on
-    RewriteOptions inherit
-
-    # Rewrite to prefered host name
-    RewriteCond %{HTTP_HOST}        !^$
-    RewriteCond %{REQUEST_METHOD}   !=POST                                          [NC]
-
-    DocumentRoot /nuinfo/httpd/htdocs/edgs
-
-    Redirect permanent /arryman-fellows/	http://www.edgs.${local_Domain_Name}/edgs/arryman-program/
-    Redirect permanent /events/			http://www.edgs.${local_Domain_Name}/edgs/about/events/
-    Redirect permanent /people/			http://www.edgs.${local_Domain_Name}/index.html
-    Redirect permanent /research-support/	http://www.edgs.${local_Domain_Name}/edgs/research-and-funding/
-    Redirect permanent /papers/			http://www.edgs.${local_Domain_Name}/edgs/research-and-funding/working-papers/
-
-</VirtualHost>
-# End #583394
-
 
 
 

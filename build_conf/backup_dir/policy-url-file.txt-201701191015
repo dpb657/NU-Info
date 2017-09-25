@@ -343,7 +343,7 @@ http://www.it.${local_Domain_Name}/telephone/converge/future.html*
 # 2-25-09, for Anisha Mack, IT
 # any valid netid
 http://www.it.${local_Domain_Name}/dss/units/dss-units$
-http://www.it.${local_Domain_Name}/dss/units/dss-units/*
+http://www.it.${local_Domain_Name}/dss/units/dss-units/
 #http://evnuinfo-proto1.${local_Domain_Name}/dss/units/dss-units
 
 # private directory for the Committee on Athletics and Recreation
@@ -718,12 +718,8 @@ http://www.${local_Domain_Name}/up/safety/annual-report/secure$
 
 # Requested by Jacob Arnold on 7/10/12, SM Ticket IM72904, for certain NetIDs,
 # /coi/secure modified for all NetIDs 05/07/2013 (ISSUE=21140), request by Chris Tondini
-http://${local_Domain_Name}/hr/secure/
-http://${local_Domain_Name}/hr/secure$
 http://www.${local_Domain_Name}/hr/secure/
 http://www.${local_Domain_Name}/hr/secure$
-http://${local_Domain_Name}/coi/secure/
-http://${local_Domain_Name}/coi/secure$
 http://www.${local_Domain_Name}/coi/secure/
 http://www.${local_Domain_Name}/coi/secure$
 
@@ -912,14 +908,8 @@ http://www.it.${local_Domain_Name}/security/vulnerability-assessment/secure/comm
 # Request by Nimisha Joshi (nsj448) 02/22/2016, Ticket 354942
 # Added by Darryl Baker (dpb657)
 # 
-http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/about/index.html
-http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/about/
-http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/about$
-
+http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/about
 http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/survey-feedback  
-http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/survey-feedback/
-http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/survey-feedback$
-
 http://www.${local_Domain_Name}/provost/initiatives/teaching-and-learning/assessment-of-student-learning/Framework_Feb_2015.pdf
 
 http://www.${local_Domain_Name}/provost/committees/teaching-and-learning/teaching-awards/secure/index.html
@@ -978,243 +968,6 @@ http://www.${local_Domain_Name}/faculty-senate/resources
 
 # Request by Nimisha Joshi (nsj448) 01/09/2017, Ticket 478933
 http://www.${local_Domain_Name}/studyabroad/student-voices/program-evaluations.html
-
-# BEGIN Request by Terry Jolley 01/19/2017 for it.${local_Domain_Name} content update
-http://it-virtual-v2.${local_Domain_Name}/test-websso-auth-dir/
-http://it-virtual-v2.${local_Domain_Name}/policies/secure/
-http://it-virtual-v2.${local_Domain_Name}/intranet$
-http://it-virtual-v2.${local_Domain_Name}/intranet/
-http://it-virtual-v2.${local_Domain_Name}/tss-intranet$
-http://it-virtual-v2.${local_Domain_Name}/tss-intranet/
-http://it-virtual-v2.${local_Domain_Name}/SES/private$
-http://it-virtual-v2.${local_Domain_Name}/SES/private/
-http://it-virtual-v2.${local_Domain_Name}/bin/docs/secure$
-http://it-virtual-v2.${local_Domain_Name}/bin/docs/secure/
-http://it-virtual-v2.${local_Domain_Name}/trustees$
-http://it-virtual-v2.${local_Domain_Name}/trustees/
-http://it-virtual-v2.${local_Domain_Name}/dss/dssmain/secure/1800/
-http://it-virtual-v2.${local_Domain_Name}/dss/dssmain/secure/lurie/
-http://it-virtual-v2.${local_Domain_Name}/dss/dssmain/secure/soc/
-http://it-virtual-v2.${local_Domain_Name}/dss/dssmain/secure/som/
-http://it-virtual-v2.${local_Domain_Name}/dss/dssmain/secure/contracthelp/
-http://it-virtual-v2.${local_Domain_Name}/software/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/secure/
-http://it-virtual-v2.${local_Domain_Name}/servicestatus/secure$
-http://it-virtual-v2.${local_Domain_Name}/servicestatus/secure/
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/secure$
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/secure/
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/building.html$
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/future.html$
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/building.html*
-http://it-virtual-v2.${local_Domain_Name}/telephone/converge/future.html*
-http://it-virtual-v2.${local_Domain_Name}/dss/units/dss-units$
-http://it-virtual-v2.${local_Domain_Name}/dss/units/dss-units/
-http://it-virtual-v2.${local_Domain_Name}/dashboard/
-http://it-virtual-v2.${local_Domain_Name}/software/redhat/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/redhat/secure/
-http://it-virtual-v2.${local_Domain_Name}/validate/secure$
-http://it-virtual-v2.${local_Domain_Name}/validate/secure/
-http://it-virtual-v2.${local_Domain_Name}/about/departments/itms/secure$
-http://it-virtual-v2.${local_Domain_Name}/about/departments/itms/secure/
-http://it-virtual-v2.${local_Domain_Name}/netid/secure$
-http://it-virtual-v2.${local_Domain_Name}/netid/secure/
-http://it-virtual-v2.${local_Domain_Name}/desktop-videoconference/secure$
-http://it-virtual-v2.${local_Domain_Name}/desktop-videoconference/secure/
-http://it-virtual-v2.${local_Domain_Name}/network/firewall/secure$
-http://it-virtual-v2.${local_Domain_Name}/network/firewall/secure/
-http://it-virtual-v2.${local_Domain_Name}/software/microsoft/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/microsoft/secure/
-http://it-virtual-v2.${local_Domain_Name}/software/office/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/office/secure/
-http://it-virtual-v2.${local_Domain_Name}/business-intelligence/secure$
-http://it-virtual-v2.${local_Domain_Name}/business-intelligence/secure/
-http://it-virtual-v2.${local_Domain_Name}/about/departments/cyb/secure$
-http://it-virtual-v2.${local_Domain_Name}/about/departments/cyb/secure/
-http://it-virtual-v2.${local_Domain_Name}/research/adv-research/hpc/vault/secure$
-http://it-virtual-v2.${local_Domain_Name}/research/adv-research/hpc/vault/secure/
-http://it-virtual-v2.${local_Domain_Name}/bin/docs/secure/nuit$
-http://it-virtual-v2.${local_Domain_Name}/bin/docs/secure/nuit/
-http://it-virtual-v2.${local_Domain_Name}/software/sav/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/sav/secure/
-http://it-virtual-v2.${local_Domain_Name}/about/departments/bi/secure$
-http://it-virtual-v2.${local_Domain_Name}/about/departments/bi/secure/
-http://it-virtual-v2.${local_Domain_Name}/strategic-plan/unified-service/secure$
-http://it-virtual-v2.${local_Domain_Name}/strategic-plan/unified-service/secure/
-http://it-virtual-v2.${local_Domain_Name}/security/ssl-certificate/secure/
-http://it-virtual-v2.${local_Domain_Name}/security/ssl-certificate/secure$
-http://it-virtual-v2.${local_Domain_Name}/units/
-http://it-virtual-v2.${local_Domain_Name}/units$
-http://it-virtual-v2.${local_Domain_Name}/learning/nuit-webinars/
-http://it-virtual-v2.${local_Domain_Name}/learning/nuit-webinars$
-http://it-virtual-v2.${local_Domain_Name}/strategic-plan/collaboration/secure/
-http://it-virtual-v2.${local_Domain_Name}/strategic-plan/collaboration/secure$
-http://it-virtual-v2.${local_Domain_Name}/conduits/order-form/
-http://it-virtual-v2.${local_Domain_Name}/conduits/order-form$
-http://it-virtual-v2.${local_Domain_Name}/research/adv-research/hpc/quest/secure$
-http://it-virtual-v2.${local_Domain_Name}/research/adv-research/hpc/quest/secure/
-http://it-virtual-v2.${local_Domain_Name}/software/pgp/secure/ 
-http://it-virtual-v2.${local_Domain_Name}/software/pgp/secure$ 
-http://it-virtual-v2.${local_Domain_Name}/network/secure/
-http://it-virtual-v2.${local_Domain_Name}/network/secure$
-http://it-virtual-v2.${local_Domain_Name}/secure/
-http://it-virtual-v2.${local_Domain_Name}/secure$
-http://it-virtual-v2.${local_Domain_Name}/software/adobe/secure/
-http://it-virtual-v2.${local_Domain_Name}/software/adobe/secure$
-http://it-virtual-v2.${local_Domain_Name}/education/learning-management/secure/
-http://it-virtual-v2.${local_Domain_Name}/security/vulnerability-assessment/secure/common-vulnerabilities.html
-http://it-virtual-v2.${local_Domain_Name}/admin-systems/secure/
-http://it-virtual-v2.${local_Domain_Name}/admin-systems/secure
-# Extra for testing V2 kickoff
-http://www.it.${local_Domain_Name}/test-websso-auth-dir/
-http://www.it.${local_Domain_Name}/policies/secure/
-http://www.it.${local_Domain_Name}/intranet$
-http://www.it.${local_Domain_Name}/intranet/
-http://www.it.${local_Domain_Name}/tss-intranet$
-http://www.it.${local_Domain_Name}/tss-intranet/
-http://www.it.${local_Domain_Name}/SES/private$
-http://www.it.${local_Domain_Name}/SES/private/
-http://www.it.${local_Domain_Name}/bin/docs/secure$
-http://www.it.${local_Domain_Name}/bin/docs/secure/
-http://www.it.${local_Domain_Name}/trustees$
-http://www.it.${local_Domain_Name}/trustees/
-http://www.it.${local_Domain_Name}/dss/dssmain/secure/1800/
-http://www.it.${local_Domain_Name}/dss/dssmain/secure/lurie/
-http://www.it.${local_Domain_Name}/dss/dssmain/secure/soc/
-http://www.it.${local_Domain_Name}/dss/dssmain/secure/som/
-http://www.it.${local_Domain_Name}/dss/dssmain/secure/contracthelp/
-http://www.it.${local_Domain_Name}/software/secure$
-http://www.it.${local_Domain_Name}/software/secure/
-http://www.it.${local_Domain_Name}/servicestatus/secure$
-http://www.it.${local_Domain_Name}/servicestatus/secure/
-http://www.it.${local_Domain_Name}/telephone/converge/secure$
-http://www.it.${local_Domain_Name}/telephone/converge/secure/
-http://www.it.${local_Domain_Name}/telephone/converge/building.html$
-http://www.it.${local_Domain_Name}/telephone/converge/future.html$
-http://www.it.${local_Domain_Name}/telephone/converge/building.html*
-http://www.it.${local_Domain_Name}/telephone/converge/future.html*
-http://www.it.${local_Domain_Name}/dss/units/dss-units$
-http://www.it.${local_Domain_Name}/dss/units/dss-units/
-http://www.it.${local_Domain_Name}/dashboard/
-http://www.it.${local_Domain_Name}/software/redhat/secure$
-http://www.it.${local_Domain_Name}/software/redhat/secure/
-http://www.it.${local_Domain_Name}/validate/secure$
-http://www.it.${local_Domain_Name}/validate/secure/
-http://www.it.${local_Domain_Name}/about/departments/itms/secure$
-http://www.it.${local_Domain_Name}/about/departments/itms/secure/
-http://www.it.${local_Domain_Name}/netid/secure$
-http://www.it.${local_Domain_Name}/netid/secure/
-http://www.it.${local_Domain_Name}/desktop-videoconference/secure$
-http://www.it.${local_Domain_Name}/desktop-videoconference/secure/
-http://www.it.${local_Domain_Name}/network/firewall/secure$
-http://www.it.${local_Domain_Name}/network/firewall/secure/
-http://www.it.${local_Domain_Name}/software/microsoft/secure$
-http://www.it.${local_Domain_Name}/software/microsoft/secure/
-http://www.it.${local_Domain_Name}/software/office/secure$
-http://www.it.${local_Domain_Name}/software/office/secure/
-http://www.it.${local_Domain_Name}/business-intelligence/secure$
-http://www.it.${local_Domain_Name}/business-intelligence/secure/
-http://www.it.${local_Domain_Name}/about/departments/cyb/secure$
-http://www.it.${local_Domain_Name}/about/departments/cyb/secure/
-http://www.it.${local_Domain_Name}/research/adv-research/hpc/vault/secure$
-http://www.it.${local_Domain_Name}/research/adv-research/hpc/vault/secure/
-http://www.it.${local_Domain_Name}/bin/docs/secure/nuit$
-http://www.it.${local_Domain_Name}/bin/docs/secure/nuit/
-http://www.it.${local_Domain_Name}/software/sav/secure$
-http://www.it.${local_Domain_Name}/software/sav/secure/
-http://www.it.${local_Domain_Name}/about/departments/bi/secure$
-http://www.it.${local_Domain_Name}/about/departments/bi/secure/
-http://www.it.${local_Domain_Name}/strategic-plan/unified-service/secure$
-http://www.it.${local_Domain_Name}/strategic-plan/unified-service/secure/
-http://www.it.${local_Domain_Name}/security/ssl-certificate/secure/
-http://www.it.${local_Domain_Name}/security/ssl-certificate/secure$
-http://www.it.${local_Domain_Name}/units/
-http://www.it.${local_Domain_Name}/units$
-http://www.it.${local_Domain_Name}/learning/nuit-webinars/
-http://www.it.${local_Domain_Name}/learning/nuit-webinars$
-http://www.it.${local_Domain_Name}/strategic-plan/collaboration/secure/
-http://www.it.${local_Domain_Name}/strategic-plan/collaboration/secure$
-http://www.it.${local_Domain_Name}/conduits/order-form/
-http://www.it.${local_Domain_Name}/conduits/order-form$
-http://www.it.${local_Domain_Name}/research/adv-research/hpc/quest/secure$
-http://www.it.${local_Domain_Name}/research/adv-research/hpc/quest/secure/
-http://www.it.${local_Domain_Name}/software/pgp/secure/ 
-http://www.it.${local_Domain_Name}/software/pgp/secure$ 
-http://www.it.${local_Domain_Name}/network/secure/
-http://www.it.${local_Domain_Name}/network/secure$
-http://www.it.${local_Domain_Name}/secure/
-http://www.it.${local_Domain_Name}/secure$
-http://www.it.${local_Domain_Name}/software/adobe/secure/
-http://www.it.${local_Domain_Name}/software/adobe/secure$
-http://www.it.${local_Domain_Name}/education/learning-management/secure/
-http://www.it.${local_Domain_Name}/security/vulnerability-assessment/secure/common-vulnerabilities.html
-http://www.it.${local_Domain_Name}/admin-systems/secure/
-http://www.it.${local_Domain_Name}/admin-systems/secure
-http://it.${local_Domain_Name}/admin-systems/secure/infoed/
-http://it.${local_Domain_Name}/admin-systems/secure/infoed
-http://www.it.${local_Domain_Name}/admin-systems/secure/infoed/
-http://www.it.${local_Domain_Name}/admin-systems/secure/infoed
-# END Request by Terry Jolley 01/19/2017 for it.${local_Domain_Name} content update
-
-# Request by Nimisha Joshi (nsj448) 01/19/2017, Ticket 483810
-http://www.adminplan.${local_Domain_Name}/planning/peer-reports/past-peer-reports.html
-
-# Request by Nimisha Joshi (nsj448) 03/01/2017, Ticket #501461
-http://www.adminplan.${local_Domain_Name}/planning/special-reports/past-reports/
-http://www.adminplan.${local_Domain_Name}/planning/special-reports/past-reports$
-
-# Request by Nimisha Joshi (nsj448) 03/20/2017, Ticket #509181
-http://corporate.${local_Domain_Name}/about/for-faculty-staff-and-students/secure/
-http://corporate.${local_Domain_Name}/about/for-faculty-staff-and-students/secure$
-
-# Request by Nimisha Joshi (nsj448) 04/11/2017, Ticket #519712
-http://www.${local_Domain_Name}/searle/assessment-of-student-learning/assessment-in-practice/repository/
-http://www.${local_Domain_Name}/searle/assessment-of-student-learning/assessment-in-practice/repository$
-
-# Request by Nimisha Joshi (nsj448) 04/24/2017, Ticket #524484
-http://www.${local_Domain_Name}/auxiliary-services/travel/agencies/fees.html
-http://www.${local_Domain_Name}/auxiliary-services/travel/air/united.html
-http://www.${local_Domain_Name}/auxiliary-services/travel/hotels/rates.html
-http://www.${local_Domain_Name}/auxiliary-services/travel/car_rental/companies.html
-
-# Request by Robert Henkins (rsh290) 04/27/2017, Ticket #521668
-http://enrollment.${local_Domain_Name}/operations/members$
-http://enrollment.${local_Domain_Name}/operations/members/
-
-# Request by Nimisha Joshi (nsj448) 05/10/2017, Ticket #532677
-http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/companies.html
-
-# Request by Nimisha Joshi (nsj448) 06/05/2017, Ticket #544528
-http://www.${local_Domain_Name}/ses/staff/ses-access-request-form.html
-
-# Request by Nimisha Joshi (nsj448) 06/14/2017, Ticket #547996
-http://policies.${local_Domain_Name}/under-review/secure$
-http://policies.${local_Domain_Name}/under-review/secure/
-
-# Request by Nimisha Joshi (nsj448) 06/14/2017, Ticket #566578
-http://www.${local_Domain_Name}/ethics/campus-security/annual-report/secure$
-http://www.${local_Domain_Name}/ethics/campus-security/annual-report/secure/
-http://www.${local_Domain_Name}/up/community-services/secure$
-http://www.${local_Domain_Name}/up/community-services/secure/
-
-# Request by Nimisha Joshi (nsj448) 08/07/2017, Ticket #573541
-http://www.${local_Domain_Name}/cascade-help$
-http://www.${local_Domain_Name}/cascade-help/
-
-# Request by Nimisha Joshi (nsj448) 08/18/2017, Ticket #578414
-# Test site
-http://nuinfo-proto12.${local_Domain_Name}/advisestream/adviser-resources$
-http://nuinfo-proto12.${local_Domain_Name}/advisestream/adviser-resources/
-http://nuinfo-proto12.${local_Domain_Name}/advisestream/student-resources$
-http://nuinfo-proto12.${local_Domain_Name}/advisestream/student-resources/
-# Production site
-http://www.${local_Domain_Name}/advisestream/adviser-resources$
-http://www.${local_Domain_Name}/advisestream/adviser-resources/
-http://www.${local_Domain_Name}/advisestream/student-resources$
-http://www.${local_Domain_Name}/advisestream/student-resources/
-      
-# Request by Nimisha Joshi (nsj448) 08/30/2017, Ticket #584154
-http://www.${local_Domain_Name}/newscenter/chicago-ideas-week$
-http://www.${local_Domain_Name}/newscenter/chicago-ideas-week/
 
 
 

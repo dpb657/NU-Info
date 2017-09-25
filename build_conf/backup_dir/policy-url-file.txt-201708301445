@@ -718,12 +718,8 @@ http://www.${local_Domain_Name}/up/safety/annual-report/secure$
 
 # Requested by Jacob Arnold on 7/10/12, SM Ticket IM72904, for certain NetIDs,
 # /coi/secure modified for all NetIDs 05/07/2013 (ISSUE=21140), request by Chris Tondini
-http://${local_Domain_Name}/hr/secure/
-http://${local_Domain_Name}/hr/secure$
 http://www.${local_Domain_Name}/hr/secure/
 http://www.${local_Domain_Name}/hr/secure$
-http://${local_Domain_Name}/coi/secure/
-http://${local_Domain_Name}/coi/secure$
 http://www.${local_Domain_Name}/coi/secure/
 http://www.${local_Domain_Name}/coi/secure$
 
@@ -1212,10 +1208,6 @@ http://www.${local_Domain_Name}/advisestream/adviser-resources/
 http://www.${local_Domain_Name}/advisestream/student-resources$
 http://www.${local_Domain_Name}/advisestream/student-resources/
       
-# Request by Nimisha Joshi (nsj448) 08/30/2017, Ticket #584154
-http://www.${local_Domain_Name}/newscenter/chicago-ideas-week$
-http://www.${local_Domain_Name}/newscenter/chicago-ideas-week/
-
 
 
 

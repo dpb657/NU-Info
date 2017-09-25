@@ -5472,8 +5472,7 @@ RedirectMatch permanent ^/invo/(.*)$ https://invo.${local_Domain_Name}/$1
 
 # Request from Ian Martinez (cim417) ticket #583015  by Darryl Baker (dpb657) 09/13/2017
 # Begin #583015
-RedirectMatch permanent ^/joinallofus$ http://sites.${local_Domain_Name}/joinallofus
-RedirectMatch permanent ^/joinallofus/(.*) http://sites.${local_Domain_Name}/joinallofus
+RedirectMatch permanent ^/joinallofus/(.*) http://sites.${local_Domain_Name}/joinallofus/$1
 # End #583015
 
 # Request from Nimisha Joshi (nsj442) ticket #578418  by Darryl Baker (dpb657) 09/13/2017
@@ -5481,20 +5480,6 @@ RedirectMatch permanent ^/joinallofus/(.*) http://sites.${local_Domain_Name}/joi
 Redirect permanent /hr/workplace-learning/performance-excellence/index.html	http://perform.${local_Domain_Name}/index.html
 Redirect permanent /hr/workplace-learning/new-performance-excellence/index.html	http://perform.${local_Domain_Name}/index.html
 # End #578418
-
-# Request from Nimisha Joshi (nsj442) ticket #591209  by Darryl Baker (dpb657) 09/14/2017
-# Begin #591209
-RedirectMatch permanent ^/studentorgs/get-involved/rsos-fairs/index(.*) http://www.${local_Domain_Name}/studentorgs/students/upcoming-fairs/index.html
-# End #591209
-
-# Request from Nimisha Joshi (nsj442) ticket #591594  by Darryl Baker (dpb657) 09/15/2017
-# Begin #591594
-RedirectMatch permanent ^/searle/drop-in-tutoring(.*) http://www.${local_Domain_Name}/searle/programs-events/undergrad/group-study/drop-in-peer-tutoring.html
-# End #591594
-   
-
-
-
 
 
 
