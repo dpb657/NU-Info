@@ -1211,11 +1211,17 @@ http://www.${local_Domain_Name}/advisestream/adviser-resources$
 http://www.${local_Domain_Name}/advisestream/adviser-resources/
 http://www.${local_Domain_Name}/advisestream/student-resources$
 http://www.${local_Domain_Name}/advisestream/student-resources/
-      
+
 # Request by Nimisha Joshi (nsj448) 08/30/2017, Ticket #584154
 http://www.${local_Domain_Name}/newscenter/chicago-ideas-week$
 http://www.${local_Domain_Name}/newscenter/chicago-ideas-week/
 
+# Request by Nimisha Joshi (nsj448) 10/03/2017, Ticket #600316
+http://www.adminplan.northwestern.edu/ir/sspg/cofhe-surveys$
+http://www.adminplan.northwestern.edu/ir/sspg/cofhe-surveys/
+
+# Request by Nimisha Joshi (nsj448) 10/04/2017, Ticket #601428
+http://www.northwestern.edu/controller/tax/w9.pdf
 
 
 
