@@ -774,13 +774,14 @@ http://www.${local_Domain_Name}/univ-relations/webcomm/wcms/documentation/secure
 http://www.${local_Domain_Name}/univ-relations/webcomm/wcms/documentation/secure$
 
 #  TICKET: 23962 by Nimisha Joshi on 05/16/2013  
+# removed as part of #665050
 #  limit: http://www.${local_Domain_Name}/audit-and-advisory/services/compliance/ucc/handouts/
 # &   http://www.${local_Domain_Name}/audit-and-advisory/services/risk-and-control/steering/handouts/
 # to group seeauditucc 
-http://www.${local_Domain_Name}/audit-and-advisory/services/compliance/ucc/handouts$
-http://www.${local_Domain_Name}/audit-and-advisory/services/compliance/ucc/handouts/
-http://www.${local_Domain_Name}/audit-and-advisory/services/risk-and-control/steering/handouts$
-http://www.${local_Domain_Name}/audit-and-advisory/services/risk-and-control/steering/handouts/
+# http://www.${local_Domain_Name}/audit-and-advisory/services/compliance/ucc/handouts$
+# http://www.${local_Domain_Name}/audit-and-advisory/services/compliance/ucc/handouts/
+# http://www.${local_Domain_Name}/audit-and-advisory/services/risk-and-control/steering/handouts$
+# http://www.${local_Domain_Name}/audit-and-advisory/services/risk-and-control/steering/handouts/
 
 # Request by Nimisha Joshi 06/03/2013, Ticket 27851, for all NetIDs
 http://www.${local_Domain_Name}/nrotc/current-students/portal/
@@ -1197,8 +1198,8 @@ http://www.${local_Domain_Name}/up/community-services/secure$
 http://www.${local_Domain_Name}/up/community-services/secure/
 
 # Request by Nimisha Joshi (nsj448) 08/07/2017, Ticket #573541
-http://www.${local_Domain_Name}/cascade-help$
-http://www.${local_Domain_Name}/cascade-help/
+#FP 614060 http://www.${local_Domain_Name}/cascade-help$
+#FP 614060 http://www.${local_Domain_Name}/cascade-help/
 
 # Request by Nimisha Joshi (nsj448) 08/18/2017, Ticket #578414
 # Test site
@@ -1217,11 +1218,120 @@ http://www.${local_Domain_Name}/newscenter/chicago-ideas-week$
 http://www.${local_Domain_Name}/newscenter/chicago-ideas-week/
 
 # Request by Nimisha Joshi (nsj448) 10/03/2017, Ticket #600316
-http://www.adminplan.northwestern.edu/ir/sspg/cofhe-surveys$
-http://www.adminplan.northwestern.edu/ir/sspg/cofhe-surveys/
+http://www.adminplan.${local_Domain_Name}/ir/sspg/cofhe-surveys$
+http://www.adminplan.${local_Domain_Name}/ir/sspg/cofhe-surveys/
 
 # Request by Nimisha Joshi (nsj448) 10/04/2017, Ticket #601428
-http://www.northwestern.edu/controller/tax/w9.pdf
+http://www.${local_Domain_Name}/controller/tax/w9.pdf
+
+# Request by Nimisha Joshi (nsj448) 11/10/2017, Ticket #614060
+# Superceded by #659724 by Nimisha Joshi (nsj448) 02/23/2018
+# http://www.${local_Domain_Name}/cascade-help/a-z-help-topics.html
+# http://www.${local_Domain_Name}/cascade-help/accessibility-considerations/
+# http://www.${local_Domain_Name}/cascade-help/accessibility-considerations$
+# http://www.${local_Domain_Name}/cascade-help/advanced-editing-tasks/
+# http://www.${local_Domain_Name}/cascade-help/advanced-editing-tasks$
+# http://www.${local_Domain_Name}/cascade-help/basic-editing-tasks/
+# http://www.${local_Domain_Name}/cascade-help/basic-editing-tasks$
+# http://www.${local_Domain_Name}/cascade-help/creating-content/
+# http://www.${local_Domain_Name}/cascade-help/creating-content$
+# http://www.${local_Domain_Name}/cascade-help/developer-tools-resources/
+# http://www.${local_Domain_Name}/cascade-help/developer-tools-resources$
+# http://www.${local_Domain_Name}/cascade-help/faqs/
+# http://www.${local_Domain_Name}/cascade-help/faqs$
+# http://www.${local_Domain_Name}/cascade-help/get-training/
+# http://www.${local_Domain_Name}/cascade-help/get-training$
+# http://www.${local_Domain_Name}/cascade-help/getting-started/
+# http://www.${local_Domain_Name}/cascade-help/getting-started$
+# http://www.${local_Domain_Name}/cascade-help/whats-new-in-cascade-8.html
+# not removed by FP#659724
+http://www.${local_Domain_Name}/cascade-help/cascade-video-library.html
+
+# Request by Nimisha Joshi (nsj448) 12/06/2017, Ticket #629351
+http://www.${local_Domain_Name}/controller/treasury-operations/docs/pci-town-hall-campusguard.pdf
+
+# Request by Nimisha Joshi (nsj448) 12/07/2017, Ticket #629513
+http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/faculty-survey/
+http://www.${local_Domain_Name}/provost/initiatives/strategic-priorities/support-for-faculty-excellence/faculty-survey$
+
+# Request by Nimisha Joshi (nsj448) 12/21/2017, Ticket #632579
+http://www.${local_Domain_Name}/controller/treasury-operations/depository-services/banking-wire-instructions.pdf
+
+# Request by Nimisha Joshi (nsj448) 01/18/2018 Ticket #640590
+http://www.registrar.${local_Domain_Name}/faculty-staff/course-leaf-section-scheduler-clss/how-to-videos-documents.html
+http://www.registrar.${local_Domain_Name}/faculty-staff/course-leaf-section-scheduler-clss/rules-workflow.html
+http://www.registrar.${local_Domain_Name}/faculty-staff/course-leaf-section-scheduler-clss/training.html
+http://www.registrar.${local_Domain_Name}/faculty-staff/course-leaf-section-scheduler-clss/documents/AddingInstructors.pdf
+http://www.registrar.${local_Domain_Name}/faculty-staff/course-leaf-section-scheduler-clss/documents/CLSSUserGuide.pdf
+
+# Request by Nimisha Joshi (nsj448) 02/02/2018 Ticket #645398
+http://www.${local_Domain_Name}/searle/assessment-of-student-learning/assessment-in-practice/repository/index.html
+
+# Request by Hary Saito (hhs  ) 03/21/2018 Ticket #670343 
+ 
+http://nuinfo-proto12.${local_Domain_Name}/youth-on-campus/protection-measures/requirements-programs/online-registration/
+http://nuinfo-proto12.${local_Domain_Name}/youth-on-campus/protection-measures/requirements-programs/training/
+
+# Request by Nimisha Joshi (nsj448) 03/21/2018 Ticket #670591
+http://www.${local_Domain_Name}/staff-survey/documents/internal/
+
+# Request by Nimisha Joshi (nsj448) 03/21/2018 Ticket #670753
+http://www.it.${local_Domain_Name}/nuportal$
+http://www.it.${local_Domain_Name}/nuportal/
+
+# Request by Nimisha Joshi (nsj448) 04/12/2018 Ticket #678893
+http://www.${local_Domain_Name}/cataloghelp/course-and-curricular-updates/
+http://www.${local_Domain_Name}/cataloghelp/timeline.html
+http://www.${local_Domain_Name}/cataloghelp/faqs.html
+http://www.${local_Domain_Name}/cataloghelp/contact.html
+
+# Request by Nimisha Joshi (nsj448) 04/14/2018 Ticket #679780
+http://www.${local_Domain_Name}/staff-survey/documents/secure/
+http://www.${local_Domain_Name}/staff-survey/internal-results.html
+http://www.${local_Domain_Name}/staff-survey/documents/internal/results-3-19.pdf
+
+# Request by Nimisha Joshi (nsj448) 04/27/2018 Ticket #677934
+http://www.adminplan.${local_Domain_Name}/documents/secure/
+
+# Request by Nimisha Joshi (nsj448) 05/01/2018 Ticket #687564
+http://www.${local_Domain_Name}/youth-on-campus/program-guidlines/requirements-programs/online-registration$
+http://www.${local_Domain_Name}/youth-on-campus/program-guidlines/requirements-programs/online-registration/
+http://www.${local_Domain_Name}/youth-on-campus/program-guidlines/requirements-programs/training$
+http://www.${local_Domain_Name}/youth-on-campus/program-guidlines/requirements-programs/training/
+
+# Request by Harry Saito 05/01/2018 Ticket #687624
+http://www.${local_Domain_Name}/global-marketing-communications/whoozwho$
+http://www.${local_Domain_Name}/global-marketing-communications/whoozwho/
+
+# Request by Harry Saito 05/01/2018 Ticket #687564
+http://www.${local_Domain_Name}/youth-on-campus/program-guidelines/requirements-programs/online-registration$
+http://www.${local_Domain_Name}/youth-on-campus/program-guidelines/requirements-programs/online-registration/
+http://www.${local_Domain_Name}/youth-on-campus/program-guidelines/requirements-programs/training$
+http://www.${local_Domain_Name}/youth-on-campus/program-guidelines/requirements-programs/training/
+
+# Request by Nimisha Joshi (nsj448) 05/11/2018 Ticket #687667
+http://undergradaid.${local_Domain_Name}/secure$
+http://undergradaid.${local_Domain_Name}/secure/
+
+# Request by Nimisha Joshi (nsj448) 05/11/2018 Ticket #694059
+http://www.${local_Domain_Name}/budget/budget-transformation/resources$
+http://www.${local_Domain_Name}/budget/budget-transformation/resources/
+
+# Request by Nimisha Joshi (nsj448) 05/29/2018 Ticket #698287
+http://www.${local_Domain_Name}/risk/secure
+http://www.${local_Domain_Name}/risk/secure/
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/a-c-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/d-j-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/k-o-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/p-s-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/t-z-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/recently-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/expiring-approved-drivers.html
+
+# Request by Nimisha Joshi (nsj448) 05/29/2018 Ticket #698757
+http://www.northwestern.edu/foundationrelations/funding-newsletter-sign-up$
+http://www.northwestern.edu/foundationrelations/funding-newsletter-sign-up/
+
 
 
 

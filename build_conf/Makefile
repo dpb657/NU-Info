@@ -130,7 +130,7 @@ status:
 deployChicago: ALL test
 	@$(foreach REMOTE_HOST, $(CH_HOSTS), \
 	echo -e "Deploying to $(REMOTE_HOST)" && \
-	$(RSYNC) $(RSYNC_OPTS_REMOTE) $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
+	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude 'backup_dir/201[67]' $(BUILD_DIR) $(REMOTE_HOST):$(BUILD_DIR) && \
 	echo -e "\tBuild directory synchronized" && \
 	$(RSYNC) $(RSYNC_OPTS_REMOTE) --exclude=Makefile $(CONFIG_TARGET_DIR) $(REMOTE_HOST):$(CONFIG_TARGET_DIR) && \
 	echo -e "\tConfiguration directory synchronized" && \
