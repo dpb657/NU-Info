@@ -1,5 +1,6 @@
 conf
 conf.d/
+conf.modules.d
 logs
 modules
 oldhttpd
@@ -11,4 +12,5 @@ localhost_configs/
 build_conf/AMAgent_enforced.txt
 build_conf/Agent_Enforced_URLs
 build_conf/OpenSSOAgentConfiguration.properties
+build_conf/syncit
 
