@@ -13,4 +13,7 @@ build_conf/AMAgent_enforced.txt
 build_conf/Agent_Enforced_URLs
 build_conf/OpenSSOAgentConfiguration.properties
 build_conf/syncit
+build_conf/backup_dir
+build_conf/all-names.conf
+build_conf/config-removeifdefines.pl
 

@@ -575,24 +575,6 @@ http://www.${local_Domain_Name}/univ-relations/media_relations/hometownnews/
 http://www.${local_Domain_Name}/univ-relations/media_relations/hometownnews$
 
 # rules for node testing, not a real web site 5-3-2011
-http://nuinfotest.it.${local_Domain_Name}/test-websso-auth-dir/
-http://nuinfotest.it.${local_Domain_Name}/test-websso-auth-dir$
-http://evnuinfow1.it.${local_Domain_Name}/test-websso-auth-dir/
-http://evnuinfow1.it.${local_Domain_Name}/test-websso-auth-dir$
-http://evnuinfow2.it.${local_Domain_Name}/test-websso-auth-dir/
-http://evnuinfow2.it.${local_Domain_Name}/test-websso-auth-dir$
-http://evnuinfow3.it.${local_Domain_Name}/test-websso-auth-dir/
-http://evnuinfow3.it.${local_Domain_Name}/test-websso-auth-dir$
-http://evnuinfow4.it.${local_Domain_Name}/test-websso-auth-dir/
-http://evnuinfow4.it.${local_Domain_Name}/test-websso-auth-dir$
-http://chnuinfow1.it.${local_Domain_Name}/test-websso-auth-dir/
-http://chnuinfow1.it.${local_Domain_Name}/test-websso-auth-dir$
-http://chnuinfow2.it.${local_Domain_Name}/test-websso-auth-dir/
-http://chnuinfow2.it.${local_Domain_Name}/test-websso-auth-dir$
-http://chnuinfow3.it.${local_Domain_Name}/test-websso-auth-dir/
-http://chnuinfow3.it.${local_Domain_Name}/test-websso-auth-dir$
-http://chnuinfow4.it.${local_Domain_Name}/test-websso-auth-dir/
-http://chnuinfow4.it.${local_Domain_Name}/test-websso-auth-dir$
 http://nuinfo-proto19.${local_Domain_Name}/test-websso-auth-dir/
 http://nuinfo-proto19.${local_Domain_Name}/test-websso-auth-dir$
 
@@ -602,12 +584,10 @@ http://evnuinfoprodweb1.ci.${local_Domain_Name}/ur-news-passport-auth/cgi/breaki
 # DSS UNITs new directory, "any valid netid"?? 5-6-2011
 http://www.it.${local_Domain_Name}/units/
 http://www.it.${local_Domain_Name}/units$
-#http://evnuinfo-proto1.${local_Domain_Name}/units
 
 # nuit-webinars  groups faculty or staff 5-6-2011
 http://www.it.${local_Domain_Name}/learning/nuit-webinars/
 http://www.it.${local_Domain_Name}/learning/nuit-webinars$
-#http://evnuinfo-proto1.${local_Domain_Name}/nuit-webinars
 
 # http://nuwrite.${local_Domain_Name}/secure 5-31-2011
 # restrict to group faculty
