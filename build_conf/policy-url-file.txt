@@ -1253,7 +1253,9 @@ http://nuinfo-proto12.${local_Domain_Name}/youth-on-campus/protection-measures/r
 http://nuinfo-proto12.${local_Domain_Name}/youth-on-campus/protection-measures/requirements-programs/training/
 
 # Request by Nimisha Joshi (nsj448) 03/21/2018 Ticket #670591
+http://www.${local_Domain_Name}/staff-survey/documents/internal$
 http://www.${local_Domain_Name}/staff-survey/documents/internal/
+#redundent http://www.${local_Domain_Name}/staff-survey/documents/internal/results-3-19.pdf
 
 # Request by Nimisha Joshi (nsj448) 03/21/2018 Ticket #670753
 http://www.it.${local_Domain_Name}/nuportal$
@@ -1266,9 +1268,9 @@ http://www.${local_Domain_Name}/cataloghelp/faqs.html
 http://www.${local_Domain_Name}/cataloghelp/contact.html
 
 # Request by Nimisha Joshi (nsj448) 04/14/2018 Ticket #679780
+http://www.${local_Domain_Name}/staff-survey/documents/secure$
 http://www.${local_Domain_Name}/staff-survey/documents/secure/
 http://www.${local_Domain_Name}/staff-survey/internal-results.html
-http://www.${local_Domain_Name}/staff-survey/documents/internal/results-3-19.pdf
 
 # Request by Nimisha Joshi (nsj448) 04/27/2018 Ticket #677934
 http://www.adminplan.${local_Domain_Name}/documents/secure/
@@ -1309,12 +1311,63 @@ http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-dr
 http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/expiring-approved-drivers.html
 
 # Request by Nimisha Joshi (nsj448) 05/29/2018 Ticket #698757
-http://www.northwestern.edu/foundationrelations/funding-newsletter-sign-up$
-http://www.northwestern.edu/foundationrelations/funding-newsletter-sign-up/
+http://www.${local_Domain_Name}/foundationrelations/funding-newsletter-sign-up$
+http://www.${local_Domain_Name}/foundationrelations/funding-newsletter-sign-up/
 
+# Request by Matthew Carroll (mmc295) 09/04/2018 Ticket #743453
+http://www.tgs.${local_Domain_Name}/resources-for/staff/funding$
+http://www.tgs.${local_Domain_Name}/resources-for/staff/funding/
 
+# Request by Nimisha Joshi (nsj448) 09/04/2018 Ticket #745218
+http://www.${local_Domain_Name}/abroad/student-experiences/connect-with-students$
+http://www.${local_Domain_Name}/abroad/student-experiences/connect-with-students/
 
+# Request by Nimisha Joshi (nsj448) 10/26/2018 Ticket #770587
+# http://www.${local_Domain_Name}/risk/approved-drivers/a-c.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/d-j.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/k-o.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/p-s.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/t-z.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/recent-drivers.html
+# http://www.${local_Domain_Name}/risk/approved-drivers/expiring-drivers.html
 
+# Request by Nimisha Joshi (nsj448) 10/29/2018 Ticket #772071 supercedes #770587
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/a-c-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/d-j-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/k-o-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/p-s-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/t-z-approved-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/recent-drivers.html
+http://www.${local_Domain_Name}/risk/services/university-vehicle-use/approved-drivers/expiring-drivers.html
+
+# Request by Nimisha Joshi (nsj448) 11/09/2018 Ticket #771550
+http://corporate.${local_Domain_Name}/about/for-faculty-staff-and-students/faculty-and-staff-information$
+http://corporate.${local_Domain_Name}/about/for-faculty-staff-and-students/faculty-and-staff-information/
+
+# Request by Nimisha Joshi (nsj448) 11/16/2018 Ticket #778318 by Darryl Baker (dpb657)
+http://www.${local_Domain_Name}/strategy-and-change/secure$
+http://www.${local_Domain_Name}/strategy-and-change/secure/
+
+# Request by Aditi Singru (asx377) 01/14/2019 Ticket #800110 by Darryl Baker (dpb657)
+http://nuinfo-proto12.${local_Domain_Name}/admindash$
+http://nuinfo-proto12.${local_Domain_Name}/admindash/
+http://admindash.${local_domain_Name}$
+http://admindash.${local_Domain_Name}/
+
+# Request by Nimisha Joshi (nsj448) 01/28/2019 Ticket #803205 by Darryl Baker (dpb657)
+http://www.${local_Domain_Name}/global-marketing-communications/resources/news-and-media/media-tools-for-faculty$
+http://www.${local_Domain_Name}/global-marketing-communications/resources/news-and-media/media-tools-for-faculty/
+
+# Request by Nimisha Joshi (nsj448) 02/14/2019 Ticket #807951 by Darryl Baker (dpb657)
+http://www.${local_Domain_Name}/hr/documents/forms$
+http://www.${local_Domain_Name}/hr/documents/forms/
+
+# Request by Nimisha Joshi (nsj448) 02/13/2019 Ticket #810945 by Darryl Baker (dpb657)
+http://www.${local_Domain_Name}/staff-survey/internal-results/
+
+# Request by Nimisha Joshi (nsj448) 02/13/2019 Ticket #812271 by Darryl Baker (dpb657)
+http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/business-use.html
+http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/student-group.html
 
 
 
