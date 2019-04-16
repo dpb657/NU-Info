@@ -232,8 +232,13 @@ http://www.music.${local_Domain_Name}/for-faculty/internal$
 # limit /ir/sspg/private to group seesspg
 
 #
-http://www.adminplan.${local_Domain_Name}/ir/sspg/private
+http://www.adminplan.${local_Domain_Name}/ir/sspg/private$
+http://www.adminplan.${local_Domain_Name}/ir/sspg/private/
 #
+
+# Request by Paul Schatz (pls854) 04/15/2019 Ticket #836527 by Darryl Baker (dpb657)
+http://www.adminplan.${local_Domain_Name}/ir/sspg/Surveys$
+http://www.adminplan.${local_Domain_Name}/ir/sspg/Surveys/
 
 # 10-24-07 for Admin & Planning via  Lee Roberson
 # any valid netid
@@ -1368,6 +1373,15 @@ http://www.${local_Domain_Name}/staff-survey/internal-results/
 # Request by Nimisha Joshi (nsj448) 02/13/2019 Ticket #812271 by Darryl Baker (dpb657)
 http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/business-use.html
 http://www.${local_Domain_Name}/auxiliary-services/travel/car-rental/student-group.html
+
+# Request by Nimisha Joshi (nsj448) 04/15/2019 Ticket #838650 by Darryl Baker (dpb657)
+http://www.northwestern.edu/diversity/docs/diversity-reports$
+http://www.northwestern.edu/diversity/docs/diversity-reports/
+
+
+
+
+
 
 
 
